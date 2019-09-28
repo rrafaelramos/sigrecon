@@ -38,10 +38,10 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Cliente avulso', 'icon' => '', 'url' => ['/clienteavulso/create'],],
-                            ['label' => 'Rotina', 'icon' => '', 'url' => ['/rotina/create'],],
-                            ['label' => 'Empresa', 'icon' => '', 'url' => ['/empresa/create'],],
-                            ['label' => 'Serviço', 'icon' => '', 'url' => ['/servico/create'],],
+                            ['label' => 'Cliente avulso', 'icon' => '', 'url' => ['/clienteavulso'],],
+                            ['label' => 'Rotina', 'icon' => '', 'url' => ['/rotina'],],
+                            ['label' => 'Empresa', 'icon' => '', 'url' => ['/empresa'],],
+                            ['label' => 'Serviço', 'icon' => '', 'url' => ['/servico'],],
                             [
                                 'label' => 'Level One',
                                 'icon' => 'circle-o',

@@ -86,7 +86,7 @@ use kartik\datecontrol\Module;
         'language' => 'pt-BR'
     ]); ?>
 
-    <?= $form->field($model, 'usuario_fk')->dropDownList(ArrayHelper::map(DBUser::find()->where(['nome' => yii::$app->session])
+    <?= $form->field($model, 'usuario_fk')->dropDownList(ArrayHelper::map(DBUser::find()->where(['id' => Yii::$app->user->id])
     ->all(), 'id','nome'));?>
 
 

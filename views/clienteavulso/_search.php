@@ -15,15 +15,15 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?php // echo $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'nome') ?>
+    <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'cpf') ?>
 
+    <?= $form->field($model, 'nome') ?>
+
     <?= $form->field($model, 'telefone') ?>
 
-    <?php // echo $form->field($model, 'numero') ?>
+    <?= $form->field($model, 'numero') ?>
 
     <?php // echo $form->field($model, 'rua') ?>
 
@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
