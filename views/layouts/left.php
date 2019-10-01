@@ -8,7 +8,7 @@
                 <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p>Bem Vindo</p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -17,7 +17,7 @@
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                <input type="text" name="q" class="form-control" placeholder="Buscar..."/>
               <span class="input-group-btn">
                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
@@ -30,18 +30,22 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
+                    ['label' => 'Menu', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     [
                         'label' => 'Cadastrar',
-                        'icon' => 'share',
+                        //'icon' => 'share',
+                        'icon' => 'plus',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Cliente avulso', 'icon' => '', 'url' => ['/clienteavulso'],],
-                            ['label' => 'Rotina', 'icon' => '', 'url' => ['/rotina'],],
-                            ['label' => 'Empresa', 'icon' => '', 'url' => ['/empresa'],],
-                            ['label' => 'Serviço', 'icon' => '', 'url' => ['/servico'],],
+                            ['label' => 'Cliente avulso', 'icon' => 'user', 'url' => ['/clienteavulso'],],
+                            ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina'],],
+                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa'],],
+                            ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico'],],
+                            ['label' => 'Compra', 'icon' => 'pencil', 'url' => ['/compra'],],
+
+                            //['label' => 'Empresa', 'icon' => 'institution', 'url' => ['/servico'],],
                             [
                                 'label' => 'Level One',
                                 'icon' => 'circle-o',
