@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yiibr\brvalidator\CpfValidator;
+use yiibr\brvalidator\CnpjValidator;
+use yiibr\brvalidator\CeiValidator;
 
 /**
  * This is the model class for table "empresa".
@@ -67,6 +70,8 @@ class Empresa extends \yii\db\ActiveRecord
             [['titulo'], 'string', 'max' => 12],
             [['cnpj'], 'unique'],
             [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => DBUser::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
+            [['cnpj'], CnpjValidator::className()],
+            [['cpf_socio'], CpfValidator::className()]
         ];
     }
 

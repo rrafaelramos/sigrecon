@@ -1,6 +1,9 @@
 <?php
 
 namespace app\models;
+use yiibr\brvalidator\CpfValidator;
+use yiibr\brvalidator\CnpjValidator;
+use yiibr\brvalidator\CeiValidator;
 
 use Yii;
 
@@ -43,15 +46,16 @@ class Clienteavulso extends \yii\db\ActiveRecord
             [['cpf', 'nome'], 'required'],
             [['numero', 'rotina', 'usuario_fk'], 'integer'],
             [['datanascimento'], 'safe'],
-            [['cpf'], 'string', 'max' => 11],
+            [['cpf'], 'string',],
             [['nome'], 'string', 'max' => 120],
             [['telefone'], 'string', 'max' => 20],
             [['rua', 'bairro', 'cidade'], 'string', 'max' => 200],
-            [['cep'], 'string', 'max' => 8],
+            [['cep'], 'string',],
             [['uf'], 'string', 'max' => 2],
             [['complemento'], 'string', 'max' => 255],
             [['cpf'], 'unique'],
             [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => DBUser::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
+            [['cpf'], CpfValidator::className()],
         ];
     }
 
