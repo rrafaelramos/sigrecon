@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Clienteavulso */
 
 $this->title = $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Clienteavulsos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="clienteavulso-view box box-primary">
@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'rua',
                 'numero',
+                'complemento',
                 'bairro',
                 'cidade',
                 ['attribute' => 'cep',

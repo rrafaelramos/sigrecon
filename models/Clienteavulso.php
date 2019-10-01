@@ -20,6 +20,7 @@ use Yii;
  * @property int $rotina
  * @property string $datanascimento
  * @property int $usuario_fk
+ * @property string $complemento
  *
  * @property User $usuarioFk
  */
@@ -42,12 +43,13 @@ class Clienteavulso extends \yii\db\ActiveRecord
             [['cpf', 'nome'], 'required'],
             [['numero', 'rotina', 'usuario_fk'], 'integer'],
             [['datanascimento'], 'safe'],
-            [['cpf'], 'string',],
+            [['cpf'], 'string', 'max' => 11],
             [['nome'], 'string', 'max' => 120],
             [['telefone'], 'string', 'max' => 20],
             [['rua', 'bairro', 'cidade'], 'string', 'max' => 200],
-            [['cep'], 'string'],
+            [['cep'], 'string', 'max' => 8],
             [['uf'], 'string', 'max' => 2],
+            [['complemento'], 'string', 'max' => 255],
             [['cpf'], 'unique'],
             [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => DBUser::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
         ];
@@ -68,10 +70,11 @@ class Clienteavulso extends \yii\db\ActiveRecord
             'bairro' => 'Bairro',
             'cidade' => 'Cidade',
             'cep' => 'CEP',
-            'uf' => 'UF',
+            'uf' => 'Estado',
             'rotina' => 'Rotina',
-            'datanascimento' => 'Data de Nascimento',
+            'datanascimento' => 'Data de nascimento',
             'usuario_fk' => 'Usuario Fk',
+            'complemento' => 'Complemento',
         ];
     }
 
@@ -80,6 +83,6 @@ class Clienteavulso extends \yii\db\ActiveRecord
      */
     public function getUsuarioFk()
     {
-        return $this->hasOne(DBUser::className(), ['id' => 'usuario_fk']);
+        return $this->hasOne(User::className(), ['id' => 'usuario_fk']);
     }
 }

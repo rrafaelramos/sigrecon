@@ -18,23 +18,25 @@ use kartik\datecontrol\Module;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'cpf')->widget(\yii\widgets\MaskedInput::className(),[
         'mask' => '999.999.999-99',
         'clientOptions' => ['removeMaskOnSubmit' => true]
     ]) ?>
-
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'telefone')->widget(\yii\widgets\MaskedInput::className(),[
         'mask' => '(99) 9 9999-9999',
         'clientOptions' => ['removeMaskOnSubmit' => true]
     ]) ?>
 
-    <?= $form->field($model, 'numero')->textInput() ?>
-
     <?= $form->field($model, 'rua')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'numero')->textInput() ?>
+
     <?= $form->field($model, 'bairro')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'complemento')->textInput() ?>
 
     <?= $form->field($model, 'cidade')->textInput(['maxlength' => true]) ?>
 
