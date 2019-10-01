@@ -9,40 +9,36 @@ use yii\widgets\DetailView;
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Rotinas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
-<div class="rotina-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+<div class="rotina-view box box-primary">
+    <div class="box-header">
+        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
         <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-danger btn-flat',
             'data' => [
                 'confirm' => 'Deseja realmente apagar este item?',
                 'method' => 'post',
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'nome',
-            'repeticao',
-            'doc_entrega',
-            'doc_busca',
-            ['attribute' => 'data_entrega',
-                'format' => ['date', 'php:d/m/Y'],
+    </div>
+    <div class="box-body table-responsive no-padding">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                //'id',
+                'nome',
+                'repeticao',
+                'doc_entrega',
+                'doc_busca',
+                ['attribute' => 'data_entrega',
+                    'format' => ['date', 'php:d/m/Y'],
+                ],
+                ['attribute' => 'data_aviso',
+                    'format' => ['date', 'php:d/m/Y'],
+                ],
+                'informacao',
+                'msg_aviso',
             ],
-            ['attribute' => 'data_aviso',
-                'format' => ['date', 'php:d/m/Y'],
-            ],
-            'informacao',
-            'msg_aviso',
-        ],
-    ]) ?>
-
+        ]) ?>
+    </div>
 </div>

@@ -1,0 +1,104 @@
+create database bd_tcc;
+
+use bd_tcc;
+
+CREATE TABLE user(
+	id int auto_increment,
+	nome varchar(120) not null,
+	senha varchar(50) not null,
+	telefone varchar(20) not null,
+	email varchar(100) not null,
+	tipo int,
+	primary key(id),
+	unique index(email)
+);
+
+create TABLE clienteavulso(
+	id INT AUTO_INCREMENT,
+	cpf varchar(11) not null,
+	nome varchar(120) not null,
+	telefone varchar(20),
+	numero INT,
+	rua VARCHAR(200),
+	bairro VARCHAR(200),
+	cidade VARCHAR(200),
+	cep varchar(8),
+	uf varchar(2),
+	complemento varchar(255),
+	rotina int,
+	datanascimento DATE,
+	usuario_fk int,
+	foreign key (usuario_fk) references user (id),
+	unique index (cpf),
+	primary key (id)
+);
+
+create TABLE empresa(
+	id INT AUTO_INCREMENT,
+	cnpj varchar(14) not null,
+	razao_social varchar(200) not null,
+	nome_fantasia varchar(200),
+	email varchar(100),
+	telefone varchar(20),
+	celular varchar(20),
+	numero INT,
+	complemento varchar(50),
+	rua VARCHAR(120),
+	bairro VARCHAR(120),
+	cidade VARCHAR(120),
+	cep varchar(8),
+	uf varchar(2),
+	data_abertura DATE,
+	data_procuracao DATE,
+	data_certificado DATE,
+	rotina int not null,
+	responsavel varchar(120),
+	cpf_socio varchar(11) not null,
+	datanascimento_socio DATE,
+	rg varchar(11),
+	titulo varchar(12),
+	nome_mae_socio varchar(120),
+	telefone_socio varchar(20),
+	usuario_fk int,
+	foreign key (usuario_fk) references user(id),
+	unique index (cnpj),
+	primary key (id)
+);
+
+create table compra(
+	id int auto_increment,
+	usuario_fk int,
+	quantidade int not null,
+	data DATE not null,
+	valor float not null,
+	descricao varchar(200) not null,
+	primary key (id),
+	foreign key (usuario_fk) references usuario (id) 
+);
+
+create table servico(
+	id int auto_increment,
+	valor float not null,
+	valor_minimo float,
+	descricao varchar(255) not null,
+	primary key (id)
+);
+
+create table caixa(
+	id int auto_increment,
+	saldo float,
+	primary key (id)
+);
+
+create table rotina(
+	id int auto_increment,
+	nome varchar(200),
+	repeticao int not null,
+	doc_entrega varchar(200),
+	doc_busca varchar(200),
+	data_entrega DATE,
+	data_aviso DATE,
+	informacao varchar(500),
+	msg_aviso varchar(500),
+	primary key (id)
+);
