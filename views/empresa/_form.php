@@ -1,8 +1,10 @@
 <?php
 
 use kartik\datecontrol\DateControl;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Rotina;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Empresa */
@@ -84,7 +86,8 @@ use yii\widgets\ActiveForm;
             'language' => 'pt-BR'
         ]); ?>
 
-        <?= $form->field($model, 'rotina')->textInput() ?>
+        <?= $form->field($model, 'rotina')->dropDownList(ArrayHelper::map(Rotina::find()->all(),'id', 'nome')) ?>
+
 
         <?= $form->field($model, 'responsavel')->textInput(['maxlength' => true]) ?>
 

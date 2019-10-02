@@ -2,12 +2,15 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'SIGRECon';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
         <h1><b>SIGRE</b>Con</h1>
+        <?php
+            echo Yii::$app->user->id;
+        ?>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
 
