@@ -37,10 +37,9 @@ use dmstr\widgets\Alert;
 
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.0
+        <b>Versão</b> 1.0
     </div>
-    <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-    reserved.
+    <strong>Copyright &copy; 2019 <a href="http://ifnmg.edu.br/januaria"> Rafael Ramos | IFNMG-Campus Januária</a>.</strong> Todos os Direitos Reservados.
 </footer>
 
 <!-- Control Sidebar -->
