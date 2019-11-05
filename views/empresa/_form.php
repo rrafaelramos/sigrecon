@@ -189,7 +189,7 @@ use app\models\Rotina;
     </div>
 </div>
 
-<!--       -->//= $form->field($model, 'usuario_fk')->textInput()
+//<!--       -->= $form->field($model, 'usuario_fk')->textInput()
 
     </div>
     <div class="box-footer">
