@@ -56,11 +56,11 @@ class Empresa extends \yii\db\ActiveRecord
     {
         return [
             [['cnpj', 'razao_social', 'rotina', 'cpf_socio'], 'required'],
-            [['numero', 'rotina', 'usuario_fk'], 'integer'],
+            [['rotina', 'usuario_fk'], 'integer'],
             [['data_abertura', 'data_procuracao', 'data_certificado', 'datanascimento_socio'], 'safe'],
-            [['cnpj'], 'string',],
+            [['numero','cnpj'], 'string',],
             [['razao_social', 'nome_fantasia'], 'string', 'max' => 200],
-            [['email'], 'string', 'max' => 100],
+            [['email'], 'email'],
             [['telefone', 'celular', 'telefone_socio'], 'string', 'max' => 20],
             [['complemento'], 'string', 'max' => 50],
             [['rua', 'bairro', 'cidade', 'responsavel', 'nome_mae_socio'], 'string', 'max' => 120],

@@ -181,7 +181,7 @@ use app\models\Rotina;
                 </div>
                 <div class="col-sm-2">
                     <?= $form->field($model, 'telefone_socio')->widget(\yii\widgets\MaskedInput::className(),[
-                        'mask' => '(99) 9999-9999',
+                        'mask' => '(99) 99999-9999',
                         'clientOptions' => ['removeMaskOnSubmit' => true]
                     ]) ?>
                 </div>
