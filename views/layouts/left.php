@@ -36,12 +36,12 @@
                     [
                         'label' => 'Cadastrar',
                         //'icon' => 'share',
-                        'icon' => 'plus',
+                        'icon' => 'share',
                         'url' => '#',
                         'items' => [
+                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa'],],
                             ['label' => 'Cliente avulso', 'icon' => 'user', 'url' => ['/clienteavulso'],],
                             ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina'],],
-                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa'],],
                             ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico'],],
                             ['label' => 'Compra', 'icon' => 'pencil', 'url' => ['/compra'],],
 

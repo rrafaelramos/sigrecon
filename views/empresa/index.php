@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EmpresaSearch */
@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="empresa-index box box-primary">
     <div class="box-header with-border">
         <?= Html::a('Cadastrar Empresa', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
+        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btm-flat']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -31,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 'razao_social',
-                'nome_fantasia',
+                //'nome_fantasia',
                 'email:email',
                 ['attribute' => 'telefone',
                     'format' => 'html',
@@ -65,7 +66,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 // 'usuario_fk',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => '\kartik\grid\ActionColumn',
+                    'template' => '{view}{update}',
+                ],
+
             ],
         ]); ?>
     </div>

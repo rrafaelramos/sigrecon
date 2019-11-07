@@ -2,16 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\detail\DetailView;
-use kartik\grid\GridView;
-use yii\bootstrap\Modal;
-use yii\helpers\Url;
-use yii\bootstrap\ButtonDropdown;
 use kartik\icons\Icon;
-
-
-
-
-
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Empresa */
@@ -21,23 +12,22 @@ $this->params['breadcrumbs'][] = ['label' => 'Empresas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?//= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-<?//= Html::a('Apagar', ['delete', 'id' => $model->id], [
-//    'class' => 'btn btn-danger btn-flat',
-//    'data' => [
-//        'confirm' => 'Deseja realmente apagar?',
-//        'method' => 'post',
-//    ],
-//]) ?>
-
 <div class="empresa-view box box-primary">
     <div class="box-header with-border">
         <div class="col-xs-10">
             <h4>Dados da Empresa</h4>
         </div>
-        <div class="col-xs-2">
+        <div>
             <div class="pull-right">
                 <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning']) ?>
+                <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
+                <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger btn-flat',
+                    'data' => [
+                        'confirm' => 'Deseja realmente apagar?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
             </div>
         </div>
     </div>
@@ -48,11 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-heading with-border col-xs-12">
                     <div class="col-xs-10">
                         <h4>Dados Gerais</h4>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="pull-right">
-                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                        </div>
                     </div>
                 </div>
 
@@ -132,11 +117,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-xs-10">
                         <h4>Endereço</h4>
                     </div>
-                    <div class="col-xs-2">
-                        <div class="pull-right">
-                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="box-body table-responsive">
@@ -211,66 +191,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel panel-default">
                 <div class="panel-heading with-border col-xs-12">
                     <div class="col-xs-10">
-                        <h4>Informações adicionais</h4>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="pull-right">
-                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="box-body table-responsive">
-                    <?= DetailView::widget([
-                        'model' => $model,
-                        'condensed' => true,
-                        'bordered' => true,
-                        'striped' => false,
-                        'enableEditMode' => false,
-                        'mode' => DetailView::MODE_VIEW,
-                        'attributes' => [
-                            [
-                                'columns' => [
-                                    [
-                                        'label' => 'Data de Abertura',
-                                        'value' => $model->data_abertura,
-                                        'format' => ['date', 'php:d/m/Y'],
-                                        'labelColOptions' => ['style' => 'width:10%'],
-                                        'valueColOptions' => ['style' => 'width:15%'],
-                                    ],
-                                    [
-                                        'label' => 'Vencimento da Procuração',
-                                        'value' => $model->data_procuracao,
-                                        'format' => ['date', 'php:d/m/Y'],
-                                        'labelColOptions' => ['style' => 'width:10%'],
-                                        'valueColOptions' => ['style' => 'width:15%'],
-                                    ],
-                                    [
-                                        'label' => 'Vencimento Certificado',
-                                        'value' => $model->data_certificado,
-                                        'format' => ['date', 'php:d/m/Y'],
-                                        'labelColOptions' => ['style' => 'width:10%'],
-                                        'valueColOptions' => ['style' => 'width:15%'],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ])?>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="panel-group collapse in">
-            <div class="panel panel-default">
-                <div class="panel-heading with-border col-xs-12">
-                    <div class="col-xs-10">
                         <h4>Dados do Sócio Administrador</h4>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="pull-right">
-                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                        </div>
                     </div>
                 </div>
 
@@ -289,7 +210,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'label' => 'Nome',
                                         'value' => $model->responsavel,
                                         'labelColOptions' => ['style' => 'width:10%'],
-                                        'valueColOptions' => ['style' => 'width:50%'],
+                                        'valueColOptions' => ['style' => 'width:40%'],
                                     ],
                                 ],
                             ],
@@ -299,24 +220,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'label' => 'Nome da Mãe',
                                         'value' => $model->nome_mae_socio,
                                         'labelColOptions' => ['style' => 'width:10%'],
-                                        'valueColOptions' => ['style' => 'width:50%'],
+                                        'valueColOptions' => ['style' => 'width:40%'],
                                     ],
                                 ],
                             ],
                             [
                                 'columns' => [
                                     [
-                                    'attribute' => 'cpf_socio',
-                                    'label' => 'CPF',
-                                    'value' => preg_replace('/^(\d{3})(\d{3})(\d{3})(\d{2})$/', '${1}.${2}.${3}-${4}', $model->cpf_socio),
-                                    'labelColOptions' => ['style' => 'width:15%'],
-                                    'valueColOptions' => ['style' => 'width:35%'],
+                                        'attribute' => 'cpf_socio',
+                                        'label' => 'CPF',
+                                        'value' => preg_replace('/^(\d{3})(\d{3})(\d{3})(\d{2})$/', '${1}.${2}.${3}-${4}', $model->cpf_socio),
+                                        'labelColOptions' => ['style' => 'width:15%'],
+                                        'valueColOptions' => ['style' => 'width:35%'],
                                     ],
                                     [
-                                    'label' => 'RG',
-                                    'value' => $model->rg,
-                                    'labelColOptions' => ['style' => 'width:15%'],
-                                    'valueColOptions' => ['style' => 'width:35%'],
+                                        'label' => 'RG',
+                                        'value' => $model->rg,
+                                        'labelColOptions' => ['style' => 'width:15%'],
+                                        'valueColOptions' => ['style' => 'width:35%'],
                                     ],
                                 ],
                             ],
@@ -351,6 +272,56 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'value' => $model->rotina,
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ])?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="panel-group collapse in">
+            <div class="panel panel-default">
+                <div class="panel-heading with-border col-xs-12">
+                    <div class="col-xs-10">
+                        <h4>Informações adicionais</h4>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'condensed' => true,
+                        'bordered' => true,
+                        'striped' => false,
+                        'enableEditMode' => false,
+                        'mode' => DetailView::MODE_VIEW,
+                        'attributes' => [
+                            [
+                                'columns' => [
+                                    [
+                                        'label' => 'Data de Abertura',
+                                        'value' => $model->data_abertura,
+                                        'format' => ['date', 'php:d/m/Y'],
+                                        'labelColOptions' => ['style' => 'width:10%'],
+                                        'valueColOptions' => ['style' => 'width:15%'],
+                                    ],
+                                    [
+                                        'label' => 'Vencimento da Procuração',
+                                        'value' => $model->data_procuracao,
+                                        'format' => ['date', 'php:d/m/Y'],
+                                        'labelColOptions' => ['style' => 'width:10%'],
+                                        'valueColOptions' => ['style' => 'width:15%'],
+                                    ],
+                                    [
+                                        'label' => 'Vencimento Certificado',
+                                        'value' => $model->data_certificado,
+                                        'format' => ['date', 'php:d/m/Y'],
+                                        'labelColOptions' => ['style' => 'width:10%'],
+                                        'valueColOptions' => ['style' => 'width:15%'],
                                     ],
                                 ],
                             ],

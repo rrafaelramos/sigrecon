@@ -5,6 +5,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Rotina;
+use kartik\icons\Icon;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Empresa */
@@ -186,14 +187,11 @@ use app\models\Rotina;
                     ]) ?>
                 </div>
             </div>
+        </div>
+        <div class="pull-right">
+            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
+        </div>
     </div>
 </div>
-
-//<!--       -->= $form->field($model, 'usuario_fk')->textInput()
-
-    </div>
-    <div class="box-footer">
-        <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat']) ?>
-    </div>
-    <?php ActiveForm::end(); ?>
-</div>
+<?php ActiveForm::end(); ?>
