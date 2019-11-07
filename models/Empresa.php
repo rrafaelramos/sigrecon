@@ -105,7 +105,7 @@ class Empresa extends \yii\db\ActiveRecord
             'rg' => 'RG',
             'titulo' => 'Título de Eleitor',
             'nome_mae_socio' => 'Nome da Mãe',
-            'telefone_socio' => 'Telefone',
+            'telefone_socio' => 'Celular do Sócio',
             'usuario_fk' => 'Usuário',
         ];
     }
