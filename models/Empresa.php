@@ -55,7 +55,7 @@ class Empresa extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cnpj', 'razao_social', 'rotina', 'cpf_socio'], 'required'],
+            [['cnpj', 'razao_social', 'rotina', 'cpf_socio', 'responsavel'], 'required'],
             [['rotina', 'usuario_fk'], 'integer'],
             [['data_abertura', 'data_procuracao', 'data_certificado', 'datanascimento_socio'], 'safe'],
             [['numero','cnpj'], 'string',],
@@ -85,7 +85,7 @@ class Empresa extends \yii\db\ActiveRecord
             'cnpj' => 'CNPJ',
             'razao_social' => 'Razão Social',
             'nome_fantasia' => 'Nome Fantasia',
-            'email' => 'Email',
+            'email' => 'E-mail',
             'telefone' => 'Telefone',
             'celular' => 'Celular',
             'numero' => 'N°',

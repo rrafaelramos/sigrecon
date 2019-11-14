@@ -3,16 +3,34 @@
 /* @var $this yii\web\View */
 
 $this->title = 'SIGRECon';
+
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
         <h1><b>SIGRE</b>Con</h1>
-<!--        --><?php
-//            echo Yii::$app->user->id;
-//        ?>
+<?php
+        $data1 = '2019-11-12';
+        $data2 = '2019-11-13';
 
-        <p class="lead">Seja Bem vindo(a) ao SIGRECon!</p>
+        $aux = date("Y/m/d");
+        echo $aux;
+
+        if(strtotime($aux) > strtotime($data2)){
+                    echo 'A data 1 é maior que a data 2.';
+        }
+        elseif(strtotime($aux) == strtotime($data2))
+        {
+                    echo 'A data 1 é igual a data 2.';
+        }
+        else
+        {
+                    echo 'A data 1 é menor q a data 2.';
+        }
+
+?>
+
+        <p class="lead">Seja Bem vindo(a) ao SIGRECon! </p>
 
     </div>
 

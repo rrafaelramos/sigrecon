@@ -33,6 +33,7 @@ class Rotina extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nome'],'unique'],
             [['repeticao'], 'required'],
             [['repeticao'], 'integer'],
             [['data_entrega', 'data_aviso'], 'safe'],

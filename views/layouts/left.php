@@ -30,7 +30,7 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-                    ['label' => 'Menu', 'options' => ['class' => 'header']],
+                    ['label' => 'MENU', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     [
@@ -61,6 +61,22 @@
                                             ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
                                         ],
                                     ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => 'Consultar',
+                        'icon' => 'share',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Empresas',
+                                'icon' => 'home',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/empresa'],],
+                                    ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/datavencimento',]],
                                 ],
                             ],
                         ],
