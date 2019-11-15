@@ -55,13 +55,13 @@ class Empresa extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cnpj', 'razao_social', 'rotina', 'cpf_socio', 'responsavel'], 'required'],
+            [['cnpj', 'razao_social', 'rotina', 'cpf_socio', 'responsavel', 'telefone_socio'], 'required'],
             [['rotina', 'usuario_fk'], 'integer'],
             [['data_abertura', 'data_procuracao', 'data_certificado', 'datanascimento_socio'], 'safe'],
             [['numero','cnpj'], 'string',],
             [['razao_social', 'nome_fantasia'], 'string', 'max' => 200],
             [['email'], 'email'],
-            [['telefone', 'celular', 'telefone_socio'], 'string', 'max' => 20],
+            [['telefone', 'celular'], 'string', 'max' => 20],
             [['complemento'], 'string', 'max' => 50],
             [['rua', 'bairro', 'cidade', 'responsavel', 'nome_mae_socio'], 'string', 'max' => 120],
             [['cep'], 'string',],
@@ -99,7 +99,7 @@ class Empresa extends \yii\db\ActiveRecord
             'data_procuracao' => 'Vencimento da Procuração',
             'data_certificado' => 'Vencimento do Certificado',
             'rotina' => 'Rotina',
-            'responsavel' => 'Nome',
+            'responsavel' => 'Nome do Responsável',
             'cpf_socio' => 'CPF',
             'datanascimento_socio' => 'Data de nascimento',
             'rg' => 'RG',

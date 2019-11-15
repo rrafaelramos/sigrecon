@@ -149,4 +149,19 @@ class EmpresaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionDatavenc()
+    {
+        $searchModel = new EmpresaSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('datavenc', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+//        return $this->render('datavenc', [
+//            'model' => $model,
+//        ]);
+    }
 }

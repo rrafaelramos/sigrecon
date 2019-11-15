@@ -76,7 +76,7 @@
                                 'url' => '#',
                                 'items' => [
                                     ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/empresa'],],
-                                    ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/datavencimento',]],
+                                    ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/empresa/datavenc',]],
                                 ],
                             ],
                         ],
