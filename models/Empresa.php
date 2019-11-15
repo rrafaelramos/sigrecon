@@ -54,10 +54,18 @@ class Empresa extends \yii\db\ActiveRecord
      */
     public function rules()
     {
+
         return [
             [['cnpj', 'razao_social', 'rotina', 'cpf_socio', 'responsavel', 'telefone_socio'], 'required'],
             [['rotina', 'usuario_fk'], 'integer'],
             [['data_abertura', 'data_procuracao', 'data_certificado', 'datanascimento_socio'], 'safe'],
+
+            //Compara se a data da procuração é maior do que a de abertura, em caso positivo permite o cadastro!
+            ['data_procuracao', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
+            ['data_certificado', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
+
+           //['data_abertura', 'compare', 'compareValues' => 'echo date(php:d/m/Y)', 'operator' => '>=', 'message' => 'Data Inválida!' ],
+
             [['numero','cnpj'], 'string',],
             [['razao_social', 'nome_fantasia'], 'string', 'max' => 200],
             [['email'], 'email'],
@@ -73,6 +81,7 @@ class Empresa extends \yii\db\ActiveRecord
             [['cnpj'], CnpjValidator::className()],
             [['cpf_socio'], CpfValidator::className()]
         ];
+
     }
 
     /**
