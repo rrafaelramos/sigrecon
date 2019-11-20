@@ -10,23 +10,23 @@ $this->title = 'SIGRECon';
     <div class="jumbotron">
         <h1><b>SIGRE</b>Con</h1>
 <?php
-        $data1 = '2019-11-12';
-        $data2 = '2019-11-13';
-
-        $aux = date("Y/m/d");
-        echo $aux;
-
-        if(strtotime($aux) > strtotime($data2)){
-                    echo 'A data 1 é maior que a data 2.';
-        }
-        elseif(strtotime($aux) == strtotime($data2))
-        {
-                    echo 'A data 1 é igual a data 2.';
-        }
-        else
-        {
-                    echo 'A data 1 é menor q a data 2.';
-        }
+//        $data1 = '2019-11-12';
+//        $data2 = '2019-11-13';
+//
+//        $aux = date("Y/m/d");
+//        echo $aux;
+//
+//        if(strtotime($aux) > strtotime($data2)){
+//                    echo 'A data 1 é maior que a data 2.';
+//        }
+//        elseif(strtotime($aux) == strtotime($data2))
+//        {
+//                    echo 'A data 1 é igual a data 2.';
+//        }
+//        else
+//        {
+//                    echo 'A data 1 é menor q a data 2.';
+//        }
 
 ?>
 

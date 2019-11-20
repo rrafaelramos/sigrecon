@@ -1,13 +1,11 @@
 <?php
 
 use app\models\DBUser;
-use app\models\User;
-use yii\bootstrap\Dropdown;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\datecontrol\DateControl;
 use yii\helpers\ArrayHelper;
-use kartik\datecontrol\Module;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Clienteavulso */

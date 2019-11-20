@@ -15,7 +15,7 @@ use kartik\icons\Icon;
 <div class="empresa-form box box-primary">
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php echo date("d/m/Y"); ?>
+<!--    --><?php //echo date("d/m/Y"); ?>
 
     <div class="box-body table-responsive">
         <div class="panel panel-default">
@@ -117,7 +117,7 @@ use kartik\icons\Icon;
                         'widgetOptions' => [
                             'pluginOptions' => [
                                 'autoclose' => true,
-                                'format' => 'php:d/m/Y'
+                                'format' => 'php:d/m/Y',
                             ]
                         ],
                         'language' => 'pt-BR'
@@ -177,7 +177,8 @@ use kartik\icons\Icon;
                             'pluginOptions' => [
                                 'autoclose' => true,
                                 'format' => 'php:d/m/Y',
-                                'language' => 'pt-BR'
+                                'language' => 'pt-BR',
+                                'displayFormat' => 'php:d/m/Y',
                             ]
                         ],
                         'language' => 'pt-BR'

@@ -78,23 +78,6 @@ class EmpresaController extends Controller
         }
     }
 
-//    public function  actionValidardata($id){
-//
-//        $model = $this->findModel($id);
-//
-//        $aux = date("Y/m/d");//'2019-11-12';
-//        $aux2 = $model->data_abertura;//'2019-07-18';
-//        //return $aux2;
-//
-//        if(strtotime($aux2) <= strtotime($aux)){
-//            return 1;
-//        }
-//        elseif(strtotime($aux) == strtotime($aux2))
-//        {
-//            return 0;
-//        }
-//    }
-
     /**
      * Updates an existing Empresa model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -108,13 +91,6 @@ class EmpresaController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }else{
-//            Alert::begin([
-//                'options' => [
-//                    'class' => 'alert-warning',
-//                    ],
-//                ]);
-//                echo 'Data de Constituição inválida!';
-//                Alert::end();
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -159,9 +135,5 @@ class EmpresaController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-
-//        return $this->render('datavenc', [
-//            'model' => $model,
-//        ]);
     }
 }

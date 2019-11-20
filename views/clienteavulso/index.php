@@ -7,12 +7,12 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ClienteavulsoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Clientes';
+$this->title = 'Clienteavulsos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="clienteavulso-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Cadastrar', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
+        <?= Html::a('Create Clienteavulso', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -23,21 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                //'id',
-                ['attribute' => 'cpf',
-                    'format' => 'html',
-                    'value' => function($model) {
-                        return preg_replace('/^(\d{3})(\d{3})(\d{3})(\d{2})$/', '${1}.${2}.${3}-${4}', $model->cpf);
-                    },
-                ],
+                'id',
+                'cpf',
                 'nome',
-                ['attribute' => 'telefone',
-                    'format' => 'html',
-                    'value' => function($model) {
-                        return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->telefone);
-                    },
-                ],
-                //'numero',
+                'telefone',
+                'numero',
                 // 'rua',
                 // 'bairro',
                 // 'cidade',
@@ -46,12 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'rotina',
                 // 'datanascimento',
                 // 'usuario_fk',
+                // 'complemento',
 
                 ['class' => 'yii\grid\ActionColumn'],
-//                [
-//                    'class' => '\kartik\grid\ActionColumn',
-//                    'template' => '{view} {update}',
-//                ]
             ],
         ]); ?>
     </div>
