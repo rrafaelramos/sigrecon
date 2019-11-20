@@ -14,16 +14,12 @@ use kartik\icons\Icon;
 
 <div class="empresa-form box box-primary">
     <?php $form = ActiveForm::begin(); ?>
-
-<!--    --><?php //echo date("d/m/Y"); ?>
-
     <div class="box-body table-responsive">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Dados da Empresa</h3>
             </div>
             <div class="panel-body">
-
                 <div class="col-sm-6">
                     <?= $form->field($model, 'cnpj')->widget(\yii\widgets\MaskedInput::className(),[
                         'mask' => '99.999.999/9999-99',

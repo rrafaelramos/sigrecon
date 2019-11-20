@@ -13,13 +13,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="empresa-index box box-primary">
     <div class="box-header with-border">
         <?= Html::a('Cadastrar Empresa', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btm-flat']) ?>
+        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btn-flat']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'hover' => 'true',
+            'resizableColumns'=>'true',
+            'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
@@ -70,7 +73,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => '\kartik\grid\ActionColumn',
                     'template' => '{view}{update}',
                 ],
-
             ],
         ]); ?>
     </div>
