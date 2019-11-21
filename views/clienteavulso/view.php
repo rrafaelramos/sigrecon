@@ -1,5 +1,8 @@
 <?php
 
+use app\models\Rotina;
+use app\models\RotinaSearch;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 
@@ -9,6 +12,7 @@ use kartik\detail\DetailView;
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <div class="clienteavulso-view box box-primary">
@@ -99,7 +103,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h4>Endereço</h4>
                     </div>
                 </div>
-
                 <div class="box-body table-responsive">
                     <?= DetailView::widget([
                         'model' => $model,

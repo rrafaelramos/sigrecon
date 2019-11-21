@@ -13,6 +13,11 @@ use kartik\grid\GridView;
 
 $this->title = 'Clientes';
 $this->params['breadcrumbs'][] = $this->title;
+
+$aux = new RotinaSearch();
+
+
+
 ?>
 <div class="clienteavulso-index box box-primary">
     <div class="box-header with-border">
@@ -45,7 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->telefone);
                     },
                 ],
-                'rotina',
+//                ['attribute' => 'rotina',
+//                    'value' => $userQuery = (new Query())->select('nome')->from('rotina')->where($model->rotina == 'id')
+//                ],
                 //'numero',
                 // 'rua',
                 // 'bairro',
