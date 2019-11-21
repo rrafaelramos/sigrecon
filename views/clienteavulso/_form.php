@@ -133,9 +133,7 @@ use yii\helpers\ArrayHelper;
 </div>
 <?php ActiveForm::end(); ?>
 
-<!--            tentativa de retornar o usuário logado para fins de teste-->
-<!--    -->//= $form->field($model, 'usuario_fk')->dropDownList(ArrayHelper::map(DBUser::find()->where(['id' => Yii::$app->user->id])
-//    ->all(), 'id','nome'));?>
+<?//= $form->field($model, 'usuario_fk')->dropDownList(ArrayHelper::map(DBUser::find()->where(['id' => Yii::$app->user->id])->all(), 'id','nome'));?>
 
 
 

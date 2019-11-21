@@ -1,5 +1,8 @@
 <?php
 
+use app\models\Rotina;
+use app\models\RotinaSearch;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 //use yii\grid\GridView;
 use kartik\grid\GridView;
@@ -8,7 +11,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\ClienteavulsoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Clienteavulsos';
+$this->title = 'Clientes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="clienteavulso-index box box-primary">
@@ -29,20 +32,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\SerialColumn'],
 
                 //'id',
-                'cpf',
+                ['attribute' => 'cpf',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        return preg_replace('/^(\d{3})(\d{3})(\d{3})(\d{2})$/', '${1}.${2}.${3}-${4}', $model->cpf);
+                    },
+                ],
                 'nome',
-                'telefone',
-                'numero',
+                ['attribute' => 'telefone',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->telefone);
+                    },
+                ],
+                'rotina',
+                //'numero',
                 // 'rua',
                 // 'bairro',
                 // 'cidade',
                 // 'cep',
                 // 'uf',
-                // 'rotina',
                 // 'datanascimento',
                 // 'usuario_fk',
                 // 'complemento',
-
                 [
                     'class' => '\kartik\grid\ActionColumn',
                     'template' => '{view}{update}',
