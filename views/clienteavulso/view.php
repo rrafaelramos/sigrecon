@@ -1,8 +1,5 @@
 <?php
 
-use app\models\Rotina;
-use app\models\RotinaSearch;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 

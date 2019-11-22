@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Rotina;
 use app\models\RotinaSearch;
+use yii\data\ActiveDataProvider;
+use yii\debug\models\timeline\DataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

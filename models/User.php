@@ -2,9 +2,7 @@
 
 namespace app\models;
 
-use app\models\DBUser as DBUser;
-
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     public $id;
     public $nome;
@@ -18,38 +16,37 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $authKey;
     public $accessToken;
 
-//    private static $users = [
-//        '100' => [
-//            'id' => '100',
-//            'username' => 'admin',
-//            'password' => 'admin',
-//            'authKey' => 'test100key',
-//            'accessToken' => '100-token',
-//        ],
-//        '101' => [
-//            'id' => '101',
-//            'username' => 'demo',
-//            'password' => 'demo',
-//            'authKey' => 'test101key',
-//            'accessToken' => '101-token',
-//        ],
-//    ];
+    public static function tableName(){
+        return 'user';
+    }
 
-
+    public function rules()
+    {
+        return [
+            [['nome', 'senha', 'telefone', 'email'], 'required'],
+            [['tipo'], 'integer'],
+            [['nome'], 'string', 'max' => 120],
+            [['senha'], 'string', 'max' => 50],
+            [['telefone'], 'string', 'max' => 20],
+            [['email'], 'string', 'max' => 100],
+            [['email'], 'unique'],
+        ];
+    }
     /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)
     {
-        //return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
-    
-        $user = DBUser::find($id)->one();
-        
+        $user = User::find()->where(['id' => $id])->one();
+
+//        $user = self::find()->where(['id' => $id])->one();
+//
         if($user){
             return new static($user);
         }
         return null;
     }
+
 
     /**
      * {@inheritdoc}
@@ -61,7 +58,6 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 //                return new static($user);
 //            }
 //        }
-
         return null;
     }
 
@@ -78,7 +74,8 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 //                return new static($user);
 //            }
 //        }
-        $user = DBUser::find()->where(['nome' => $username])->one();
+        $user = User::find()->where(['nome' => $username])->one();
+
         
         if($user){
             return new static ($user);
@@ -99,8 +96,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return null;
-        //$this->authKey;
+        return $this->authKey;
     }
 
     /**
@@ -108,8 +104,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return null;
-        //$this->authKey === $authKey;
+        return $this->authKey === $authKey;
     }
 
     /**

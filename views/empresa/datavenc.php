@@ -9,6 +9,9 @@ use kartik\grid\GridView;
 
 $this->title = 'Empresas';
 $this->params['breadcrumbs'][] = $this->title;
+$data = date("d-m-Y");
+echo $data;
+
 ?>
 <div class="empresa-index box box-primary">
     <div class="box-header with-border">
@@ -48,9 +51,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'cidade',
                 // 'cep',
                 // 'uf',
+                //'format' => ['date','php:d/m/Y'],
                 // 'data_abertura',
                  [ 'attribute' => 'data_procuracao',
-                    'format' => ['date','php:d/m/Y']
+                     'value' => function($model){
+                        if(strtotime($model->data_procuracao) > strtotime(date("Y-m-d"))){
+                            return "$model->data_procuracao";
+//                            $result = $model->data_procuracao->format('Y-m-d H:i:s');
+//                            return "$result";
+                        }else{
+                            return "Expirou!";
+                        }
+                     }
                  ],
                  ['attribute' => 'data_certificado',
                     'format' => ['date', 'php:d/m/Y'],

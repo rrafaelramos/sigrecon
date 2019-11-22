@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 
@@ -9,7 +10,9 @@ use kartik\grid\GridView;
 
 $this->title = 'Empresas';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
+
 <div class="empresa-index box box-primary">
     <div class="box-header with-border">
         <?= Html::a('Cadastrar Empresa', ['create'], ['class' => 'btn btn-success btn-flat']) ?>

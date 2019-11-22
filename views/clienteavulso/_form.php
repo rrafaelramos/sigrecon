@@ -1,6 +1,5 @@
 <?php
 
-use app\models\DBUser;
 use app\models\Rotina;
 use yii\bootstrap\Dropdown;
 use yii\helpers\Html;

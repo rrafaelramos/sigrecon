@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'usuario_fk')->dropDownList(ArrayHelper::map(DBUser::find()->where(['nome' => yii::$app->session])
+    <?= $form->field($model, 'usuario_fk')->dropDownList(ArrayHelper::map(User::find()->where(['id' => yii::$app->user->id])
         ->all(), 'id','nome'));?>
 
     <?= $form->field($model, 'quantidade')->textInput() ?>

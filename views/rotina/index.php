@@ -25,7 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 //'id',
                 'nome',
-                'repeticao',
+                ['attribute' => 'repeticao',
+                    'value' => function($model){
+                        if($model->repeticao == 1){
+                            return 'Todo mês';
+                        }elseif ($model->repeticao == 2){
+                            return 'À cada Trimestre';
+                        }elseif ($model->repeticao == 3){
+                            return 'À cada semestre';
+                        }elseif($model->repeticao == 4){
+                            return 'Anualmente';
+                        }
+                    }],
                 'doc_entrega',
                 'doc_busca',
                 ['attribute' => 'data_entrega',
