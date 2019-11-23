@@ -182,15 +182,22 @@ use kartik\icons\Icon;
                 </div>
                 <div class="col-sm-2">
                     <?= $form->field($model, 'telefone_socio')->widget(\yii\widgets\MaskedInput::className(),[
-                        'mask' => '(99) 99999-9999',
+                        'mask' => '(99) 9 9999-9999',
                         'clientOptions' => ['removeMaskOnSubmit' => true]
                     ]) ?>
                 </div>
             </div>
         </div>
         <div class="pull-right">
-            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat']) ?>
             <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
+            <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger btn-flat',
+                'data' => [
+                    'confirm' => 'Deseja realmente apagar?',
+                    'method' => 'post',
+                ],
+            ]) ?>
         </div>
     </div>
 </div>

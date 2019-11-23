@@ -124,8 +124,12 @@ use yii\helpers\ArrayHelper;
                 </div>
             </div>
             <div class="pull-right">
-                <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat']) ?>
                 <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
+                <?= Html::a('Apagar',['delete', 'id' => $model->id], ['class' => 'btn btn-danger btn-flat', 'data' => [
+                    'confirm' => 'Deseja realmente apagar?',
+                    'method' => 'post',
+                ],]) ?>
             </div>
         </div>
     </div>

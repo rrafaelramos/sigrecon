@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Rotina;
 use Yii;
 use app\models\Clienteavulso;
 use app\models\ClienteavulsoSearch;

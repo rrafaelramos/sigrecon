@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div>
             <div class="pull-right">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning']) ?>
+                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
                 <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
                 <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger btn-flat',

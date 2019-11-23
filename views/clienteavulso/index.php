@@ -1,10 +1,7 @@
 <?php
 
 use app\models\Rotina;
-use app\models\RotinaSearch;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-//use yii\grid\GridView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -13,10 +10,6 @@ use kartik\grid\GridView;
 
 $this->title = 'Clientes';
 $this->params['breadcrumbs'][] = $this->title;
-
-$aux = new RotinaSearch();
-
-
 
 ?>
 <div class="clienteavulso-index box box-primary">
@@ -37,22 +30,29 @@ $aux = new RotinaSearch();
                 ['class' => 'yii\grid\SerialColumn'],
 
                 //'id',
+                'nome',
                 ['attribute' => 'cpf',
                     'format' => 'html',
                     'value' => function($model) {
                         return preg_replace('/^(\d{3})(\d{3})(\d{3})(\d{2})$/', '${1}.${2}.${3}-${4}', $model->cpf);
                     },
                 ],
-                'nome',
                 ['attribute' => 'telefone',
                     'format' => 'html',
                     'value' => function($model) {
                         return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->telefone);
                     },
                 ],
-//                ['attribute' => 'rotina',
-//                    'value' => $userQuery = (new Query())->select('nome')->from('rotina')->where($model->rotina == 'id')
-//                ],
+                ['attribute' => 'rotina',
+                    'value' => function($model){
+                        //retorna todos as rotinas cadastradas para $rotina
+                        $rotina = Rotina::find()->all();
+                        foreach ($rotina as $a){
+                            if($a->id == $model->rotina){
+                                return "$a->nome";
+                            }
+                        }
+                    }],
                 //'numero',
                 // 'rua',
                 // 'bairro',

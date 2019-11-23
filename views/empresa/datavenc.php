@@ -57,8 +57,6 @@ echo $data;
                      'value' => function($model){
                         if(strtotime($model->data_procuracao) > strtotime(date("Y-m-d"))){
                             return "$model->data_procuracao";
-//                            $result = $model->data_procuracao->format('Y-m-d H:i:s');
-//                            return "$result";
                         }else{
                             return "Expirou!";
                         }
