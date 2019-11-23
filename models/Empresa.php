@@ -3,9 +3,11 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
 use yiibr\brvalidator\CpfValidator;
 use yiibr\brvalidator\CnpjValidator;
 use yiibr\brvalidator\CeiValidator;
+//use app\components\validators\DataValida;
 
 /**
  * This is the model class for table "empresa".
@@ -59,9 +61,12 @@ class Empresa extends \yii\db\ActiveRecord
             [['cnpj', 'razao_social', 'rotina', 'cpf_socio', 'responsavel', 'telefone_socio'], 'required'],
             [['rotina', 'usuario_fk'], 'integer'],
             [['data_abertura', 'data_procuracao', 'data_certificado', 'datanascimento_socio'], 'safe'],
+            [['data_abertura'], 'validarData'],
+
             //Compara se a data da procuração é maior do que a de abertura, em caso positivo permite o cadastro!
             ['data_procuracao', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
             ['data_certificado', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
+
             [['numero','cnpj'], 'string',],
             [['razao_social', 'nome_fantasia'], 'string', 'max' => 200],
             [['email'], 'email'],
@@ -73,11 +78,19 @@ class Empresa extends \yii\db\ActiveRecord
             [['cpf_socio', 'rg'], 'string',],
             [['titulo'], 'string', 'max' => 12],
             [['cnpj'], 'unique'],
-            [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => DBUser::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
+            [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
             [['cnpj'], CnpjValidator::className()],
             [['cpf_socio'], CpfValidator::className()]
         ];
 
+    }
+    public function validarData($attribute, $params, $validator)
+    {
+        $data = date("Y/m/d");
+        if (strtotime($this->$attribute) > strtotime($data)) {
+            $formatar = date("d/m/Y");
+            $this->addError($attribute, 'A data deve ser Inferior ou igual a: '.$formatar);
+        }
     }
 
     /**
@@ -120,6 +133,6 @@ class Empresa extends \yii\db\ActiveRecord
      */
     public function getUsuarioFk()
     {
-        return $this->hasOne(DBUser::className(), ['id' => 'usuario_fk']);
+        return $this->hasOne(User::className(), ['id' => 'usuario_fk']);
     }
 }
