@@ -34,11 +34,14 @@ class Rotina extends \yii\db\ActiveRecord
     {
         return [
             [['nome'],'unique'],
+            [['nome'], 'required'],
             [['repeticao'], 'required'],
-            [['repeticao'], 'integer'],
             [['data_entrega', 'data_aviso'], 'safe'],
             [['nome', 'doc_entrega', 'doc_busca'], 'string', 'max' => 200],
             [['informacao', 'msg_aviso'], 'string', 'max' => 500],
+
+            //Compara se a data da procuração é maior do que a de abertura, em caso positivo permite o cadastro!
+            ['data_entrega', 'compare', 'compareAttribute' => 'data_aviso', 'operator' => '>=', 'message' => 'Data de Entrega deve ser posterior a Data de aviso!' ],
         ];
     }
 
@@ -49,8 +52,8 @@ class Rotina extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'Código',
-            'nome' => 'Nome',
-            'repeticao' => 'Repetição',
+            'nome' => 'Nome da Rotina',
+            'repeticao' => 'Repetição/Período',
             'doc_entrega' => 'Doc. à ser Entregue',
             'doc_busca' => 'Doc. à Receber',
             'data_entrega' => 'Data de Entrega',
