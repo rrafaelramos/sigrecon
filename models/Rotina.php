@@ -40,7 +40,7 @@ class Rotina extends \yii\db\ActiveRecord
             [['nome', 'doc_entrega', 'doc_busca'], 'string', 'max' => 200],
             [['informacao', 'msg_aviso'], 'string', 'max' => 500],
 
-            //Compara se a data da procuração é maior do que a de abertura, em caso positivo permite o cadastro!
+            //Compara se a data da entrega é maior do que a de abertura, em caso positivo permite o cadastro!
             ['data_entrega', 'compare', 'compareAttribute' => 'data_aviso', 'operator' => '>=', 'message' => 'Data de Entrega deve ser posterior a Data de aviso!' ],
         ];
     }

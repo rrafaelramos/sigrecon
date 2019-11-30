@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Rotina;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\icons\Icon;
@@ -30,6 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
         </div>
+        <?php
+            //Busca todas as rotinas cadastradas e guarda para $rotina,
+            $rotina = Rotina::find()->all();
+            foreach ($rotina as $r){
+                if($model->rotina == $r->id){
+                    $rotina = $r->nome;
+                }
+            }
+        ?>
     </div>
 
     <div class="panel-body">
@@ -269,7 +279,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                     [
                                         'label' => 'Rotina',
-                                        'value' => $model->rotina,
+                                        'value' => $rotina,
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
@@ -292,6 +302,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
                 <div class="box-body table-responsive">
+
                     <?= DetailView::widget([
                         'model' => $model,
                         'condensed' => true,

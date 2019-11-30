@@ -66,6 +66,8 @@ class Empresa extends \yii\db\ActiveRecord
             //Compara se a data da procuração é maior do que a de abertura, em caso positivo permite o cadastro!
             ['data_procuracao', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
             ['data_certificado', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
+            [['datanascimento_socio'], 'validarIdade'],
+
 
             [['numero','cnpj'], 'string',],
             [['razao_social', 'nome_fantasia'], 'string', 'max' => 200],
@@ -87,9 +89,43 @@ class Empresa extends \yii\db\ActiveRecord
     public function validarData($attribute, $params, $validator)
     {
         $data = date("Y/m/d");
+
         if (strtotime($this->$attribute) > strtotime($data)) {
             $formatar = date("d/m/Y");
             $this->addError($attribute, 'A data deve ser Inferior ou igual a: '.$formatar);
+        }
+    }
+
+    //Validar dta valida a idade do sócio;
+    public function validarIdade($attribute, $params, $validator)
+    {
+        $data = date("Y/m/d");
+        $guardadata = explode('/',$data);
+        $ano = $guardadata[0];
+        $mes = $guardadata[1];
+        $dia = $guardadata[2];
+        $ano = intval($ano);
+        $mes = intval($mes);
+        $dia = intval($dia);
+
+        $dataform = explode('-',$this->datanascimento_socio);
+        $anoform = $dataform[0];
+        $mesform = $dataform[1];
+        $diaform = $dataform[2];
+        $anoform = intval($anoform);
+        $mesform = intval($mesform);
+        $diaform = intval($diaform);
+
+        $idadeano = ($ano-$anoform);
+        $idademes = ($mes-$mesform);
+        $idadedia = ($dia-$diaform);
+
+        if ($idadeano<18) {
+            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade');
+        }elseif($idadeano==18 && $mes<$mesform){
+            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade'.$mesform);
+        }elseif ($idadeano==18 && $idademes==0 && $dia<$diaform){
+            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade'.$diaform);
         }
     }
 
