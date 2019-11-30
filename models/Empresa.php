@@ -66,7 +66,7 @@ class Empresa extends \yii\db\ActiveRecord
             //Compara se a data da procuração é maior do que a de abertura, em caso positivo permite o cadastro!
             ['data_procuracao', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
             ['data_certificado', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
-            [['datanascimento_socio'], 'validarIdade'],
+            [['datanascimento_socio'], 'validarIdade' ],
 
 
             [['numero','cnpj'], 'string',],
