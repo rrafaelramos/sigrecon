@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Empresa;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 
@@ -7,11 +8,8 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Empresas';
+$this->title = 'Procurações e Certificados';
 $this->params['breadcrumbs'][] = $this->title;
-$data = date("d-m-Y");
-echo $data;
-
 ?>
 <div class="empresa-index box box-primary">
     <div class="box-header with-border">
@@ -20,13 +18,17 @@ echo $data;
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'hover' => 'true',
+            'resizableColumns'=>'true',
+            'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-
                 //'id',
 //                ['attribute' => 'cnpj',
 //                    'format' => 'html',
@@ -55,16 +57,34 @@ echo $data;
                 // 'data_abertura',
                  [ 'attribute' => 'data_procuracao',
                      'value' => function($model){
+                         date_default_timezone_set('America/Sao_Paulo');
                         if(strtotime($model->data_procuracao) > strtotime(date("Y-m-d"))){
-                            return "$model->data_procuracao";
+                            //retorna a data do model, e transforma em um array
+                            $dataprocuracao = explode('-',$model->data_procuracao);
+                            $dia = $dataprocuracao[2];
+                            $mes = $dataprocuracao[1];
+                            $ano = $dataprocuracao[0];
+                            return "$dia/$mes/$ano";
                         }else{
                             return "Expirou!";
                         }
                      }
                  ],
-                 ['attribute' => 'data_certificado',
-                    'format' => ['date', 'php:d/m/Y'],
-                 ],
+                ['attribute' => 'data_certificado',
+                    'value' => function($model){
+                        if(strtotime($model->data_certificado) > strtotime(date("Y-m-d"))){
+                            date_default_timezone_set('America/Sao_Paulo');
+                            $datacertificado = explode('-',$model->data_certificado);
+                            $diac = $datacertificado[2];
+                            $mesc = $datacertificado[1];
+                            $anoc = $datacertificado[0];
+                            return "$diac/$mesc/$anoc";
+                        }else{
+                            return 'Expirou!';
+                        }
+                    }
+
+                ],
                 // 'rotina',
                 'responsavel',
                 // 'cpf_socio',

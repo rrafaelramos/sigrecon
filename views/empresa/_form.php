@@ -13,7 +13,10 @@ use kartik\icons\Icon;
 ?>
 
 <div class="empresa-form box box-primary">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php
+        date_default_timezone_set('America/Sao_Paulo');
+        $form = ActiveForm::begin();
+    ?>
     <div class="box-body table-responsive">
         <div class="panel panel-default">
             <div class="panel-heading">

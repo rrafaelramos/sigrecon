@@ -39,7 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     $rotina = $r->nome;
                 }
             }
-        ?>
+
+        date_default_timezone_set('America/Sao_Paulo');
+         ?>
     </div>
 
     <div class="panel-body">

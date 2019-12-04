@@ -99,6 +99,7 @@ class Empresa extends \yii\db\ActiveRecord
     //Validar dta valida a idade do sócio;
     public function validarIdade($attribute, $params, $validator)
     {
+        date_default_timezone_set('America/Sao_Paulo');
         $data = date("Y/m/d");
         $guardadata = explode('/',$data);
         $ano = $guardadata[0];
@@ -121,11 +122,11 @@ class Empresa extends \yii\db\ActiveRecord
         $idadedia = ($dia-$diaform);
 
         if ($idadeano<18) {
-            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade');
+            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade!');
         }elseif($idadeano==18 && $mes<$mesform){
-            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade'.$mesform);
+            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade!');
         }elseif ($idadeano==18 && $idademes==0 && $dia<$diaform){
-            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade'.$diaform);
+            $this->addError($attribute, 'O Sócio não pode ser Menor de Idade!');
         }
     }
 
