@@ -31,13 +31,13 @@ $fieldOptions2 = [
 
         <?= $form
             ->field($model, 'username', $fieldOptions1)
-            ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+            ->label('Usuário')
+            ->textInput(['placeholder' => $model->getAttributeLabel('Usuário')]) ?>
 
         <?= $form
             ->field($model, 'password', $fieldOptions2)
-            ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+            ->label("Senha")
+            ->passwordInput(['placeholder' => $model->getAttributeLabel('Senha')]) ?>
 
         <div class="row">
             <div class="col-xs-8">
