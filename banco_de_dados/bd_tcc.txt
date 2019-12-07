@@ -4,8 +4,8 @@ use bd_tcc;
 
 CREATE TABLE user(
 	id int auto_increment,
-	nome varchar(120) not null,
-	senha varchar(50) not null,
+	username varchar(120) not null,
+	password varchar(50) not null,
 	telefone varchar(20) not null,
 	email varchar(100) not null,
 	tipo int,
