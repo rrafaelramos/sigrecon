@@ -11,6 +11,21 @@ $this->title = $model->descricao;
 $this->params['breadcrumbs'][] = ['label' => 'Serviços', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php
+
+    function formatar($model){
+        $formatter = Yii::$app->formatter;
+
+        $formatado = $formatter->asCurrency($model);
+
+        //$remove = array("pt-br");
+
+        $dinheiro = str_replace("pt-br", "", $formatado);
+        return $dinheiro;
+    }
+?>
+
 <div class="col-sm-12">
     <div class="col-sm-offset-3">
         <div class="clienteavulso-form col-sm-7">
@@ -59,14 +74,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'columns' => [
                                                 [
                                                     'attribute' => 'valor',
-                                                    'value' => $model->valor,
+                                                    'value' => formatar($model->valor),
                                                     'labelColOptions' => ['style' => 'width:17%'],
                                                     'valueColOptions' => ['style' => 'width:33%'],
                                                 ],
                                                 [
                                                     'attribute' => 'valor_minimo',
                                                     'label' => 'Mínimo',
-                                                    'value' => $model->valor_minimo,
+                                                    'value' => formatar($model->valor_minimo),
                                                     'labelColOptions' => ['style' => 'width:17%'],
                                                     'valueColOptions' => ['style' => 'width:33%'],
                                                 ],
