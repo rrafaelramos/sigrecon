@@ -23,7 +23,8 @@
         "kartik-v/yii2-detail-view": "dev-master",
         "kartik-v/yii2-datecontrol": "dev-master",
         "kartik-v/yii2-widget-datepicker": "dev-master",
-        "yiibr/yii2-br-validator": "*"
+        "yiibr/yii2-br-validator": "*",
+        "kartik-v/yii2-money": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

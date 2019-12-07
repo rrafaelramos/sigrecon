@@ -1,5 +1,6 @@
 <?php
 
+use kartik\money\MaskMoney;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -21,8 +22,25 @@ use yii\widgets\ActiveForm;
                         <div class="panel-body">
                             <div>
                                 <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
-                                <?= $form->field($model, 'valor')->textInput() ?>
-                                <?= $form->field($model, 'valor_minimo')->textInput() ?>
+
+                                <?= $form->field($model, 'valor')->widget(MaskMoney::classname(), [
+                                    'pluginOptions' => [
+                                        'prefix' => 'R$ ',
+                                        'suffix' => '',
+                                        'allowNegative' => false
+                                    ]
+                                ]);
+                                ?>
+
+                                <?= $form->field($model, 'valor_minimo')->widget(MaskMoney::classname(), [
+                                    'pluginOptions' => [
+                                        'prefix' => 'R$ ',
+                                        'suffix' => '',
+                                        'allowNegative' => false
+                                    ]
+                                ]);
+                                ?>
+
                             </div>
                             <div class="pull-right">
                                 <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']); ?>

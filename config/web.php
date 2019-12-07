@@ -4,6 +4,7 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 use kartik\datecontrol\Module;
+use kartik\money\MaskMoney;
 
 $config = [
     'id' => 'basic',
@@ -18,8 +19,9 @@ $config = [
         'formatter' => [
             'dateFormat' => 'dd/mm/yyyy',
             'decimalSeparator' => ',',
-            'thousandSeparator' => ' ',
+            'thousandSeparator' => '.',
             'currencyCode' => 'pt-br',
+            'class' => 'yii\i18n\formatter',
         ],
     //'components' => [
         /*'view' => [
