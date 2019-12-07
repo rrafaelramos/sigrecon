@@ -1,5 +1,10 @@
 <?php
+
+use app\models\Empresa;
+use app\models\Rotina;
+//use yii\db\mysql\QueryBuilder;
 use yii\helpers\Html;
+use yii\db\QueryBuilder;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -26,7 +31,7 @@ use yii\helpers\Html;
                         <span class="label label-success">4</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 4 messages</li>
+                        <li class="header">You have 3 messages</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
@@ -101,13 +106,76 @@ use yii\helpers\Html;
                         <li class="footer"><a href="#">See All Messages</a></li>
                     </ul>
                 </li>
+                <?php
+                    function mensal(){
+                        date_default_timezone_set('America/Sao_Paulo');
+                        $data = date('Y-m-d');
+
+                        $rotinas = Rotina::find()->all();
+                        $empresas = Empresa::find()->all();
+
+                        $numeroempresa = count($empresas);
+                        $numerorotina = count($rotinas);
+
+                        //cria um array para ir setando as empresas que se encaixam na rotina mensal
+                        $arrayempresa = array();
+
+                        //cria um array para ir setando as rotinas que se encaixam na rotina mensal
+                        $arrayrotina = array();
+
+                        $cont=0;
+                        $cont2=0;
+                        //pegar o nome da rotina
+                        for($i=0; $i<$numerorotina; $i++){
+                            if(strtotime($rotinas[$i]->data_aviso) == strtotime($data)){
+                                $arrayrotina[$cont] = $rotinas[$i];
+                                $cont++;
+                            }
+                        }
+
+                        for($i=0; $i<$numeroempresa; $i++){
+                            for($j=0; $j<$numerorotina; $j++) {
+                                //verifica todas as empresas que possuem a rotina mensal;
+                                if (($empresas[$i]->rotina == $rotinas[$j]->id) && $rotinas[$j]->repeticao == 1) {
+                                    $arrayempresa[$cont2] = $empresas[$i];
+                                    $cont2++;
+                                }
+                            }
+                        }
+                        return $cont;
+                    }
+
+//                    // teste inserção automática
+//
+//                        date_default_timezone_set('America/Sao_Paulo');
+//                        $data = date('Y-m-d');
+//                        $rotinas = Rotina::find()->all();
+//                        $numerorotina = count($rotinas);
+//                        $cont = 0;
+//                        for($i=0; $i<$numerorotina; $i++){
+//                            if(strtotime($rotinas[$i]->data_aviso) == strtotime($data)){
+//                                $arrayrotina[$cont] = $rotinas[$i];
+//                                $cont++;
+//                            }
+//                        }
+
+                ?>
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
                         <span class="label label-warning">10</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 10 notifications</li>
+                        <li class="header">
+                            <?php
+                                $verifica = mensal();
+                                echo "Notificações: $verifica";
+////                            if($command){
+////                                return 'deu certo';
+//                            }
+                            ?>
+                        </li>
+
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">

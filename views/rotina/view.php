@@ -152,7 +152,15 @@ use yii\widgets\DetailView;
                                         $mes = 'Dezembro';
                                         break;
                                 }
-                                return "Todo dia $dia de $mes";
+                                if($model->repeticao == '1') {
+                                    return "Todo dia: $dia de cada mês a vencer";
+                                }elseif($model->repeticao == '2'){
+                                    return "Todo dia $dia à cada 3 Meses";
+                                }elseif($model->repeticao == '3'){
+                                    return "Todo dia $dia à cada 6 Meses";
+                                }else{
+                                    return "Todo dia $dia de $mes";
+                                }
                             }
                             //'format' => ['date', 'php:d/m/Y'],
                         ],

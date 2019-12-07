@@ -4,17 +4,14 @@ namespace app\models;
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    public $id;
-    public $nome;
-    public $username;
-    public $senha;
-    public $telefone;
-    public $email;
-    public $tipo;
-    public $password;
-    public $usuario_fk;
-    public $authKey;
-    public $accessToken;
+//    public $id;
+//    public $nome;
+//    public $senha;
+//    public $telefone;
+//    public $email;
+//    public $tipo;
+//    public $authKey;
+//    public $accessToken;
 
     public static function tableName(){
         return 'user';
@@ -37,9 +34,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        $user = User::find()->where(['id' => $id])->one();
+        //$user = User::find()->where(['id' => $id])->one();
 
-//        $user = self::find()->where(['id' => $id])->one();
+       $user = self::find()->where(['id' => $id])->one();
 //
         if($user){
             return new static($user);
@@ -74,7 +71,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 //                return new static($user);
 //            }
 //        }
-        $user = User::find()->where(['nome' => $username])->one();
+        $user = User::find()->where(['nome' => $username]);
 
         
         if($user){
