@@ -65,8 +65,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             $mes = $dataprocuracao[1];
                             $ano = $dataprocuracao[0];
                             return "$dia/$mes/$ano";
+                        }elseif(strtotime($model->data_procuracao) == strtotime(date("Y-m-d"))){
+                            return "Hoje!";
                         }else{
-                            return "Expirou!";
+                            return 'Expirou!';
                         }
                      }
                  ],
@@ -79,8 +81,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             $mesc = $datacertificado[1];
                             $anoc = $datacertificado[0];
                             return "$diac/$mesc/$anoc";
+                        }elseif(strtotime($model->data_certificado) == strtotime(date("Y-m-d"))){
+                            return 'Hoje!';
                         }else{
-                            return 'Expirou!';
+                            return 'Expirou';
                         }
                     }
 

@@ -2,17 +2,93 @@
 
 use app\models\Empresa;
 use app\models\Rotina;
-//use yii\db\mysql\QueryBuilder;
 use yii\helpers\Html;
-use yii\db\QueryBuilder;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
 
+<?php
+date_default_timezone_set('America/Sao_Paulo');
+
+function mensal(){
+    $data = date('Y-m-d');
+    $rotinas = Rotina::find()->all();
+    $empresas = Empresa::find()->all();
+    $numeroempresa = count($empresas);
+    $numerorotina = count($rotinas);
+    //cria um array para ir setando as empresas que se encaixam na rotina mensal
+    $arrayempresa = array();
+    //cria um array para ir setando as rotinas que se encaixam na rotina mensal
+    $arrayrotina = array();
+    $cont=0;
+    $cont2=0;
+    //pegar o nome da rotina
+    for($i=0; $i<$numerorotina; $i++){
+        if(strtotime($rotinas[$i]->data_aviso) == strtotime($data)){
+            $arrayrotina[$cont] = $rotinas[$i];
+            $cont++;
+        }
+    }
+    for($i=0; $i<$numeroempresa; $i++){
+        for($j=0; $j<$numerorotina; $j++) {
+            //verifica todas as empresas que possuem a rotina mensal;
+            if (($empresas[$i]->rotina == $rotinas[$j]->id) && $rotinas[$j]->repeticao == 1) {
+                $arrayempresa[$cont2] = $empresas[$i];
+                $cont2++;
+            }
+        }
+    }
+    return $cont;
+}
+
+// retorna o número de certificados que irão expirar no dia!
+function certificado(){
+    $data = date('Y-m-d');
+    $empresas = Empresa::find()->all();
+    $arrayempresa = array();
+    $cont = 0;
+    foreach ($empresas as $emp){
+        if($emp->data_certificado == $data){
+            $arrayempresa[$cont] = $emp->id;
+            $cont++;
+        }
+    }
+    if($cont>1){
+        return "   $cont Certificados expiram hoje!";
+    }elseif ($cont==1){
+        return "   $cont certificado expira hoje!";
+    }else{
+        return 0;
+    }
+}
+//retorna o número de procuracao que irão expirar no dia!
+function procuracao(){
+    $data = date('Y-m-d');
+    $empresas = Empresa::find()->all();
+    $arrayempresa = array();
+    $cont = 0;
+    foreach ($empresas as $emp){
+        if($emp->data_procuracao == $data){
+            $arrayempresa[$cont] = $emp->id;
+            $cont++;
+        }
+    }
+    if($cont>1){
+        return "   $cont procurações expiram hoje!";
+    }elseif ($cont==1){
+        return "   $cont procuração expira hoje!";
+    }else{
+        return 0;
+    }
+}
+?>
+
+
 <header class="main-header">
 
     <?= Html::a('<span class="logo-mini"><b>SG</b>C</span><span class="logo-lg"><b>SIGRE</b>Con</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -106,73 +182,28 @@ use yii\db\QueryBuilder;
                         <li class="footer"><a href="#">See All Messages</a></li>
                     </ul>
                 </li>
-                <?php
-                    function mensal(){
-                        date_default_timezone_set('America/Sao_Paulo');
-                        $data = date('Y-m-d');
 
-                        $rotinas = Rotina::find()->all();
-                        $empresas = Empresa::find()->all();
-
-                        $numeroempresa = count($empresas);
-                        $numerorotina = count($rotinas);
-
-                        //cria um array para ir setando as empresas que se encaixam na rotina mensal
-                        $arrayempresa = array();
-
-                        //cria um array para ir setando as rotinas que se encaixam na rotina mensal
-                        $arrayrotina = array();
-
-                        $cont=0;
-                        $cont2=0;
-                        //pegar o nome da rotina
-                        for($i=0; $i<$numerorotina; $i++){
-                            if(strtotime($rotinas[$i]->data_aviso) == strtotime($data)){
-                                $arrayrotina[$cont] = $rotinas[$i];
-                                $cont++;
-                            }
-                        }
-
-                        for($i=0; $i<$numeroempresa; $i++){
-                            for($j=0; $j<$numerorotina; $j++) {
-                                //verifica todas as empresas que possuem a rotina mensal;
-                                if (($empresas[$i]->rotina == $rotinas[$j]->id) && $rotinas[$j]->repeticao == 1) {
-                                    $arrayempresa[$cont2] = $empresas[$i];
-                                    $cont2++;
-                                }
-                            }
-                        }
-                        return $cont;
-                    }
-
-//                    // teste inserção automática
-//
-//                        date_default_timezone_set('America/Sao_Paulo');
-//                        $data = date('Y-m-d');
-//                        $rotinas = Rotina::find()->all();
-//                        $numerorotina = count($rotinas);
-//                        $cont = 0;
-//                        for($i=0; $i<$numerorotina; $i++){
-//                            if(strtotime($rotinas[$i]->data_aviso) == strtotime($data)){
-//                                $arrayrotina[$cont] = $rotinas[$i];
-//                                $cont++;
-//                            }
-//                        }
-
-                ?>
                 <li class="dropdown notifications-menu">
+
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">10</span>
+                        <span class="label label-warning">
+                            <?php
+                            if(certificado() || procuracao()){
+                                echo '!';
+                            }
+                            echo '';
+                            ?>
+                        </span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">
                             <?php
-                                $verifica = mensal();
-                                echo "Notificações: $verifica";
-////                            if($command){
-////                                return 'deu certo';
-//                            }
+                            $verifica = mensal();
+                            echo "Notificações: $verifica";
+                            ////                            if($command){
+                            ////                                return 'deu certo';
+                            //                            }
                             ?>
                         </li>
 
@@ -185,10 +216,20 @@ use yii\db\QueryBuilder;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-warning text-yellow"></i> Very long description here that may
-                                        not fit into the page and may cause design problems
-                                    </a>
+                                    <!--                                    <i class="fa fa-warning text-yellow"></i>-->
+                                    <!--                                    <i class="fa fa-warning "></i>-->
+                                    <?php
+                                    if(certificado()) {
+                                        echo Html::a(certificado(), ['/empresa/datavenc'], ['i class' => 'fa fa-warning text-yellow']);
+                                    }
+                                    ?>
+                                </li>
+                                <li>
+                                    <?php
+                                    if(procuracao()) {
+                                        echo Html::a(procuracao(), ['/empresa/datavenc'], ['i class' => 'fa fa-warning text-yellow']);
+                                    }
+                                    ?>
                                 </li>
                                 <li>
                                     <a href="#">
