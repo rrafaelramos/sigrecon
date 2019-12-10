@@ -41,7 +41,6 @@ function mensal(){
     }
     return $cont;
 }
-
 // retorna o número de certificados que irão expirar no dia!
 function certificado(){
     $data = date('Y-m-d');
@@ -184,16 +183,16 @@ function procuracao(){
                 </li>
 
                 <li class="dropdown notifications-menu">
-
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">
-                            <?php
-                            if(certificado() || procuracao()){
-                                echo '!';
-                            }
-                            echo '';
-                            ?>
+                        <!--                        //class warning para nova notificação-->
+                        <?php
+                        if(certificado() || procuracao()){
+                            echo '<span class="label label-warning">';
+                            echo '!';
+                        }
+                        echo '';
+                        ?>
                         </span>
                     </a>
                     <ul class="dropdown-menu">
@@ -336,49 +335,60 @@ function procuracao(){
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
 
-                <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- User image -->
-                        <li class="user-header">
-                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
-                                 alt="User Image"/>
+<!--                Se o usuário não estiver logado apresenta o botão login-->
+                <?php if (Yii::$app->user->isGuest){
+                    ?>
+                    <li class="dropdown user user-menu">
+                            <?= Html::a(' Login', ['site/login']) ?>
+                    </li>
+                <?php }else{  ?>
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                            <span class="hidden-xs"><?= Yii::$app->user->identity->nome?></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
+                                     alt="User Image"/>
 
-                            <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
-                            </p>
-                        </li>
-                        <!-- Menu Body -->
-                        <li class="user-body">
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Followers</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Sales</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Friends</a>
-                            </div>
-                        </li>
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            </div>
-                            <div class="pull-right">
-                                <?= Html::a(
-                                    'Sign out',
-                                    ['/site/logout'],
-                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
-                                ) ?>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                                <p>
+                                    <?= Yii::$app->user->identity->email;
+                                        date_default_timezone_set('America/Sao_Paulo');
+                                        $data = date('d/m/Y');
+                                    ?>
+                                    <small>Seja Bem Vindo!<br> <?php echo $data;?></small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <!--                        <li class="user-body">-->
+                            <!--                            <div class="col-xs-4 text-center">-->
+                            <!--                                <a href="#">Followers</a>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-xs-4 text-center">-->
+                            <!--                                <a href="#">Sales</a>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-xs-4 text-center">-->
+                            <!--                                <a href="#">Friends</a>-->
+                            <!--                            </div>-->
+                            <!--                        </li>-->
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <?= Html::a(
+                                        'Sair',
+                                        ['/site/logout'],
+                                        ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
+                                    ) ?>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                <?php }?>
 
                 <!-- User Account: style can be found in dropdown.less -->
                 <li>

@@ -20,6 +20,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
             [['tipo'], 'integer'],
             [['username', 'password', 'authKey'], 'string', 'max' => 30],
             [['email'], 'string', 'max' => 50],
+            [['nome'], 'string', 'max' => 200],
         ];
     }
 
@@ -32,6 +33,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
             'email' => 'Email',
             'tipo' => 'Tipo',
             'authKey' => 'Authkey',
+            'nome' =>'Nome;'
         ];
     }
 

@@ -16,6 +16,7 @@ CREATE TABLE user(
 create table usuario(
     id int AUTO_INCREMENT,
     username varchar(30),
+    nome varchar(200) not null,
     password varchar(30),
     email varchar(50),
 	tipo int,
