@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Clienteavulso;
 use app\models\Rotina;
 use yii\bootstrap\Dropdown;
 use yii\helpers\Html;
@@ -135,12 +136,5 @@ use yii\helpers\ArrayHelper;
     </div>
 </div>
 <?php ActiveForm::end(); ?>
-
-<?//= $form->field($model, 'usuario_fk')->dropDownList(ArrayHelper::map(DBUser::find()->where(['id' => Yii::$app->user->id])->all(), 'id','nome'));?>
-
-
-
-
-
 
 </div>

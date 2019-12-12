@@ -39,7 +39,7 @@ create TABLE clienteavulso(
 	rotina int,
 	datanascimento DATE,
 	usuario_fk int,
-	foreign key (usuario_fk) references user (id),
+	foreign key (usuario_fk) references usuario (id),
 	unique index (cpf),
 	primary key (id)
 );
@@ -112,4 +112,16 @@ create table rotina(
 	informacao varchar(500),
 	msg_aviso varchar(500),
 	primary key (id)
+);
+
+create table venda(
+	id int auto_increment,
+	data DATE not null,
+	cliente_fk int,
+	usuario_fk int,
+	servico_fk int not null,
+	quantidade int not null,
+	total float,
+	primary key (id),
+	foreign key (servico_fk) references servico (id)
 );

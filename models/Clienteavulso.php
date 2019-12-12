@@ -54,7 +54,7 @@ class Clienteavulso extends \yii\db\ActiveRecord
             [['uf'], 'string', 'max' => 2],
             [['complemento'], 'string', 'max' => 255],
             [['cpf'], 'unique'],
-            [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => DBUser::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
+            [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
             [['cpf'], CpfValidator::className()],
         ];
     }
@@ -87,6 +87,6 @@ class Clienteavulso extends \yii\db\ActiveRecord
      */
     public function getUsuarioFk()
     {
-        return $this->hasOne(User::className(), ['id' => 'usuario_fk']);
+        return $this->hasOne(Usuario::className(), ['id' => 'usuario_fk']);
     }
 }
