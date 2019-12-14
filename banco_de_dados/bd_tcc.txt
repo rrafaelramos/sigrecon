@@ -116,7 +116,7 @@ create table rotina(
 
 create table venda(
 	id int auto_increment,
-	data DATE not null,
+	data datetime not null,
 	cliente_fk int,
 	usuario_fk int,
 	servico_fk int not null,
@@ -124,4 +124,17 @@ create table venda(
 	total float,
 	primary key (id),
 	foreign key (servico_fk) references servico (id)
+);
+
+create table alertaservico(
+    id int auto_increment,
+    cliente_fk int,
+    data_entrega date,
+    servico_fk int,
+    quantidade int,
+    info text,
+    status_pagamento int not null,
+    status_servico int,
+    usuario_fk int,
+    primary key (id)
 );

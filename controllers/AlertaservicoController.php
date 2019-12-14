@@ -2,19 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\Servico;
-use app\models\Caixa;
 use Yii;
-use app\models\Venda;
-use app\models\VendaSearch;
+use app\models\Alertaservico;
+use app\models\AlertaservicoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * VendaController implements the CRUD actions for Venda model.
+ * AlertaservicoController implements the CRUD actions for Alertaservico model.
  */
-class VendaController extends Controller
+class AlertaservicoController extends Controller
 {
     /**
      * @inheritdoc
@@ -32,12 +30,12 @@ class VendaController extends Controller
     }
 
     /**
-     * Lists all Venda models.
+     * Lists all Alertaservico models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new VendaSearch();
+        $searchModel = new AlertaservicoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,7 +45,7 @@ class VendaController extends Controller
     }
 
     /**
-     * Displays a single Venda model.
+     * Displays a single Alertaservico model.
      * @param integer $id
      * @return mixed
      */
@@ -59,37 +57,16 @@ class VendaController extends Controller
     }
 
     /**
-     * Creates a new Venda model.
+     * Creates a new Alertaservico model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-
     public function actionCreate()
     {
-        date_default_timezone_set('America/Sao_Paulo');
-        $model = new Venda();
-        $model_caixa = new Caixa();
+        $model = new Alertaservico();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            $servico = Servico::find()->all();
-            foreach ($servico as $serv){
-                if($serv->id == $model->servico_fk){
-                    $model->total = ($model->quantidade *$serv->valor);
-                }
-            }
-            $model->usuario_fk = Yii::$app->user->identity->id;
-            $data = date('Y-m-d H:i:s');
-            $model->data = $data;
-            $model->save();
-
-
-            $model_caixa->data = $data;
-            $model_caixa->total = $model->total;
-
-            $model_caixa->save();
-
-            return $this->redirect(['update', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -98,27 +75,16 @@ class VendaController extends Controller
     }
 
     /**
-     * Updates an existing Venda model.
+     * Updates an existing Alertaservico model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
-
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            $servico = Servico::find()->all();
-            foreach ($servico as $serv){
-                if($serv->id == $model->servico_fk){
-                    $model->total = ($model->quantidade *$serv->valor);
-                }
-            }
-            $model->usuario_fk = Yii::$app->user->identity->id;
-            $model->save();
-
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -128,53 +94,28 @@ class VendaController extends Controller
     }
 
     /**
-     * Deletes an existing Venda model.
+     * Deletes an existing Alertaservico model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $venda = Venda::find()->all();
-        $caixa = Caixa::find()->all();
-        $data = 0;
-        $idc = 0;
-
-        foreach ($venda as $v){
-            if($v->id == $id){
-                $data = $v->data;
-            }
-        }
-        foreach ($caixa as $c){
-            if($c->data == $data){
-                $idc = $c->id;
-            }
-        }
-
-        $this->findCaixa($idc)->delete();
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Venda model based on its primary key value.
+     * Finds the Alertaservico model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Venda the loaded model
+     * @return Alertaservico the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Venda::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    protected function findCaixa($idc)
-    {
-        if (($model = Caixa::findOne($idc)) !== null) {
+        if (($model = Alertaservico::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
