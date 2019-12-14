@@ -66,6 +66,10 @@ class AlertaservicoController extends Controller
         $model = new Alertaservico();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $model->usuario_fk = Yii::$app->user->identity->id;
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

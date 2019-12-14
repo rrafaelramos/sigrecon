@@ -50,12 +50,19 @@ use yii\widgets\ActiveForm;
                         <div class="col-sm-4">
                             <?= $form->field($model, 'quantidade')->textInput(['type'=>'number']) ?>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <?= $form->field($model, 'status_pagamento')->dropDownList([
                                 '0' => 'Aguardando Pagamento',
                                 '1' => 'Pago',
                                 '2' => 'Pago no honorário',
                             ],['prompt' => 'Selecione'])->label('Pagamento') ?>
+                        </div>
+                        <div class="col-sm-2">
+                            <?= $form->field($model, 'status_servico')->dropDownList([
+                                '0' => 'Pendente',
+                                '1' => 'Pronto para entrega',
+                                '2' => 'Entregue',
+                            ],['prompt' => 'Selecione'])->label('Status') ?>
                         </div>
 
                         <div class="col-sm-8 col-sm-offset-2">

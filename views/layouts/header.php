@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Alertaservico;
 use app\models\Empresa;
 use app\models\Rotina;
 use yii\helpers\Html;
@@ -81,13 +82,31 @@ function procuracao(){
         return 0;
     }
 }
+// retorna o número de servicos pendentes
+function alertaServico(){
+    date_default_timezone_set('America/Sao_Paulo');
+    $data = date('Y-m-d');
+    $cont = 0;
+
+    $alerta = Alertaservico::find()->all();
+
+    foreach ($alerta as $a){
+        if(($a->status_servico == 0 || $a->status_servico == 1) && Yii::$app->user->identity->id == $a->usuario_fk){
+            $cont++;
+        }
+    }
+    if($cont>1) {
+        return " $cont serviços pendentes!";
+    }else{
+        return " $cont serviço pendente!";
+    }
+}
 ?>
 
 
 <header class="main-header">
 
     <?= Html::a('<span class="logo-mini"><b>SG</b>C</span><span class="logo-lg"><b>SIGRE</b>Con</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
-
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -204,9 +223,6 @@ function procuracao(){
                                 <?php
                                 $verifica = mensal();
                                 echo "Notificações: $verifica";
-                                ////                            if($command){
-                                ////                                return 'deu certo';
-                                //                            }
                                 ?>
                             </li>
 
@@ -231,6 +247,13 @@ function procuracao(){
                                         <?php
                                         if(procuracao()) {
                                             echo Html::a(procuracao(), ['/empresa/datavenc'], ['i class' => 'fa fa-warning text-yellow']);
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(alertaServico()) {
+                                            echo Html::a(alertaServico(), ['/alertaservico'], ['i class' => 'fa fa-warning text-yellow']);
                                         }
                                         ?>
                                     </li>
