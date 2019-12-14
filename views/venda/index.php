@@ -46,7 +46,7 @@ function servico($model){
 <div class="servico-index box box-primary">
     <div class="box-header with-border">
         <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btn-flat'])?>
-        <?= Html::a('Nova', ['create'], ['class' => 'btn btn-warning btn-flat'])?>
+        <?= Html::a('Nova Venda', ['create'], ['class' => 'btn btn-success btn-flat'])?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -81,7 +81,7 @@ function servico($model){
                     return servico($model);
                 }],
                 // 'quantidade',
-                // 'total',
+                 'total',
 
                 ['class' => 'yii\grid\ActionColumn'],
             ],
