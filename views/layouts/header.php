@@ -83,24 +83,44 @@ function procuracao(){
     }
 }
 // retorna o número de servicos pendentes
-function alertaServico(){
-    date_default_timezone_set('America/Sao_Paulo');
-    $data = date('Y-m-d');
+function servicoPendente(){
     $cont = 0;
 
     $alerta = Alertaservico::find()->all();
 
     foreach ($alerta as $a){
-        if(($a->status_servico == 0 || $a->status_servico == 1) && Yii::$app->user->identity->id == $a->usuario_fk){
+        if($a->status_servico == 0  && Yii::$app->user->identity->id == $a->usuario_fk){
             $cont++;
         }
     }
     if($cont>1) {
         return " $cont serviços pendentes!";
-    }else{
+    }elseif($cont == 1){
         return " $cont serviço pendente!";
+    }else{
+        return 0;
     }
 }
+
+function servicoPronto(){
+    $cont = 0;
+
+    $alerta = Alertaservico::find()->all();
+
+    foreach ($alerta as $a){
+        if($a->status_servico == 1  && Yii::$app->user->identity->id == $a->usuario_fk){
+            $cont++;
+        }
+    }
+    if($cont>1) {
+        return " $cont serviços prontos para entrega!";
+    }elseif($cont == 1){
+        return " $cont serviço pronto para entrega!";
+    }else{
+        return 0;
+    }
+}
+
 ?>
 
 
@@ -207,14 +227,15 @@ function alertaServico(){
 
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell-o"></i>
+
                             <!--                        //class warning para nova notificação-->
                             <?php
-                            if(certificado() || procuracao()){
-                                echo '<span class="label label-warning">';
-                                echo '!';
+                            if(certificado() || procuracao() || servicoPronto() || servicoPendente()){
+                                echo '<i class="fa fa-bell"></i>'.'<span class="label label-warning">';
+                                echo '+';
+                            }else{
+                                echo '<i class="fa fa-bell-o"></i>';
                             }
-                            echo '';
                             ?>
                             </span>
                         </a>
@@ -235,25 +256,30 @@ function alertaServico(){
                                         </a>
                                     </li>
                                     <li>
-                                        <!--                                    <i class="fa fa-warning text-yellow"></i>-->
-                                        <!--                                    <i class="fa fa-warning "></i>-->
+                                        <?php
+                                        if(servicoPronto()) {
+                                            echo '<a href="/sigrecon/web/?r=alertaservico"> <i class="fa fa-check-circle text-green"></i>'.servicoPronto().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
                                         <?php
                                         if(certificado()) {
-                                            echo Html::a(certificado(), ['/empresa/datavenc'], ['i class' => 'fa fa-warning text-yellow']);
+                                            echo '<a href="/sigrecon/web/?r=empresa/datavenc"> <i class="fa fa-warning text-yellow"></i>'.certificado().'</a>';
                                         }
                                         ?>
                                     </li>
                                     <li>
                                         <?php
                                         if(procuracao()) {
-                                            echo Html::a(procuracao(), ['/empresa/datavenc'], ['i class' => 'fa fa-warning text-yellow']);
+                                            echo '<a href="/sigrecon/web/?r=empresa/datavenc"> <i class="fa fa-warning text-yellow"></i>'.procuracao().'</a>';
                                         }
                                         ?>
                                     </li>
                                     <li>
                                         <?php
-                                        if(alertaServico()) {
-                                            echo Html::a(alertaServico(), ['/alertaservico'], ['i class' => 'fa fa-warning text-yellow']);
+                                        if(servicoPendente()) {
+                                            echo '<a href="/sigrecon/web/?r=alertaservico"> <i class="fa fa-warning text-yellow"></i>'.servicoPendente().'</a>';
                                         }
                                         ?>
                                     </li>
@@ -279,88 +305,88 @@ function alertaServico(){
                         </ul>
                     </li>
 
-                    <!-- Tasks: style can be found in dropdown.less -->
-                    <li class="dropdown tasks-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-flag-o"></i>
-                            <span class="label label-danger">9</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 9 tasks</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li><!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Design some buttons
-                                                <small class="pull-right">20%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">20% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                    <li><!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Create a nice theme
-                                                <small class="pull-right">40%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-green" style="width: 40%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">40% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                    <li><!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Some task I need to do
-                                                <small class="pull-right">60%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-red" style="width: 60%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">60% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                    <li><!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Make beautiful transitions
-                                                <small class="pull-right">80%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-yellow" style="width: 80%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">80% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">View all tasks</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--                    <li class="dropdown tasks-menu">-->
+                    <!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                    <!--                            <i class="fa fa-flag-o"></i>-->
+                    <!--                            <span class="label label-danger">9</span>-->
+                    <!--                        </a>-->
+                    <!--                        <ul class="dropdown-menu">-->
+                    <!--                            <li class="header">You have 9 tasks</li>-->
+                    <!--                            <li>-->
+                    <!--                                -->
+                    <!--                                <ul class="menu">-->
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <h3>-->
+                    <!--                                                Design some buttons-->
+                    <!--                                                <small class="pull-right">20%</small>-->
+                    <!--                                            </h3>-->
+                    <!--                                            <div class="progress xs">-->
+                    <!--                                                <div class="progress-bar progress-bar-aqua" style="width: 20%"-->
+                    <!--                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"-->
+                    <!--                                                     aria-valuemax="100">-->
+                    <!--                                                    <span class="sr-only">20% Complete</span>-->
+                    <!--                                                </div>-->
+                    <!--                                            </div>-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                    -->
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <h3>-->
+                    <!--                                                Create a nice theme-->
+                    <!--                                                <small class="pull-right">40%</small>-->
+                    <!--                                            </h3>-->
+                    <!--                                            <div class="progress xs">-->
+                    <!--                                                <div class="progress-bar progress-bar-green" style="width: 40%"-->
+                    <!--                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"-->
+                    <!--                                                     aria-valuemax="100">-->
+                    <!--                                                    <span class="sr-only">40% Complete</span>-->
+                    <!--                                                </div>-->
+                    <!--                                            </div>-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                -->
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <h3>-->
+                    <!--                                                Some task I need to do-->
+                    <!--                                                <small class="pull-right">60%</small>-->
+                    <!--                                            </h3>-->
+                    <!--                                            <div class="progress xs">-->
+                    <!--                                                <div class="progress-bar progress-bar-red" style="width: 60%"-->
+                    <!--                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"-->
+                    <!--                                                     aria-valuemax="100">-->
+                    <!--                                                    <span class="sr-only">60% Complete</span>-->
+                    <!--                                                </div>-->
+                    <!--                                            </div>-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                   -->
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <h3>-->
+                    <!--                                                Make beautiful transitions-->
+                    <!--                                                <small class="pull-right">80%</small>-->
+                    <!--                                            </h3>-->
+                    <!--                                            <div class="progress xs">-->
+                    <!--                                                <div class="progress-bar progress-bar-yellow" style="width: 80%"-->
+                    <!--                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"-->
+                    <!--                                                     aria-valuemax="100">-->
+                    <!--                                                    <span class="sr-only">80% Complete</span>-->
+                    <!--                                                </div>-->
+                    <!--                                            </div>-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                    -->
+                    <!--                                </ul>-->
+                    <!--                            </li>-->
+                    <!--                            <li class="footer">-->
+                    <!--                                <a href="#">View all tasks</a>-->
+                    <!--                            </li>-->
+                    <!--                        </ul>-->
+                    <!--                    </li>-->
+
                 <?php } ?>
                 <!-- User Account: style can be found in dropdown.less -->
 

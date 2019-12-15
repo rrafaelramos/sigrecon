@@ -192,15 +192,15 @@ use kartik\icons\Icon;
             </div>
         </div>
         <div class="pull-right">
-            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat']) ?>
             <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-            <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
+            <?php echo Html::a('Apagar', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-flat',
                 'data' => [
                     'confirm' => 'Deseja realmente apagar?',
                     'method' => 'post',
                 ],
             ]) ?>
+            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat']) ?>
         </div>
     </div>
 </div>

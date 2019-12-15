@@ -37,7 +37,18 @@ class Alertaservico extends \yii\db\ActiveRecord
             [['data_entrega'], 'safe'],
             [['info'], 'string'],
             [['status_pagamento'], 'required'],
+            [['data_entrega'], 'validarData'],
         ];
+    }
+
+    public function validarData($attribute, $params, $validator)
+    {
+        $data = date("Y/m/d");
+
+        if (strtotime($this->$attribute) < strtotime($data)) {
+            $formatar = date("d/m/Y");
+            $this->addError($attribute, 'A data deve ser maior ou igual a: '.$formatar);
+        }
     }
 
     /**

@@ -71,7 +71,7 @@ create TABLE empresa(
 	nome_mae_socio varchar(120),
 	telefone_socio varchar(20),
 	usuario_fk int,
-	foreign key (usuario_fk) references user(id),
+	foreign key (usuario_fk) references usuario(id),
 	unique index (cnpj),
 	primary key (id)
 );

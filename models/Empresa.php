@@ -80,7 +80,7 @@ class Empresa extends \yii\db\ActiveRecord
             [['cpf_socio', 'rg'], 'string',],
             [['titulo'], 'string', 'max' => 12],
             [['cnpj'], 'unique'],
-            [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
+            [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
             [['cnpj'], CnpjValidator::className()],
             [['cpf_socio'], CpfValidator::className()]
         ];
@@ -96,7 +96,7 @@ class Empresa extends \yii\db\ActiveRecord
         }
     }
 
-    //Validar dta valida a idade do sócio;
+    //Valida a idade do sócio;
     public function validarIdade($attribute, $params, $validator)
     {
         date_default_timezone_set('America/Sao_Paulo');

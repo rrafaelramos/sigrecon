@@ -4,7 +4,6 @@ use app\models\Clienteavulso;
 use app\models\Servico;
 use app\models\Usuario;
 use yii\helpers\Html;
-//use yii\grid\GridView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -83,7 +82,10 @@ function servico($model){
                 // 'quantidade',
                  'total',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => '\kartik\grid\ActionColumn',
+                    'template' => '{view}{delete}',
+                ],
             ],
         ]); ?>
     </div>

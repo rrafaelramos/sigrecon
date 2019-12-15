@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-
 <div class="venda-form col-sm-12">
     <div class="venda-form box box-primary">
         <?php $form = ActiveForm::begin(); ?>

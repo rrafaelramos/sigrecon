@@ -136,7 +136,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'labelColOptions' => ['style' => 'width:15%'],
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
-
                                     ],
                                 ],
                                 [
