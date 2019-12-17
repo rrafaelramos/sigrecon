@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Caixa;
+use app\models\Servico;
 use Yii;
 use app\models\Alertaservico;
 use app\models\AlertaservicoSearch;
@@ -63,11 +65,23 @@ class AlertaservicoController extends Controller
      */
     public function actionCreate()
     {
+        date_default_timezone_set('America/Sao_Paulo');
+        $data = date('Y-m-d H:i:s');
         $model = new Alertaservico();
+        $caixa = new Caixa();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $model->usuario_fk = Yii::$app->user->identity->id;
+            $servico = Servico::find()->all();
+            foreach ($servico as $s){
+                if(($s->id == $model->servico_fk) && $model->status_pagamento==1){
+                    $caixa->total = ($s->valor*$model->quantidade);
+                    $caixa->data = $data;
+                    $model->data_pago = $data;
+                }
+            }
+            $caixa->save();
             $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -105,6 +119,25 @@ class AlertaservicoController extends Controller
      */
     public function actionDelete($id)
     {
+        $alerta = Alertaservico::find()->all();
+        $caixa = Caixa::find()->all();
+        $data = 0;
+        $idc = 0;
+
+        //pega a data no model do alerta
+        foreach ($alerta as $a){
+            if($a->id == $id){
+                $data = $a->data_pago;
+            }
+        }
+        //compara a data do caixa com do alerta e pega o id do caixa para apagar
+        foreach ($caixa as $c){
+            if($c->data == $data){
+                $idc = $c->id;
+            }
+        }
+
+        $this->findCaixa($idc)->delete();
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -123,6 +156,14 @@ class AlertaservicoController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findCaixa($idc){
+        if (($model = Caixa::findOne($idc)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Dados não encontrados');
         }
     }
 }

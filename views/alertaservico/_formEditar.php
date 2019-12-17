@@ -25,8 +25,8 @@ use yii\widgets\ActiveForm;
                     <div class="panel-body">
                         <div class="col-sm-6">
                             <?= $form->field($model, 'cliente_fk')->
-                            dropDownList(ArrayHelper::map(Clienteavulso::find()->all(),'id', 'nome'),['prompt' => 'Selecione'])->
-                            label('Cliente')
+                            dropDownList(ArrayHelper::map(Clienteavulso::find()->all(),'id', 'nome'),['prompt' => 'Selecione', 'disabled' => 'disabled'])->
+                            label('Cliente');
                             ?>
                         </div>
                         <div class="col-sm-6">
@@ -35,20 +35,20 @@ use yii\widgets\ActiveForm;
                                 'widgetOptions' => [
                                     'pluginOptions' => [
                                         'autoclose' => true,
-                                        'format' => 'php:d/m/Y'
+                                        'format' => 'php:d/m/Y',
                                     ]
-                                ],
+                                ],'disabled' => 'disabled',
                                 'language' => 'pt-BR'
-                            ])->label('Data de Entrega'); ?>
+                            ])->label('Data para Entrega'); ?>
                         </div>
                         <div class="col-sm-4">
                             <?= $form->field($model, 'servico_fk')
-                                ->dropDownList(ArrayHelper::map(Servico::find()->all(),'id','descricao'),['prompt'=>'selecione'])
+                                ->dropDownList(ArrayHelper::map(Servico::find()->all(),'id','descricao'),['prompt'=>'selecione', 'disabled' => 'disabled'])
                                 ->label('Serviço')
                             ?>
                         </div>
                         <div class="col-sm-4">
-                            <?= $form->field($model, 'quantidade')->textInput(['type'=>'number']) ?>
+                            <?= $form->field($model, 'quantidade')->textInput(['type'=>'number','disabled' => 'disabled']) ?>
                         </div>
                         <div class="col-sm-2">
                             <?= $form->field($model, 'status_pagamento')->dropDownList([
@@ -66,10 +66,10 @@ use yii\widgets\ActiveForm;
                         </div>
 
                         <div class="col-sm-8 col-sm-offset-2">
-                            <?= $form->field($model, 'info')->textarea(['rows' => 3])->label('Informações adicionais') ?>
+                            <?= $form->field($model, 'info')->textarea(['rows' => 3,'disabled' => 'disabled'])->label('Informações adicionais') ?>
                         </div>
                         <div class="col-sm-3 pull-right">
-                            <?= Html::submitButton('Gerar Alerta', ['class' => 'btn btn-success btn-flat', 'data' => [
+                            <?= Html::submitButton('Atualizar', ['class' => 'btn btn-success btn-flat', 'data' => [
                                 'confirm' => "Deseja realmente Salvar?",
                                 'method' => 'post',
                             ]]) ?>

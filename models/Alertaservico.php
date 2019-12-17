@@ -34,7 +34,7 @@ class Alertaservico extends \yii\db\ActiveRecord
     {
         return [
             [['cliente_fk', 'servico_fk', 'quantidade', 'status_pagamento', 'status_servico', 'usuario_fk'], 'integer'],
-            [['data_entrega'], 'safe'],
+            [['data_entrega', 'data_pago'], 'safe'],
             [['info'], 'string'],
             [['status_pagamento'], 'required'],
             [['data_entrega'], 'validarData'],
@@ -66,6 +66,7 @@ class Alertaservico extends \yii\db\ActiveRecord
             'status_pagamento' => 'Status Pagamento',
             'status_servico' => 'Status Servico',
             'usuario_fk' => 'Usuario Fk',
+            'data_pago' => 'data pago',
         ];
     }
 }

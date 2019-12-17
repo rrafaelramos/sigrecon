@@ -130,6 +130,7 @@ create table alertaservico(
     id int auto_increment,
     cliente_fk int,
     data_entrega date,
+    data_pago datetime,
     servico_fk int,
     quantidade int,
     info text,

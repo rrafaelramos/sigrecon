@@ -101,7 +101,7 @@ function servicoPendente(){
         return 0;
     }
 }
-
+// retorna o número de servicos prontos para entrega
 function servicoPronto(){
     $cont = 0;
 
