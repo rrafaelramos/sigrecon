@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property int|null $usuario_fk
  * @property int $quantidade
- * @property string $data
+ * @property string|null $data
  * @property float $valor
  * @property string $descricao
  *
@@ -33,7 +33,7 @@ class Compra extends \yii\db\ActiveRecord
     {
         return [
             [['usuario_fk', 'quantidade'], 'integer'],
-            [['quantidade', 'data', 'valor', 'descricao'], 'required'],
+            [['quantidade', 'valor', 'descricao'], 'required'],
             [['data'], 'safe'],
             [['valor'], 'number'],
             [['descricao'], 'string', 'max' => 200],
