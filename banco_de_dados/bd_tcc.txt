@@ -116,7 +116,7 @@ create table rotina(
 
 create table venda(
 	id int auto_increment,
-	data datetime not null,
+	data datetime,
 	cliente_fk int,
 	usuario_fk int,
 	servico_fk int not null,

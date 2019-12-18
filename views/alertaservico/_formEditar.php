@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
                                 'widgetOptions' => [
                                     'pluginOptions' => [
                                         'autoclose' => true,
-                                        'format' => 'php:d/m/Y',
+                                        'format' => 'php:d/m/Y H:i:s',
                                     ]
                                 ],'disabled' => 'disabled',
                                 'language' => 'pt-BR'

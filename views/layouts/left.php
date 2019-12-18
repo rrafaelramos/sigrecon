@@ -66,11 +66,11 @@
                         ],
                     ],
                     [
-                        'label' => 'Caixa',
+                        'label' => 'Venda PF',
                         'icon' => 'usd',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Venda Rápida(Avulsa)','icon' => 'circle-o', 'url' => ['/venda/create']],
+                            ['label' => 'Venda Rápida','icon' => 'circle-o', 'url' => ['/venda/create']],
                             ['label' => 'Alerta de Serviço','icon' => 'circle-o', 'url' => ['/alertaservico/create']],
                         ],
                     ],

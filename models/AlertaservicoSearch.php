@@ -41,6 +41,8 @@ class AlertaservicoSearch extends Alertaservico
      */
     public function search($params)
     {
+        $usuario = Yii::$app->user->identity->id;
+
         $query = Alertaservico::find();
 
         // add conditions that should always apply here
@@ -67,7 +69,7 @@ class AlertaservicoSearch extends Alertaservico
             'quantidade' => $this->quantidade,
             'status_pagamento' => $this->status_pagamento,
             'status_servico' => $this->status_servico,
-            'usuario_fk' => $this->usuario_fk,
+            'usuario_fk' => $usuario,
         ]);
 
         $query->andFilterWhere(['like', 'info', $this->info]);

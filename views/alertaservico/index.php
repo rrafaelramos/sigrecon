@@ -5,6 +5,7 @@ use app\models\Servico;
 use app\models\Usuario;
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use app\models\Alertaservico;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AlertaservicoSearch */
@@ -66,6 +67,7 @@ function status($model){
         <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btn-flat'])?>
         <?= Html::a('Cadastrar alerta', ['create'], ['class' => 'btn btn-success btn-flat'])?>
     </div>
+
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
         <?= GridView::widget([

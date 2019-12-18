@@ -38,26 +38,18 @@ if(!Yii::$app->user->isGuest){
                                 <h3 class="panel-title">Venda Rápida</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="col-sm-6">
-                                    <?= $form->field($model, 'cliente_fk')->dropDownList(ArrayHelper::map(Clienteavulso::find()->all(), 'id', 'nome'), ['prompt' => 'Selecione'], ['readOnly' => 'true'])->label('Nome do Cliente')?>
+                                <div class="col-sm-12">
+                                    <?= $form->field($model, 'cliente_fk')->
+                                    dropDownList(ArrayHelper::map(Clienteavulso::find()->all(),'id', 'nome'),['prompt' => 'Selecione', 'disabled' => 'disabled'])->
+                                    label('Cliente');
+                                    ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $form->field($model, 'data')->widget(DateControl::classname(), [
-                                        'type'=>DateControl::FORMAT_DATE,
-                                        'widgetOptions' => [
-                                            'pluginOptions' => [
-                                                'autoclose' => true,
-                                                'format' => 'php:d/m/Y H:i:s'
-                                            ]
-                                        ],
-                                        'language' => 'pt-BR'
-                                    ]); ?>
+                                    <?= $form->field($model, 'servico_fk')
+                                        ->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'disabled' => 'disabled'])?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $form->field($model, 'servico_fk')->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'id' => 'servico'])?>
-                                </div>
-                                <div class="col-sm-6">
-                                    <?= $form->field($model, 'quantidade')->textInput([ 'type' => 'number', 'id' => 'quantidade']) ?>
+                                    <?= $form->field($model, 'quantidade')->textInput([ 'type' => 'number', 'id' => 'quantidade', 'disabled' => 'disabled']) ?>
                                 </div>
                                 <?php if($model->id) {?>
                                     <?= $form->field($model, 'total')->widget(MaskMoney::classname(), [
