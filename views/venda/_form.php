@@ -38,20 +38,8 @@ if(!Yii::$app->user->isGuest){
                                 <h3 class="panel-title">Venda Rápida</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <?= $form->field($model, 'cliente_fk')->dropDownList(ArrayHelper::map(Clienteavulso::find()->all(), 'id', 'nome'), ['prompt' => 'Selecione'], ['readOnly' => 'true'])->label('Nome do Cliente')?>
-                                </div>
-                                <div class="col-sm-6">
-                                    <?= $form->field($model, 'data')->widget(DateControl::classname(), [
-                                        'type'=>DateControl::FORMAT_DATE,
-                                        'widgetOptions' => [
-                                            'pluginOptions' => [
-                                                'autoclose' => true,
-                                                'format' => 'php:d/m/Y H:i:s'
-                                            ]
-                                        ],
-                                        'language' => 'pt-BR'
-                                    ]); ?>
                                 </div>
                                 <div class="col-sm-6">
                                     <?= $form->field($model, 'servico_fk')->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'id' => 'servico'])?>

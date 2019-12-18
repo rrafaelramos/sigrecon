@@ -10,32 +10,28 @@ use yii\grid\GridView;
 $this->title = 'Compras';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="compra-index">
+<div class="compra-index box box-primary">
+    <div class="box-header with-border">
+        <?= Html::a('Create Compra', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
+    </div>
+    <div class="box-body table-responsive no-padding">
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'layout' => "{items}\n{summary}\n{pager}",
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-    <h1><?= Html::encode($this->title) ?></h1>
+                'id',
+                'usuario_fk',
+                'quantidade',
+                'data',
+                'valor',
+                // 'descricao',
 
-    <p>
-        <?= Html::a('Cadastrar Compra', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            //'id',
-            //'usuario_fk',
-            'quantidade',
-            'descricao',
-            'valor',
-            'data',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
-
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    </div>
 </div>

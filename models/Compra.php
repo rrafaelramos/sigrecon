@@ -1,7 +1,6 @@
 <?php
 
 namespace app\models;
-use app\models\DBUser;
 
 use Yii;
 
@@ -9,13 +8,13 @@ use Yii;
  * This is the model class for table "compra".
  *
  * @property int $id
- * @property int $usuario_fk
+ * @property int|null $usuario_fk
  * @property int $quantidade
  * @property string $data
- * @property double $valor
+ * @property float $valor
  * @property string $descricao
  *
- * @property User $usuarioFk
+ * @property Usuario $usuarioFk
  */
 class Compra extends \yii\db\ActiveRecord
 {
@@ -38,7 +37,7 @@ class Compra extends \yii\db\ActiveRecord
             [['data'], 'safe'],
             [['valor'], 'number'],
             [['descricao'], 'string', 'max' => 200],
-            [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => DBUser::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
+            [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
         ];
     }
 
@@ -48,12 +47,12 @@ class Compra extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Número',
-            'usuario_fk' => 'Usuário',
+            'id' => 'ID',
+            'usuario_fk' => 'Usuario Fk',
             'quantidade' => 'Quantidade',
             'data' => 'Data',
             'valor' => 'Valor',
-            'descricao' => 'Descrição',
+            'descricao' => 'Descricao',
         ];
     }
 
@@ -62,6 +61,6 @@ class Compra extends \yii\db\ActiveRecord
      */
     public function getUsuarioFk()
     {
-        return $this->hasOne(DBUser::className(), ['id' => 'usuario_fk']);
+        return $this->hasOne(Usuario::className(), ['id' => 'usuario_fk']);
     }
 }

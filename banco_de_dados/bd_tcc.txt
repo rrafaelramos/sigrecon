@@ -80,11 +80,11 @@ create table compra(
 	id int auto_increment,
 	usuario_fk int,
 	quantidade int not null,
-	data DATE not null,
+	data date not null,
 	valor float not null,
 	descricao varchar(200) not null,
 	primary key (id),
-	foreign key (usuario_fk) references usuario (id) 
+	foreign key (usuario_fk) references usuario(id)
 );
 
 create table servico(

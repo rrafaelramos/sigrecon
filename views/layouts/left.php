@@ -80,6 +80,7 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
+                            ['label' => 'Vendas', 'icon' => 'usd', 'url' => ['/venda'],],
                             [
                                 'label' => 'Empresas',
                                 'icon' => 'home',
