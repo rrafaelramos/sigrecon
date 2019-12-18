@@ -97,7 +97,9 @@ create table servico(
 
 create table caixa(
 	id int auto_increment,
-	saldo float,
+	total float,
+	data datetime,
+	estado int,
 	primary key (id)
 );
 
