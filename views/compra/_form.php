@@ -1,5 +1,6 @@
 <?php
 
+use kartik\money\MaskMoney;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -8,23 +9,44 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="compra-form box box-primary">
-    <?php $form = ActiveForm::begin(); ?>
-    <div class="box-body table-responsive">
+<div class="venda-form col-sm-12">
+    <div class="venda-form box box-primary">
+        <?php $form = ActiveForm::begin(); ?>
+        <div class="box-body table-responsive col-sm-8">
+            <div class="col-lg-offset-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Compra Realizada</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-12">
+                            <?= $form->field($model, 'descricao')->textInput(['maxlength' => true])->label('Descrição') ?>
+                        </div>
+                        <div class="col-sm-6">
+                            <?= $form->field($model, 'quantidade')->textInput(['type' => 'number', 'default' => '1', 'value' => '1', 'min' => '1']) ?>
+                        </div>
+                        <div class="col-sm-6">
+                            <?= $form->field($model, 'valor')->widget(MaskMoney::classname(), [
+                                'pluginOptions' => [
+                                    'prefix' => 'R$ ',
+                                    'suffix' => '',
+                                    'allowNegative' => false
+                                ]
+                            ])->label('Valor Total');
+                            ?>
+                        </div>
+                        <div class="pull-right">
+                            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
+                            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat', 'data' => [
+                                'confirm' => "Deseja realmente Salvar?",
+                                'method' => 'post',
+                            ]]) ?>
 
-        <?= $form->field($model, 'usuario_fk')->textInput() ?>
-
-        <?= $form->field($model, 'quantidade')->textInput() ?>
-
-        <?= $form->field($model, 'data')->textInput() ?>
-
-        <?= $form->field($model, 'valor')->textInput() ?>
-
-        <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
-
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="box-footer">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success btn-flat']) ?>
-    </div>
-    <?php ActiveForm::end(); ?>
 </div>
+<?php ActiveForm::end(); ?>

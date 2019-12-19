@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
                             ?>
                         </div>
                         <div class="col-sm-4">
-                            <?= $form->field($model, 'quantidade')->textInput(['type'=>'number']) ?>
+                            <?= $form->field($model, 'quantidade')->textInput(['type' => 'number', 'default' => '1', 'value' => '1', 'min' => '1']) ?>
                         </div>
                         <div class="col-sm-4">
                             <?= $form->field($model, 'status_pagamento')->dropDownList([

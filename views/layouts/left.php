@@ -80,7 +80,8 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Vendas', 'icon' => 'usd', 'url' => ['/venda'],],
+                            ['label' => 'Vendas Realizadas', 'icon' => 'usd', 'url' => ['/venda'],],
+                            ['label' => 'Compras Realizadas ', 'icon' => 'usd', 'url' => ['/compra'],],
                             [
                                 'label' => 'Empresas',
                                 'icon' => 'home',

@@ -65,7 +65,7 @@ class CompraController extends Controller
     public function actionCreate()
     {
         date_default_timezone_set('America/Sao_Paulo');
-        $data = date('Y-m-s H:i:s');
+        $data = date('Y-m-d H:i:s');
 
         $caixa = new Caixa();
         $model = new Compra();

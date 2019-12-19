@@ -69,7 +69,6 @@ function servico($model){
                     'value' => function($model){
                         return cliente($model);
                     }],
-
                 ['attribute' => 'usuario_fk',
                     'label' => 'Vendedor',
                     'value' => function($model){

@@ -44,10 +44,22 @@ class Alertaservico extends \yii\db\ActiveRecord
     public function validarData($attribute, $params, $validator)
     {
         $data = date("Y/m/d");
+        $aux = 0;
+        $alerta = Alertaservico::find()->all();
 
-        if (strtotime($this->$attribute) < strtotime($data)) {
-            $formatar = date("d/m/Y");
-            $this->addError($attribute, 'A data deve ser maior ou igual a: '.$formatar);
+        foreach ($alerta as $a) {
+            if($a->data_entrega == $this->$attribute){
+                $aux = 0;
+            }else{
+                $aux =1;
+            }
+        }
+
+        if($aux) {
+            if (strtotime($this->$attribute) < strtotime($data)) {
+                $formatar = date("d/m/Y");
+                $this->addError($attribute, 'A data deve ser maior ou igual a: ' . $formatar);
+            }
         }
     }
 

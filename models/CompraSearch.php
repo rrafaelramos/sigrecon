@@ -43,6 +43,7 @@ class CompraSearch extends Compra
     public function search($params)
     {
         $query = Compra::find();
+        $id = Yii::$app->user->identity->id;
 
         // add conditions that should always apply here
 
@@ -62,7 +63,7 @@ class CompraSearch extends Compra
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'usuario_fk' => $this->usuario_fk,
+            'usuario_fk' => $id,
             'quantidade' => $this->quantidade,
             'data' => $this->data,
             'valor' => $this->valor,
