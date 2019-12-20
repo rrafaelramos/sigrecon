@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Alertaservico;
+use app\models\Caixa;
 use app\models\Empresa;
 use app\models\Rotina;
 use yii\helpers\Html;
@@ -121,6 +122,22 @@ function servicoPronto(){
     }
 }
 
+function caixa(){
+    // se o numero de estado 1 for == total de inserções no caixa então o caixa está fechado
+    $caixa = Caixa::find()->all();
+    $cont = count($caixa);
+    $cont2 =0;
+    foreach ($caixa as $c){
+        if($c->estado == 1 ){
+            $cont2++;
+        }
+    }
+    if($cont == $cont2){
+        return 1;
+    }
+    return 0;
+}
+
 ?>
 
 
@@ -225,14 +242,27 @@ function servicoPronto(){
                         </ul>
                     </li>
 
+                    <?php if (caixa()){
+                        echo
+                        '<li class="dropdown notifications-menu">
+                        <a href="/sigrecon/web/?r=abrircaixa/create"> Abrir Caixa
+                            <i class="fa fa-usd">
+                            </i>
+                            <span class="label label-warning">';
+                        echo
+                        '</a>
+                    </li>';
+                    }?>
+
+
+
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
                             <!--                        //class warning para nova notificação-->
                             <?php
                             if(certificado() || procuracao() || servicoPronto() || servicoPendente()){
                                 echo '<i class="fa fa-bell"></i>'.'<span class="label label-warning">';
-                                echo '+';
+                                echo '!';
                             }else{
                                 echo '<i class="fa fa-bell-o"></i>';
                             }

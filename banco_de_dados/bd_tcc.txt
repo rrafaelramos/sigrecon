@@ -141,3 +141,21 @@ create table alertaservico(
     usuario_fk int,
     primary key (id)
 );
+
+create table fcaixa(
+	id int auto_increment,
+	data_inicio datetime,
+	data_fim datetime,
+	entrada float,
+	saida float,
+	saldo float,
+	valor_abertura float,
+    primary key (id)
+);
+
+create table abrircaixa(
+    id int auto_increment,
+    data datetime,
+    valor float,
+    primary key (id)
+);

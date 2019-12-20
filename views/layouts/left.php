@@ -93,6 +93,15 @@
                             ],
                         ],
                     ],
+                    [
+                        'label' => 'Caixa',
+                        'icon' => 'share',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Fechar Caixa', 'icon' => 'usd', 'url' => ['/fcaixa/create'],],
+                        ],
+                    ],
+
                 ],
             ]
         ) ?>
