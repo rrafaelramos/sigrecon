@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Fcaixa */
 
 $this->title = 'Fechar o Caixa';
-$this->params['breadcrumbs'][] = ['label' => 'Fcaixas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Fechar caixa', 'url' => ['index']];
+
 ?>
 <div class="fcaixa-create">
 

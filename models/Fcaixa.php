@@ -31,6 +31,8 @@ class Fcaixa extends \yii\db\ActiveRecord
     {
         return [
             [['data_inicio', 'data_fim'], 'safe'],
+            [['data_inicio'], 'required'],
+            [['data_fim'], 'required'],
             [['entrada', 'saida', 'saldo', 'valor_abertura'], 'number'],
         ];
     }

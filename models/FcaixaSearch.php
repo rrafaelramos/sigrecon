@@ -42,6 +42,7 @@ class FcaixaSearch extends Fcaixa
      */
     public function search($params)
     {
+
         $query = Fcaixa::find();
 
         // add conditions that should always apply here
