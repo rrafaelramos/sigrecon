@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Caixa;
 use Yii;
 use app\models\Abrircaixa;
 use app\models\AbrircaixaSearch;
@@ -63,9 +64,17 @@ class AbrircaixaController extends Controller
      */
     public function actionCreate()
     {
+        date_default_timezone_set('America/Sao_Paulo');
+        $data = date('Y-m-d');
+
         $model = new Abrircaixa();
+        $caixa = new Caixa();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $caixa->total = $model->valor;
+            $caixa->data = $data;
+            $model->data = $data;
+            $caixa->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

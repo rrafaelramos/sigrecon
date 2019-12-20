@@ -73,7 +73,7 @@ class FcaixaController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             foreach ($caixa as $c){
-                if((strtotime($model->data_inicio) <= strtotime($c->data) ) && strtotime($model->data_fim) >= strtotime($c->data) && $c->estado == 0){
+                if($c->estado == 0){
                     if($c->total>0){
                         $model->entrada += $c->total;
                         $c->estado = 1;
@@ -86,6 +86,7 @@ class FcaixaController extends Controller
                     $model->saldo = $model->entrada + $model->saida;
                 }
             }
+            $model->data_fechamento = date('Y-m-d');
             $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);

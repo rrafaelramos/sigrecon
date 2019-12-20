@@ -144,12 +144,10 @@ create table alertaservico(
 
 create table fcaixa(
 	id int auto_increment,
-	data_inicio datetime,
-	data_fim datetime,
+	data_fechamento datetime,
 	entrada float,
 	saida float,
 	saldo float,
-	valor_abertura float,
     primary key (id)
 );
 

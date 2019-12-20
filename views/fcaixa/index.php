@@ -39,10 +39,7 @@ function formatar($model){
                 ['class' => 'yii\grid\SerialColumn'],
                 //'id',
 
-                ['attribute' => 'data_inicio',
-                    'label' => 'Início',
-                    'format' => ['date', 'php: d/m/Y']],
-                ['attribute' => 'data_fim',
+                ['attribute' => 'data_fechamento',
                     'label' => 'Término',
                     'format' => ['date', 'php: d/m/Y']],
                 ['attribute' => 'entrada',

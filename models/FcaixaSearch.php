@@ -19,7 +19,7 @@ class FcaixaSearch extends Fcaixa
     {
         return [
             [['id'], 'integer'],
-            [['data_inicio', 'data_fim'], 'safe'],
+            [['data_fechamento'], 'safe'],
             [['entrada', 'saida', 'saldo'], 'number'],
         ];
     }
@@ -63,8 +63,7 @@ class FcaixaSearch extends Fcaixa
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'data_inicio' => $this->data_inicio,
-            'data_fim' => $this->data_fim,
+            'data_fechamento' => $this->data_fechamento,
             'entrada' => $this->entrada,
             'saida' => $this->saida,
             'saldo' => $this->saldo,

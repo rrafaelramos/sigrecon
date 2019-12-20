@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
                     </div>
                     <div class="panel-body">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'data_inicio')->widget(DateControl::classname(), [
+                            <?= $form->field($model, 'data_fechamento')->widget(DateControl::classname(), [
                                 'type'=>DateControl::FORMAT_DATE,
                                 'widgetOptions' => [
                                     'pluginOptions' => [
@@ -28,19 +28,7 @@ use yii\widgets\ActiveForm;
                                     ]
                                 ],
                                 'language' => 'pt-BR'
-                            ])->label('Data inicial'); ?>
-                        </div>
-                        <div class="col-sm-12">
-                            <?= $form->field($model, 'data_fim')->widget(DateControl::classname(), [
-                                'type'=>DateControl::FORMAT_DATE,
-                                'widgetOptions' => [
-                                    'pluginOptions' => [
-                                        'autoclose' => true,
-                                        'format' => 'php:d/m/Y'
-                                    ]
-                                ],
-                                'language' => 'pt-BR'
-                            ])->label('Data Final'); ?>
+                            ])->label('Data fechamento'); ?>
                         </div>
 <!--                        <div class="col-sm-6">-->
 <!--                            --><?php //echo $form->field($model, 'entrada')->textInput() ?>

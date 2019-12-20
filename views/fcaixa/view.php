@@ -47,15 +47,8 @@ function formatar($model){
                                         [
                                             'columns' => [
                                                 [
-                                                    'attribute' => 'data_inicio',
-                                                    'value' => $model->data_inicio,
-                                                    'format' => ['date', 'php:d/m/Y'],
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                                [
-                                                    'attribute' => 'data_fim',
-                                                    'value' => $model->data_fim,
+                                                    'attribute' => 'data_fechamento',
+                                                    'value' => $model->data_fechamento,
                                                     'format' => ['date', 'php:d/m/Y'],
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
