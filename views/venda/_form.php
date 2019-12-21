@@ -44,7 +44,7 @@ if(!Yii::$app->user->isGuest){
                                 <?= $form->field($model, 'servico_fk')->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'id' => 'servico'])?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($model, 'quantidade')->textInput([ 'type' => 'number', 'id' => 'quantidade']) ?>
+                                <?= $form->field($model, 'quantidade')->textInput([ 'type' => 'number', 'id' => 'quantidade', 'default' => '1', 'value' => '1', 'min' => '1']) ?>
                             </div>
                             <?php if($model->id) {?>
                                 <?= $form->field($model, 'total')->widget(MaskMoney::classname(), [

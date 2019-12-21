@@ -77,6 +77,7 @@
                         'icon' => 'usd',
                         'url' => '#',
                         'items' => [
+                            ['label' => 'Venda Rápida','icon' => 'circle-o', 'url' => ['/vendapj/create']],
                             ['label' => 'Alerta de Serviço','icon' => 'circle-o', 'url' => ['/alertaservicopj/create']],
                         ],
                     ],

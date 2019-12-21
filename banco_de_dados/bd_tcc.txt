@@ -128,6 +128,18 @@ create table venda(
 	foreign key (servico_fk) references servico (id)
 );
 
+create table vendapj(
+	id int auto_increment,
+	data datetime,
+	empresa_fk int,
+	usuario_fk int,
+	servico_fk int not null,
+	quantidade int not null,
+	total float,
+	primary key (id),
+	foreign key (servico_fk) references servico (id)
+);
+
 create table alertaservico(
     id int auto_increment,
     cliente_fk int,

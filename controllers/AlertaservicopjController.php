@@ -69,6 +69,7 @@ class AlertaservicopjController extends Controller
         $data = date('Y-m-d H:i:s');
         $model = new Alertaservicopj();
         $caixa = new Caixa();
+        $model->scenario = "criar";
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -101,6 +102,7 @@ class AlertaservicopjController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->scenario = "atualiza";
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

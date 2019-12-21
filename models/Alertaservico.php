@@ -37,7 +37,8 @@ class Alertaservico extends \yii\db\ActiveRecord
             [['data_entrega', 'data_pago'], 'safe'],
             [['info'], 'string'],
             [['status_pagamento'], 'required'],
-            [['data_entrega'], 'validarData'],
+            [['data_entrega'], 'validarData', 'on' => 'criar'],
+            [['data_entrega'], 'safe', 'on' => 'atualiza']
         ];
     }
 
@@ -45,20 +46,10 @@ class Alertaservico extends \yii\db\ActiveRecord
     {
         date_default_timezone_set('America/Sao_Paulo');
         $data = date("Y-m-d");
-        $aux = 0;
-        $alerta = Alertaservico::find()->all();
 
-        foreach ($alerta as $a) {
-            if($a->data_entrega == $this->$attribute){
-                $aux = 1;
-            }
-        }
-
-        if(!$aux) {
-            if (strtotime($this->$attribute) < strtotime($data)) {
-                $formatar = date("d/m/Y");
-                $this->addError($attribute, 'A data deve ser maior ou igual a: ' . $formatar);
-            }
+        if (strtotime($this->$attribute) < strtotime($data)) {
+            $formatar = date("d/m/Y");
+            $this->addError($attribute, 'A data deve ser maior ou igual a: ' . $formatar);
         }
     }
 

@@ -2,20 +2,19 @@
 
 namespace app\controllers;
 
-use app\models\Caixa;
 use app\models\Servico;
+use app\models\Caixa;
 use Yii;
-use app\models\Alertaservico;
-use app\models\AlertaservicoSearch;
-use yii\validators\Validator;
+use app\models\Vendapj;
+use app\models\VendapjSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AlertaservicoController implements the CRUD actions for Alertaservico model.
+ * VendaController implements the CRUD actions for Venda model.
  */
-class AlertaservicoController extends Controller
+class VendapjController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +32,12 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Lists all Alertaservico models.
+     * Lists all Venda models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AlertaservicoSearch();
+        $searchModel = new VendapjSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +47,7 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Displays a single Alertaservico model.
+     * Displays a single Venda model.
      * @param integer $id
      * @return mixed
      */
@@ -60,33 +59,37 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Creates a new Alertaservico model.
+     * Creates a new Venda model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+
     public function actionCreate()
     {
         date_default_timezone_set('America/Sao_Paulo');
-        $data = date('Y-m-d H:i:s');
-        $model = new Alertaservico();
-        $caixa = new Caixa();
-        $model->scenario = 'criar';
+        $model = new Vendapj();
+        $model_caixa = new Caixa();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            $model->usuario_fk = Yii::$app->user->identity->id;
             $servico = Servico::find()->all();
-            foreach ($servico as $s){
-                if(($s->id == $model->servico_fk) && $model->status_pagamento==1){
-                    $caixa->total = ($s->valor*$model->quantidade);
-                    $caixa->data = $data;
-                    $model->data_pago = $data;
+            foreach ($servico as $serv){
+                if($serv->id == $model->servico_fk){
+                    $model->total = ($model->quantidade *$serv->valor);
                 }
             }
-            $caixa->save();
+            $model->usuario_fk = Yii::$app->user->identity->id;
+            $data = date('Y-m-d H:i:s');
+            $model->data = $data;
             $model->save();
 
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            $model_caixa->data = $data;
+            $model_caixa->total = $model->total;
+
+            $model_caixa->save();
+
+            return $this->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -95,17 +98,27 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Updates an existing Alertaservico model.
+     * Updates an existing Venda model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = "atualiza";
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $servico = Servico::find()->all();
+            foreach ($servico as $serv){
+                if($serv->id == $model->servico_fk){
+                    $model->total = ($model->quantidade *$serv->valor);
+                }
+            }
+            $model->usuario_fk = Yii::$app->user->identity->id;
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -115,25 +128,23 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Deletes an existing Alertaservico model.
+     * Deletes an existing Venda model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $alerta = Alertaservico::find()->all();
+        $venda = Vendapj::find()->all();
         $caixa = Caixa::find()->all();
         $data = 0;
         $idc = 0;
 
-        //pega a data no model do alerta
-        foreach ($alerta as $a){
-            if($a->id == $id){
-                $data = $a->data_pago;
+        foreach ($venda as $v){
+            if($v->id == $id){
+                $data = $v->data;
             }
         }
-        //compara a data do caixa com do alerta e pega o id do caixa para apagar
         foreach ($caixa as $c){
             if($c->data == $data){
                 $idc = $c->id;
@@ -147,26 +158,26 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Finds the Alertaservico model based on its primary key value.
+     * Finds the Venda model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Alertaservico the loaded model
+     * @return Venda the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Alertaservico::findOne($id)) !== null) {
+        if (($model = Vendapj::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-    protected function findCaixa($idc){
+    protected function findCaixa($idc)
+    {
         if (($model = Caixa::findOne($idc)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('Dados não encontrados');
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }
