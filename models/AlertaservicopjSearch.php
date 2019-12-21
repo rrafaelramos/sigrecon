@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Compra;
+use app\models\Alertaservicopj;
 
 /**
- * CompraSearch represents the model behind the search form of `app\models\Compra`.
+ * AlertaservicopjSearch represents the model behind the search form of `app\models\Alertaservicopj`.
  */
-class CompraSearch extends Compra
+class AlertaservicopjSearch extends Alertaservicopj
 {
     /**
      * @inheritdoc
@@ -18,9 +18,8 @@ class CompraSearch extends Compra
     public function rules()
     {
         return [
-            [['id', 'usuario_fk', 'quantidade'], 'integer'],
-            [['data', 'descricao'], 'safe'],
-            [['valor'], 'number'],
+            [['id', 'empresa_fk', 'servico_fk', 'quantidade', 'status_pagamento', 'status_servico', 'usuario_fk'], 'integer'],
+            [['data_entrega', 'data_pago', 'info'], 'safe'],
         ];
     }
 
@@ -42,8 +41,7 @@ class CompraSearch extends Compra
      */
     public function search($params)
     {
-        $query = Compra::find();
-
+        $query = Alertaservicopj::find();
 
         // add conditions that should always apply here
 
@@ -63,13 +61,17 @@ class CompraSearch extends Compra
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'usuario_fk' => $this->usuario_fk,
+            'empresa_fk' => $this->empresa_fk,
+            'data_entrega' => $this->data_entrega,
+            'data_pago' => $this->data_pago,
+            'servico_fk' => $this->servico_fk,
             'quantidade' => $this->quantidade,
-            'data' => $this->data,
-            'valor' => $this->valor,
+            'status_pagamento' => $this->status_pagamento,
+            'status_servico' => $this->status_servico,
+            'usuario_fk' => $this->usuario_fk,
         ]);
 
-        $query->andFilterWhere(['like', 'descricao', $this->descricao]);
+        $query->andFilterWhere(['like', 'info', $this->info]);
 
         return $dataProvider;
     }

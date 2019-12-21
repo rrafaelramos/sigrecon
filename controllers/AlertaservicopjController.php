@@ -5,9 +5,8 @@ namespace app\controllers;
 use app\models\Caixa;
 use app\models\Servico;
 use Yii;
-use app\models\Alertaservico;
-use app\models\AlertaservicoSearch;
-use yii\validators\Validator;
+use app\models\Alertaservicopj;
+use app\models\AlertaservicopjSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -15,7 +14,7 @@ use yii\filters\VerbFilter;
 /**
  * AlertaservicoController implements the CRUD actions for Alertaservico model.
  */
-class AlertaservicoController extends Controller
+class AlertaservicopjController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +32,12 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Lists all Alertaservico models.
+     * Lists all Alertaservicopj models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AlertaservicoSearch();
+        $searchModel = new AlertaservicopjSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +47,7 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Displays a single Alertaservico model.
+     * Displays a single Alertaservicopj model.
      * @param integer $id
      * @return mixed
      */
@@ -60,7 +59,7 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Creates a new Alertaservico model.
+     * Creates a new Alertaservicopj model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -68,7 +67,7 @@ class AlertaservicoController extends Controller
     {
         date_default_timezone_set('America/Sao_Paulo');
         $data = date('Y-m-d H:i:s');
-        $model = new Alertaservico();
+        $model = new Alertaservicopj();
         $caixa = new Caixa();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -94,7 +93,7 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Updates an existing Alertaservico model.
+     * Updates an existing Alertaservicopj model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -102,7 +101,6 @@ class AlertaservicoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -114,14 +112,14 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Deletes an existing Alertaservico model.
+     * Deletes an existing Alertaservicopj model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $alerta = Alertaservico::find()->all();
+        $alerta = Alertaservicopj::find()->all();
         $caixa = Caixa::find()->all();
         $data = 0;
         $idc = 0;
@@ -146,15 +144,15 @@ class AlertaservicoController extends Controller
     }
 
     /**
-     * Finds the Alertaservico model based on its primary key value.
+     * Finds the Alertaservicopj model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Alertaservico the loaded model
+     * @return Alertaservicopj the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Alertaservico::findOne($id)) !== null) {
+        if (($model = Alertaservicopj::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

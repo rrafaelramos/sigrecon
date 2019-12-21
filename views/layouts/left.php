@@ -39,30 +39,28 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa'],],
-                            ['label' => 'Cliente avulso', 'icon' => 'user', 'url' => ['/clienteavulso'],],
-                            ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina'],],
-                            ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico'],],
-                            ['label' => 'Compra', 'icon' => 'pencil', 'url' => ['/compra'],],
-
+                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa/create'],],
+                            ['label' => 'Cliente avulso', 'icon' => 'user', 'url' => ['/clienteavulso/create'],],
+                            ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina/create'],],
+                            ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico/create'],],
                             //['label' => 'Empresa', 'icon' => 'institution', 'url' => ['/servico'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
+//                            [
+//                                'label' => 'Level One',
+//                                'icon' => 'circle-o',
+//                                'url' => '#',
+//                                'items' => [
+//                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
+//                                    [
+//                                        'label' => 'Level Two',
+//                                        'icon' => 'circle-o',
+//                                        'url' => '#',
+//                                        'items' => [
+//                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+//                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+//                                        ],
+//                                    ],
+//                                ],
+//                            ],
                         ],
                     ],
                     [
@@ -72,6 +70,14 @@
                         'items' => [
                             ['label' => 'Venda Rápida','icon' => 'circle-o', 'url' => ['/venda/create']],
                             ['label' => 'Alerta de Serviço','icon' => 'circle-o', 'url' => ['/alertaservico/create']],
+                        ],
+                    ],
+                    [
+                        'label' => 'Venda PJ',
+                        'icon' => 'usd',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Alerta de Serviço','icon' => 'circle-o', 'url' => ['/alertaservicopj/create']],
                         ],
                     ],
 
@@ -98,6 +104,7 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
+                            ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra'],],
                             ['label' => 'Fechar Caixa', 'icon' => 'usd', 'url' => ['/fcaixa/create'],],
                         ],
                     ],

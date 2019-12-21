@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Alertaservico */
 
-$this->title = 'Cadastrar Alerta';
+$this->title = 'Cadastrar Alerta PF';
 $this->params['breadcrumbs'][] = ['label' => 'Alertaservicos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

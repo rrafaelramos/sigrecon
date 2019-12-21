@@ -14,12 +14,12 @@ $this->title = 'Compras';
 $this->params['breadcrumbs'][] = $this->title;
 
 function formatar($model){
+
+    if(!$model){
+        return "R$ 0,00";
+    }
     $formatter = Yii::$app->formatter;
-
     $formatado = $formatter->asCurrency($model);
-
-    //$remove = array("pt-br");
-
     $dinheiro = str_replace("pt-br", "", $formatado);
     return "R$ $dinheiro";
 }
@@ -29,7 +29,7 @@ function usuario($model){
 
     foreach ($usuario as $u){
         if ($u->id == $model->usuario_fk){
-            return Yii::$app->user->identity->nome;
+            return $u->nome;
         }
     }
 }

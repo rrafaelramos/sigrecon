@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Usuario;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -9,6 +10,37 @@ use yii\widgets\DetailView;
 $this->title = $model->descricao;
 $this->params['breadcrumbs'][] = ['label' => 'Compras', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+?>
+<?php
+function quantidade($model){
+    if($model>1){
+        return "$model unidades";
+    }
+    return "$model unidade";
+}
+
+function formatar($model){
+
+    if(!$model){
+        return "R$ 0,00";
+    }
+    $formatter = Yii::$app->formatter;
+    $formatado = $formatter->asCurrency($model);
+    $dinheiro = str_replace("pt-br", "", $formatado);
+    return "R$ $dinheiro";
+}
+
+function usuario($model){
+    $usuario = Usuario::find()->all();
+
+    foreach ($usuario as $u){
+        if ($u->id == $model){
+            return $u->nome;
+        }
+    }
+}
+
+
 ?>
 <div class="clienteavulso-view box box-primary">
     <div class="box-header with-border">
@@ -56,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                     [
                                         'label' => 'Quantidade',
-                                        'value' =>  $model->quantidade,
+                                        'value' => quantidade($model->quantidade),
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
@@ -73,12 +105,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                     [
                                         'label' => 'Data',
                                         'value' =>  $model->data,
+                                        'format' => ['date', 'php: d/m/Y'],
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
                                     [
                                         'label' => 'Valor total',
-                                        'value' =>  $model->valor,
+                                        'value' =>  formatar($model->valor),
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
@@ -88,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'columns' => [
                                     [
                                         'label' => 'Usuário',
-                                        'value' =>  $model->usuario_fk,
+                                        'value' =>  usuario($model->usuario_fk),
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],

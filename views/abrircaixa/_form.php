@@ -1,5 +1,6 @@
 <?php
 
+use kartik\money\MaskMoney;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -8,8 +9,9 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="clienteavulso-form">
+<?php if((!Yii::$app->user->isGuest) && (Yii::$app->user->identity->tipo == 1)){?>
 
+<div class="clienteavulso-form">
     <div class="clienteavulso-form box box-primary">
         <?php $form = ActiveForm::begin(); ?>
         <div class="box-body table-responsive col-sm-offset-4 col-sm-4">
@@ -19,10 +21,22 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="panel-body">
                     <div class="col-sm-12">
-                        <?= $form->field($model, 'valor')->textInput()->label('Valor de Abertura') ?>
+                        <?= $form->field($model, 'valor')->widget(MaskMoney::classname(), [
+                            'pluginOptions' => [
+                                'prefix' => 'R$ ',
+                                'suffix' => '',
+                                'allowNegative' => false,
+                                'id' => 'total',
+                                'name' => 'total',
+                            ]
+                        ]);
+                        ?>
                     </div>
                     <div>
-                        <?= Html::submitButton('Abrir Caixa', ['class' => 'btn btn-success btn-flat pull-right']) ?>
+                        <?= Html::submitButton('Abrir Caixa', ['class' => 'btn btn-success btn-flat', 'data' => [
+                            'confirm' => "Deseja realmente Salvar?",
+                            'method' => 'post',
+                        ]]) ?>
                     </div>
                 </div>
             </div>
@@ -31,3 +45,5 @@ use yii\widgets\ActiveForm;
 </div>
 
 <?php ActiveForm::end(); ?>
+
+<?php } ?>

@@ -142,6 +142,20 @@ create table alertaservico(
     primary key (id)
 );
 
+create table alertaservicopj(
+    id int auto_increment,
+    empresa_fk int,
+    data_entrega date,
+    data_pago datetime,
+    servico_fk int,
+    quantidade int,
+    info text,
+    status_pagamento int not null,
+    status_servico int,
+    usuario_fk int,
+    primary key (id)
+);
+
 create table fcaixa(
 	id int auto_increment,
 	data_fechamento datetime,

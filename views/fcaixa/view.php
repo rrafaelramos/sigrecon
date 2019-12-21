@@ -79,13 +79,16 @@ function formatar($model){
                                                     'attribute' => 'saldo',
                                                     'label' => 'Saldo',
                                                     'value' => formatar($model->saldo),
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                    'labelColOptions' => ['style' => 'width:35%'],
+                                                    'valueColOptions' => ['style' => 'width:65%'],
                                                 ],
                                             ],
                                         ],
                                     ],
                                 ]) ?>
+                                <div>
+                                    <?= Html::a('Início', ['/site/index'],[ 'class' => 'btn btn-warning btn-flat pull-right']) ?>
+                                </div>
                             </div>
                         </div>
                     </div>

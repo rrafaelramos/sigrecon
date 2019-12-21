@@ -41,6 +41,17 @@ function servico($model){
         }
     }
 }
+
+function formatar($model){
+
+    if(!$model){
+        return "R$ 0,00";
+    }
+    $formatter = Yii::$app->formatter;
+    $formatado = $formatter->asCurrency($model);
+    $dinheiro = str_replace("pt-br", "", $formatado);
+    return "R$ $dinheiro";
+}
 ?>
 <div class="servico-index box box-primary">
     <div class="box-header with-border">
@@ -58,9 +69,9 @@ function servico($model){
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                ['attribute' => 'id',
-                    'label' => 'N° da Venda',
-                ],
+//                ['attribute' => 'id',
+//                    'label' => 'N° da Venda',
+//                ],
                 ['attribute' => 'data',
                     'format' => ['date','php:d/m/Y']
                 ],
@@ -75,11 +86,15 @@ function servico($model){
                         return usuario($model);
                     }],
                 ['attribute' => 'servico_fk',
-                'value' => function($model){
-                    return servico($model);
-                }],
+                    'value' => function($model){
+                        return servico($model);
+                    }],
                 // 'quantidade',
-                 'total',
+                [
+                    'attribute' => 'total',
+                    'value' => function($model){
+                        return formatar($model->total);
+                    }],
 
                 [
                     'class' => '\kartik\grid\ActionColumn',
