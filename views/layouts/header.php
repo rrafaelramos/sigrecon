@@ -71,8 +71,8 @@ function mensal(){
         $dataaux = 0;
         $dia = $dataaux[2];
         $ano = $dataaux[0];
+        //salva as empresas no model
         if($arrayempresa){
-            //salva as empresas no model
             do {
                 $model_avisa = new Avisa_rotina();
                 $model_avisa->empresa_fk = $arrayempresa[$aux]->id;
