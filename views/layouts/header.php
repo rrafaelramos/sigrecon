@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Alertaservico;
+use app\models\Avisa_rotina;
 use app\models\Caixa;
 use app\models\Empresa;
 use app\models\Rotina;
@@ -13,10 +14,19 @@ use yii\helpers\Html;
 <?php
 date_default_timezone_set('America/Sao_Paulo');
 
+//essa funão verifica se deverá ser gerado protocolo de entrega nesse mês
 function mensal(){
+    // todo mes os sistema vai gerar o relatório de entrega, e no dia especifico do aviso vai me mostar;
     $data = date('Y-m-d');
+    $dataform = explode("-",$data);
+    $mesatual = $dataform[1];
+    $anoatual = $dataform[0];
+
     $rotinas = Rotina::find()->all();
     $empresas = Empresa::find()->all();
+    $avisarotina = Avisa_rotina::find()->all();
+
+    $mes_tabela = '00';
     $numeroempresa = count($empresas);
     $numerorotina = count($rotinas);
     //cria um array para ir setando as empresas que se encaixam na rotina mensal
@@ -26,22 +36,62 @@ function mensal(){
     $cont=0;
     $cont2=0;
     //pegar o nome da rotina
-    for($i=0; $i<$numerorotina; $i++){
-        if(strtotime($rotinas[$i]->data_aviso) == strtotime($data)){
-            $arrayrotina[$cont] = $rotinas[$i];
-            $cont++;
-        }
+//    for($i=0; $i<$numerorotina; $i++){
+//        if(strtotime($rotinas[$i]->data_aviso) == strtotime($data)){
+//            $arrayrotina[$cont] = $rotinas[$i];
+//            $cont++;
+//        }
+//    }
+
+
+    //pegar ultima data das rotinas geradas;
+    $data_tabela = Avisa_rotina::find()->max('gera_auto');
+    if(!$data_tabela) {
+        $mes_tabela = '00';
+    }else{
+        $d_tabela = explode("-", $data_tabela);
+        $mes_tabela = $d_tabela[1];
+        $ano_tabela = $d_tabela[0];
     }
-    for($i=0; $i<$numeroempresa; $i++){
-        for($j=0; $j<$numerorotina; $j++) {
-            //verifica todas as empresas que possuem a rotina mensal;
-            if (($empresas[$i]->rotina == $rotinas[$j]->id) && $rotinas[$j]->repeticao == 1) {
-                $arrayempresa[$cont2] = $empresas[$i];
-                $cont2++;
+
+    //verifica o mes atual e o ultimo mes salvo para gerar novo "avisa_rotina"
+    if ($mesatual != $mes_tabela){
+        // cria um array com as empresas da rotina mensal e sua respectiva rotina
+        for($i=0; $i<$numeroempresa; $i++) {
+            for ($j = 0; $j < $numerorotina; $j++) {
+                //verifica todas as empresas que possuem a rotina mensal;
+                if (($empresas[$i]->rotina == $rotinas[$j]->id) && $rotinas[$j]->repeticao == 1) {
+                    $arrayempresa[$cont2] = $empresas[$i];
+                    $cont2++;
+                }
             }
         }
+
+        $aux = 0;
+        $dataaux = 0;
+        $dia = $dataaux[2];
+        $ano = $dataaux[0];
+        //salva as empresas no model
+        do {
+            $model_avisa = new Avisa_rotina();
+            $model_avisa->empresa_fk = $arrayempresa[$aux]->id;
+            $model_avisa->rotina_fk = $arrayempresa[$aux]->rotina;
+            foreach ($rotinas as $r){
+                if($model_avisa->rotina_fk == $r->id){
+                    $dataaux = explode("-", $r->data_entrega);
+                    $dia = $dataaux[2];
+                    $ano = $dataaux[0];
+                }
+            }
+            $model_avisa->data_entrega = "$anoatual-$mesatual-$dia";
+            $model_avisa->gera_auto = $data;
+            $model_avisa->save();
+            $aux++;
+        }while($aux < $cont2);
+        return 1;
+    }else{
+        return 0;
     }
-    return $cont;
 }
 // retorna o número de certificados que irão expirar no dia!
 function certificado(){
@@ -121,7 +171,7 @@ function servicoPronto(){
         return 0;
     }
 }
-
+//verifica se o caixa está fechado
 function caixa(){
     // se o numero de estado 1 for == total de inserções no caixa então o caixa está fechado
     $caixa = Caixa::find()->all();
@@ -137,9 +187,41 @@ function caixa(){
     }
     return 0;
 }
-
+//verifica guias rotina que não foram recebidas para realizar o serviço
+function rotinaAguardando(){
+    $avisa_rotina = Avisa_rotina::find()->all();
+    $aguardando = array();
+    $cont = 0;
+    foreach ($avisa_rotina as $a){
+        if(!$a->status_chegada){
+            $aguardando[$cont] = $a->empresa_fk;
+            $cont++;
+        }
+    }
+    if($cont > 1){
+        return "Aguardando doc. de $cont empresas!";
+    }elseif($cont==1){
+        return "Aguardando doc. de $cont empresa!";
+    }
+        return "Nenhum documento sendo aguardado.";
+}
+//verifica o número de guias q não foram entregue
+function rotinaPronto(){
+    $avisa_rotina = Avisa_rotina::find()->all();
+    $pronto = array();
+    $cont = 0;
+    foreach ($avisa_rotina as $a){
+        if($a->data_pronto && !$a->data_entregue){
+            $pronto[$cont] = $a->empresa_fk;
+            $cont++;
+        }
+    }
+    if($cont){
+        return "$cont doc. pronto para entrega!";
+    }
+    return 0;
+}
 ?>
-
 
 <header class="main-header">
 
@@ -334,6 +416,58 @@ function caixa(){
                             <li class="footer"><a href="#">View all</a></li>
                         </ul>
                     </li>
+
+
+                    <li class="dropdown notifications-menu">
+                        <!-- ISSO DEFINE O QUE FICA NO HEADEAR-->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!--                        //class warning para nova notificação-->
+                            <i class="fa fa-flag-o">
+                            </i>
+                            <!--                            o código abaixo que faz aparecer a notificação-->
+                            <!--                            <span class="label label-warning">-->
+                            <!--                                !-->
+                            <!--                            </i>-->
+                            </span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li class="header">
+                                <?php
+                                $verifica = mensal();
+                                echo "Notificações: $verifica";
+                                ?>
+                            </li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <?php
+                                        if(rotinaAguardando()) {
+                                            echo '<a href="/sigrecon/web/?r=alertaservico"> <i class="fa fa-warning text-yellow"></i>'.rotinaAguardando().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(rotinaPronto()) {
+                                            echo '<a href="/sigrecon/web/?r=alertaservico"> <i class="fa fa-warning text-yellow"></i>'.rotinaPronto().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
 
                     <!--                    <li class="dropdown tasks-menu">-->
                     <!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">-->

@@ -39,10 +39,10 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa/create'],],
-                            ['label' => 'Cliente avulso', 'icon' => 'user', 'url' => ['/clienteavulso/create'],],
-                            ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina/create'],],
-                            ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico/create'],],
+                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa'],],
+                            ['label' => 'Cliente avulso', 'icon' => 'user', 'url' => ['/clienteavulso'],],
+                            ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina'],],
+                            ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico'],],
                             //['label' => 'Empresa', 'icon' => 'institution', 'url' => ['/servico'],],
 //                            [
 //                                'label' => 'Level One',

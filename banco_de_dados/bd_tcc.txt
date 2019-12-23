@@ -183,3 +183,17 @@ create table abrircaixa(
     valor float,
     primary key (id)
 );
+
+create table avisa_rotina(
+	id int auto_increment,
+	empresa_fk int,
+	rotina_fk int,
+	data_entrega date,
+	status_chegada int,
+	status_entrega int,
+	data_chegada date,
+	data_pronto datetime,
+	data_entregue datetime,
+	gera_auto date,
+	primary key (id)
+);
