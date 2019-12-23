@@ -71,26 +71,28 @@ function mensal(){
         $dataaux = 0;
         $dia = $dataaux[2];
         $ano = $dataaux[0];
-        //salva as empresas no model
-        do {
-            $model_avisa = new Avisa_rotina();
-            $model_avisa->empresa_fk = $arrayempresa[$aux]->id;
-            $model_avisa->rotina_fk = $arrayempresa[$aux]->rotina;
-            foreach ($rotinas as $r){
-                if($model_avisa->rotina_fk == $r->id){
-                    $dataaux = explode("-", $r->data_entrega);
-                    $dia = $dataaux[2];
-                    $ano = $dataaux[0];
+        if($arrayempresa){
+            //salva as empresas no model
+            do {
+                $model_avisa = new Avisa_rotina();
+                $model_avisa->empresa_fk = $arrayempresa[$aux]->id;
+                $model_avisa->rotina_fk = $arrayempresa[$aux]->rotina;
+                foreach ($rotinas as $r){
+                    if($model_avisa->rotina_fk == $r->id){
+                        $dataaux = explode("-", $r->data_entrega);
+                        $dia = $dataaux[2];
+                        $ano = $dataaux[0];
+                    }
                 }
-            }
-            $model_avisa->data_entrega = "$anoatual-$mesatual-$dia";
-            $model_avisa->gera_auto = $data;
-            $model_avisa->save();
-            $aux++;
-        }while($aux < $cont2);
-        return 1;
-    }else{
-        return 0;
+                $model_avisa->data_entrega = "$anoatual-$mesatual-$dia";
+                $model_avisa->gera_auto = $data;
+                $model_avisa->save();
+                $aux++;
+            }while($aux < $cont2);
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }
 // retorna o número de certificados que irão expirar no dia!
@@ -203,7 +205,7 @@ function rotinaAguardando(){
     }elseif($cont==1){
         return "Aguardando doc. de $cont empresa!";
     }
-        return "Nenhum documento sendo aguardado.";
+    return "Nenhum documento sendo aguardado.";
 }
 //verifica o número de guias q não foram entregue
 function rotinaPronto(){
