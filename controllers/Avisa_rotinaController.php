@@ -82,9 +82,23 @@ class Avisa_rotinaController extends Controller
      */
     public function actionUpdate($id)
     {
+        date_default_timezone_set('America/Sao_Paulo');
         $model = $this->findModel($id);
 
+
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($model->status_chegada == 1){
+                $model->data_chegada = date('Y-m-d');
+                $model->save();
+            }
+            if ($model->status_entrega == 1){
+                $model->data_pronto = date('Y-m-d');
+                $model->save();
+            }elseif ($model->status_entrega == 2){
+                $model->data_entregue = date('Y-m-d');
+                $model->save();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

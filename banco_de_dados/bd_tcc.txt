@@ -192,8 +192,8 @@ create table avisa_rotina(
 	status_chegada int,
 	status_entrega int,
 	data_chegada date,
-	data_pronto datetime,
-	data_entregue datetime,
+	data_pronto date,
+	data_entregue date,
 	gera_auto date,
 	primary key (id)
 );

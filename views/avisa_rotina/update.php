@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="avisa-rotina-update">
 
-    <?= $this->render('_form', [
+    <?= $this->render('_formEditar', [
         'model' => $model,
     ]) ?>
 

@@ -33,8 +33,9 @@ class Avisa_rotina extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['empresa_fk', 'rotina_fk', 'status_chegada', 'status_entrega'], 'integer'],
+            [['empresa_fk', 'rotina_fk'], 'integer'],
             [['data_entrega', 'data_chegada', 'data_pronto', 'data_entregue'], 'safe'],
+            [['status_chegada', 'status_entrega'],'safe']
         ];
     }
 
