@@ -3,7 +3,6 @@
 use app\models\Servico;
 use app\models\Usuario;
 use yii\helpers\Html;
-//use yii\widgets\DetailView;
 use kartik\detail\DetailView;
 use app\models\Clienteavulso;
 

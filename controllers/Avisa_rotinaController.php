@@ -95,11 +95,17 @@ class Avisa_rotinaController extends Controller
             if ($model->status_entrega == 1){
                 $model->data_pronto = date('Y-m-d');
                 $model->save();
+            }elseif ($model->status_entrega == 2 && !$model->data_pronto) {
+                $model->data_entregue = date('Y-m-d');
+                $model->data_pronto = date('Y-m-d');
+                $model->save();
             }elseif ($model->status_entrega == 2){
                 $model->data_entregue = date('Y-m-d');
                 $model->save();
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            return $this->redirect(['index']);
+
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -2,13 +2,12 @@
 
 use app\models\Empresa;
 use app\models\Rotina;
-use yii\helpers\Html;
 use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Avisa_rotinaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Avisa Rotinas';
+$this->title = 'Controle de rotina';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
@@ -56,7 +55,6 @@ function entrega($model){
 
 <div class="avisa-rotina-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Create Avisa Rotina', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
