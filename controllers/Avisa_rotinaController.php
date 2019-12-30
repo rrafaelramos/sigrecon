@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Avisa_rotina;
 use app\models\Avisa_rotinaSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -33,11 +34,60 @@ class Avisa_rotinaController extends Controller
      * Lists all Avisa_rotina models.
      * @return mixed
      */
+
     public function actionIndex()
     {
         $searchModel = new Avisa_rotinaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    //lista todos os docs sendo aguardados
+    public function actionAguardando(){
+        $searchModel = new Avisa_rotinaSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Avisa_rotina::find()->where(['status_chegada' => '0'])
+        ]);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    // lista os docs pendentes
+    public function actionPendente(){
+        $searchModel = new Avisa_rotinaSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Avisa_rotina::find()->where(['status_entrega' => '0'])
+        ]);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    // lista os docs prontos para entrega
+    public function actionPronto(){
+        $searchModel = new Avisa_rotinaSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Avisa_rotina::find()->where(['status_entrega' => '1'])
+        ]);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    // lista os docs entregues
+    public function actionEntregue(){
+        $searchModel = new Avisa_rotinaSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Avisa_rotina::find()->where(['status_entrega' => '2'])
+        ]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

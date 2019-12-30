@@ -7,6 +7,7 @@ use app\models\Servico;
 use Yii;
 use app\models\Alertaservico;
 use app\models\AlertaservicoSearch;
+use yii\data\ActiveDataProvider;
 use yii\validators\Validator;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -47,6 +48,34 @@ class AlertaservicoController extends Controller
         ]);
     }
 
+    //retorna a lista de serviços prontos para entrega
+    public function actionPronto()
+    {
+        $searchModel = new AlertaservicoSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Alertaservico::find()->where(['status_servico' => '1'])
+        ]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    //retorna a lista de serviços prontos para entrega
+    public function actionPendente()
+    {
+        $searchModel = new AlertaservicoSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Alertaservico::find()->where(['status_servico' => '0'])
+        ]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Alertaservico model.
      * @param integer $id
@@ -76,6 +105,7 @@ class AlertaservicoController extends Controller
 
             $model->usuario_fk = Yii::$app->user->identity->id;
             $servico = Servico::find()->all();
+            $model->status_servico = 0;
             foreach ($servico as $s){
                 if(($s->id == $model->servico_fk) && $model->status_pagamento==1){
                     $caixa->total = ($s->valor*$model->quantidade);

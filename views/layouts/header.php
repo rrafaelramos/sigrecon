@@ -43,7 +43,6 @@ function mensal(){
 //        }
 //    }
 
-
     //pegar ultima data das rotinas geradas;
     $data_tabela = Avisa_rotina::find()->max('gera_auto');
     if(!$data_tabela) {
@@ -86,6 +85,8 @@ function mensal(){
                 }
                 $model_avisa->data_entrega = "$anoatual-$mesatual-$dia";
                 $model_avisa->gera_auto = $data;
+                $model_avisa->status_chegada = 0;
+                $model_avisa->status_entrega = 0;
                 $model_avisa->save();
                 $aux++;
             }while($aux < $cont2);
@@ -154,7 +155,7 @@ function servicoPendente(){
         return 0;
     }
 }
-// retorna o número de servicos prontos para entrega
+// retorna o número de servicos/pf prontos para entrega
 function servicoPronto(){
     $cont = 0;
 
@@ -189,6 +190,8 @@ function caixa(){
     }
     return 0;
 }
+
+
 //verifica guias rotina que não foram recebidas para realizar o serviço
 function rotinaAguardando(){
     $avisa_rotina = Avisa_rotina::find()->all();
@@ -205,16 +208,13 @@ function rotinaAguardando(){
     }elseif($cont==1){
         return "Aguardando doc. de $cont empresa!";
     }
-    return "Nenhum documento sendo aguardado.";
 }
 //verifica o número de guias q não foram entregue
 function rotinaPronto(){
     $avisa_rotina = Avisa_rotina::find()->all();
-    $pronto = array();
     $cont = 0;
     foreach ($avisa_rotina as $a){
         if($a->data_pronto && !$a->data_entregue){
-            $pronto[$cont] = $a->empresa_fk;
             $cont++;
         }
     }
@@ -222,6 +222,19 @@ function rotinaPronto(){
         return "$cont doc. pronto para entrega!";
     }
     return 0;
+}
+//verifica o número de guias pendentes
+function rotinaPendente(){
+    $avisa_rotina = Avisa_rotina::find()->all();
+    $cont = 0;
+    foreach ($avisa_rotina as $a){
+        if($a->status_entrega == 0){
+            $cont++;
+        }
+    }
+    if($cont){
+        return "$cont guias pendentes";
+    }
 }
 ?>
 
@@ -338,8 +351,6 @@ function rotinaPronto(){
                     </li>';
                     }?>
 
-
-
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!--                        //class warning para nova notificação-->
@@ -353,26 +364,20 @@ function rotinaPronto(){
                             ?>
                             </span>
                         </a>
+
                         <ul class="dropdown-menu">
                             <li class="header">
-                                <?php
-                                $verifica = mensal();
-                                echo "Notificações: $verifica";
-                                ?>
                             </li>
-
+                            <?php
+                            echo '<center>'."Notificações de serviços".'</center>';
+                            ?>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                        </a>
-                                    </li>
-                                    <li>
                                         <?php
                                         if(servicoPronto()) {
-                                            echo '<a href="/sigrecon/web/?r=alertaservico"> <i class="fa fa-check-circle text-green"></i>'.servicoPronto().'</a>';
+                                            echo '<a href="/sigrecon/web/?r=alertaservico/pronto"> <i class="fa fa-check-circle text-green"></i>'.servicoPronto().'</a>';
                                         }
                                         ?>
                                     </li>
@@ -393,20 +398,9 @@ function rotinaPronto(){
                                     <li>
                                         <?php
                                         if(servicoPendente()) {
-                                            echo '<a href="/sigrecon/web/?r=alertaservico"> <i class="fa fa-warning text-yellow"></i>'.servicoPendente().'</a>';
+                                            echo '<a href="/sigrecon/web/?r=alertaservico/pendente"> <i class="fa fa-warning text-yellow"></i>'.servicoPendente().'</a>';
                                         }
                                         ?>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-red"></i> 5 new members joined
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                        </a>
                                     </li>
                                     <li>
                                         <a href="#">
@@ -424,20 +418,21 @@ function rotinaPronto(){
                         <!-- ISSO DEFINE O QUE FICA NO HEADEAR-->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!--                        //class warning para nova notificação-->
-                            <i class="fa fa-flag-o">
-                            </i>
-                            <!--                            o código abaixo que faz aparecer a notificação-->
-                            <!--                            <span class="label label-warning">-->
-                            <!--                                !-->
-                            <!--                            </i>-->
+                            <?php
+                            mensal();
+                            if(rotinaAguardando()|| rotinaPronto() || rotinaPendente()){
+                                echo '<i class="fa fa-flag"></i>'.'<span class="label label-warning">';
+                                echo '!';
+                            }else {
+                                echo '<i class="fa fa-flag-o"></i>';
+                            }
+                            ?>
                             </span>
                         </a>
-
                         <ul class="dropdown-menu">
                             <li class="header">
                                 <?php
-                                $verifica = mensal();
-                                echo "Notificações: $verifica";
+                                echo '<center>'."Notificações de rotinas".'</center>';
                                 ?>
                             </li>
                             <li>
@@ -445,29 +440,32 @@ function rotinaPronto(){
                                 <ul class="menu">
                                     <li>
                                         <?php
-                                        if(rotinaAguardando()) {
-                                            echo '<a href="/sigrecon/web/?r=alertaservico"> <i class="fa fa-warning text-yellow"></i>'.rotinaAguardando().'</a>';
+                                        if(rotinaPronto()) {
+                                            echo '<a href="/sigrecon/web/?r=avisa_rotina/pronto"> <i class="fa fa-check-circle text-green"></i>'.rotinaPronto().'</a>';
                                         }
                                         ?>
                                     </li>
                                     <li>
                                         <?php
-                                        if(rotinaPronto()) {
-                                            echo '<a href="/sigrecon/web/?r=alertaservico"> <i class="fa fa-warning text-yellow"></i>'.rotinaPronto().'</a>';
+                                        if(rotinaAguardando()) {
+                                            echo '<a href="/sigrecon/web/?r=avisa_rotina/aguardando"> <i class="fa fa-warning text-yellow"></i>'.rotinaAguardando().'</a>';
+                                        }else{
+                                            echo '<a> <i class="fa fa-check-circle text-green"></i>'."Nenhum documento sendo aguardado".'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(rotinaPendente()) {
+                                            echo '<a href="/sigrecon/web/?r=avisa_rotina/pendente"> <i class="fa fa-warning text-yellow"></i>'.rotinaPendente().'</a>';
                                         }
                                         ?>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="footer"><a href="/sigrecon/web/?r=avisa_rotina">Ver todos</a></li>
                         </ul>
                     </li>
-
-
-
-
-
-
 
 
 
