@@ -3,6 +3,10 @@
 use app\models\Empresa;
 use app\models\Rotina;
 use kartik\grid\GridView;
+use kartik\export\ExportMenu;
+use kartik\mpdf\Pdf;
+use yii\helpers\Html;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Avisa_rotinaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -51,6 +55,54 @@ function entrega($model){
     }
 }
 
+echo '<div style="height: 50px">';
+$gridColumns = [
+    'id',
+    [
+        'label' => 'Empresa',
+        'value' => function($model){
+            return empresa($model);
+        }
+    ],
+    ['label' => 'Rotina',
+        'value' => function($model) {
+            return rotina($model);
+        }
+    ],
+    [   'attribute' => 'data_entrega',
+        'label' => 'Data Limite',
+        'format' => ['date', 'php:d/m/Y']
+    ],
+    ['label' => 'Status Chegada',
+        'value' => function($model) {
+            return chegada($model);
+        }
+    ],
+    ['label' => 'Status do serviço',
+        'value' => function($model) {
+            return entrega($model);
+        }
+    ],
+    ['label' => 'Data da entrega',
+        'value' => function($model) {
+            if(!$model->data_entregue){
+                return "Ainda não foi entregue";
+            }else{
+                return "$model->data_entregue";
+            }
+        }
+    ],
+];
+echo ExportMenu::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => $gridColumns,
+    'exportConfig' => [
+        ExportMenu::FORMAT_CSV => false,
+        ExportMenu::FORMAT_HTML => false,
+        ExportMenu::FORMAT_TEXT => false,
+    ],
+]);
+echo '</div>';
 ?>
 
 <div class="avisa-rotina-index box box-primary">
