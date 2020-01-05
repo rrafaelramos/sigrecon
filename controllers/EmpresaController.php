@@ -5,12 +5,12 @@ namespace app\controllers;
 use Yii;
 use app\models\Empresa;
 use app\models\EmpresaSearch;
-use yii\base\Model;
-use yii\helpers\Html;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\bootstrap\Alert;
+
 
 /**
  * EmpresaController implements the CRUD actions for Empresa model.
@@ -27,6 +27,16 @@ class EmpresaController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','update','view','delete'],
+                'rules' => [
+                    [
+                        'allow'=>true,
+                        'roles'=>['@']
+                    ]
                 ],
             ],
         ];

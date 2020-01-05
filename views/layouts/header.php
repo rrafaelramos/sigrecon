@@ -558,7 +558,10 @@ function rotinaPendente(){
                 <?php if (Yii::$app->user->isGuest){
                     ?>
                     <li class="dropdown user user-menu">
-                        <?= Html::a(' Login', ['site/login']) ?>
+                        <?= Html::a('Entrar', ['site/login']) ?>
+                    </li>
+                    <li class="dropdown user user-menu">
+                        <?= Html::a('Cadastrar', ['site/signup']) ?>
                     </li>
                 <?php }else{  ?>
                     <li class="dropdown user user-menu">

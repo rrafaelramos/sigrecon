@@ -1,8 +1,8 @@
 <?php
 
-use app\models\Empresa;
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EmpresaSearch */
@@ -11,6 +11,73 @@ use kartik\grid\GridView;
 $this->title = 'Procurações e Certificados';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php
+date_default_timezone_set('America/Sao_Paulo');
+function procurac($model){
+    if(strtotime($model->data_procuracao) > strtotime(date("Y-m-d"))){
+        //retorna a data do model, e transforma em um array
+        $dataprocuracao = explode('-',$model->data_procuracao);
+        $dia = $dataprocuracao[2];
+        $mes = $dataprocuracao[1];
+        $ano = $dataprocuracao[0];
+        return "$dia/$mes/$ano";
+    }elseif(strtotime($model->data_procuracao) == strtotime(date("Y-m-d"))){
+        return 'Hoje!';
+    }else{
+        return 'Expirou!';
+    }
+}
+
+function certifica($model){
+    if(strtotime($model->data_certificado) > strtotime(date("Y-m-d"))){
+        date_default_timezone_set('America/Sao_Paulo');
+        $datacertificado = explode('-',$model->data_certificado);
+        $diac = $datacertificado[2];
+        $mesc = $datacertificado[1];
+        $anoc = $datacertificado[0];
+        return "$diac/$mesc/$anoc";
+    }elseif(strtotime($model->data_certificado) == strtotime(date("Y-m-d"))){
+        return 'Hoje!';
+    }else{
+        return 'Expirou';
+    }
+}
+
+?>
+
+
+<?php
+
+$gridColumns = [
+    'razao_social',
+    ['attribute' => 'data_procuracao',
+        'label' => 'Vencimento Procuração',
+        'value' => function($model){
+            return procurac($model);
+        }
+    ],
+    ['attribute' => 'data_certificado',
+        'label' => 'Vencimento Certificado',
+        'value' => function($model){
+            return certifica($model);
+        }
+    ],
+    'responsavel',
+    'telefone_socio'
+];
+
+echo ExportMenu::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => $gridColumns,
+    'exportConfig' => [
+        ExportMenu::FORMAT_CSV => false,
+        ExportMenu::FORMAT_HTML => false,
+        ExportMenu::FORMAT_TEXT => false,
+    ],
+]);
+?>
+
 <div class="empresa-index box box-primary">
     <div class="box-header with-border">
         <?= Html::a('Cadastrar Empresa', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
@@ -55,37 +122,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'uf',
                 //'format' => ['date','php:d/m/Y'],
                 // 'data_abertura',
-                 [ 'attribute' => 'data_procuracao',
-                     'value' => function($model){
-                         date_default_timezone_set('America/Sao_Paulo');
-                        if(strtotime($model->data_procuracao) > strtotime(date("Y-m-d"))){
-                            //retorna a data do model, e transforma em um array
-                            $dataprocuracao = explode('-',$model->data_procuracao);
-                            $dia = $dataprocuracao[2];
-                            $mes = $dataprocuracao[1];
-                            $ano = $dataprocuracao[0];
-                            return "$dia/$mes/$ano";
-                        }elseif(strtotime($model->data_procuracao) == strtotime(date("Y-m-d"))){
-                            return "Hoje!";
-                        }else{
-                            return 'Expirou!';
-                        }
-                     }
-                 ],
+                [ 'attribute' => 'data_procuracao',
+                    'value' => function($model){
+                        return procurac($model);
+                    }
+                ],
                 ['attribute' => 'data_certificado',
                     'value' => function($model){
-                        if(strtotime($model->data_certificado) > strtotime(date("Y-m-d"))){
-                            date_default_timezone_set('America/Sao_Paulo');
-                            $datacertificado = explode('-',$model->data_certificado);
-                            $diac = $datacertificado[2];
-                            $mesc = $datacertificado[1];
-                            $anoc = $datacertificado[0];
-                            return "$diac/$mesc/$anoc";
-                        }elseif(strtotime($model->data_certificado) == strtotime(date("Y-m-d"))){
-                            return 'Hoje!';
-                        }else{
-                            return 'Expirou';
-                        }
+                        return certifica($model);
                     }
 
                 ],

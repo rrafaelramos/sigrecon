@@ -58,7 +58,8 @@ class Empresa extends \yii\db\ActiveRecord
     {
 
         return [
-            [['cnpj', 'razao_social', 'rotina', 'cpf_socio', 'responsavel', 'telefone_socio'], 'required'],
+            [['cnpj', 'razao_social', 'rotina', 'cpf_socio', 'responsavel'], 'required'],
+            [['telefone_socio'],'string'],
             [['rotina', 'usuario_fk'], 'integer'],
             [['data_abertura', 'data_procuracao', 'data_certificado', 'datanascimento_socio'], 'safe'],
             [['data_abertura'], 'validarData'],
