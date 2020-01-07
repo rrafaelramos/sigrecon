@@ -2,7 +2,6 @@
 
 use app\models\Clienteavulso;
 use app\models\Servico;
-use kartik\datecontrol\DateControl;
 use kartik\money\MaskMoney;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;

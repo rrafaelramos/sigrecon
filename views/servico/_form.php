@@ -1,6 +1,5 @@
 <?php
 
-//use app\widgets\Alert;
 use kartik\money\MaskMoney;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

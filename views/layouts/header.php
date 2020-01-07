@@ -5,6 +5,7 @@ use app\models\Avisa_rotina;
 use app\models\Caixa;
 use app\models\Empresa;
 use app\models\Rotina;
+use app\models\Usuario;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
@@ -14,7 +15,17 @@ use yii\helpers\Html;
 <?php
 date_default_timezone_set('America/Sao_Paulo');
 
-//essa funão verifica se deverá ser gerado protocolo de entrega nesse mês
+// verifica pedisdo para se inscrever no sistema
+function novoUsuario(){
+    $usuario = Usuario::find()->all();
+    foreach ($usuario as $u){
+        if($u->tipo == 0){
+            return 1;
+        }
+    }
+}
+
+//essa função verifica se deverá ser gerado protocolo de entrega nesse mês
 function mensal(){
     // todo mes os sistema vai gerar o relatório de entrega, e no dia especifico do aviso vai me mostar;
     $data = date('Y-m-d');
@@ -351,6 +362,18 @@ function rotinaPendente(){
                     </li>';
                     }?>
 
+                    <?php if (novoUsuario() && Yii::$app->user->identity->tipo == 1){
+                        echo
+                        '<li class="dropdown notifications-menu">
+                        <a href="/sigrecon/web/?r=usuario"> 
+                            <i class="fa fa-user">
+                            </i>
+                            <span class="label label-warning">';
+                        echo '!'.
+                        '</a>
+                    </li>';
+                    }?>
+
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!--                        //class warning para nova notificação-->
@@ -561,7 +584,7 @@ function rotinaPendente(){
                         <?= Html::a('Entrar', ['site/login']) ?>
                     </li>
                     <li class="dropdown user user-menu">
-                        <?= Html::a('Cadastrar', ['site/signup']) ?>
+                        <?= Html::a('Cadastrar', ['usuario/create']) ?>
                     </li>
                 <?php }else{  ?>
                     <li class="dropdown user user-menu">
@@ -598,7 +621,11 @@ function rotinaPendente(){
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <?= Html::a(
+                                        'Perfil',
+                                        ['/usuario/view', 'id' => Yii::$app->user->identity->id],
+                                        ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
+                                    ) ?>
                                 </div>
                                 <div class="pull-right">
                                     <?= Html::a(
