@@ -51,6 +51,8 @@ $email = [
                             <?php // echo $form->field($model, 'authKey')->textInput(['maxlength' => true]) ?>
                             <?php if(Yii::$app->user->isGuest) {
                                 echo Html::submitButton('Solicitar', ['class' => 'btn btn-success btn-flat pull-right']);
+                            }else{
+                                echo Html::submitButton('Atualizar', ['class' => 'btn btn-success btn-flat pull-right']);
                             }
                             ?>
 

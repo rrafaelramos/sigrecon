@@ -7,6 +7,7 @@ use app\models\Rotina;
 use app\models\RotinaSearch;
 use yii\data\ActiveDataProvider;
 use yii\debug\models\timeline\DataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,16 @@ class RotinaController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','update','view','delete','index'],
+                'rules' => [
+                    [
+                        'allow'=>true,
+                        'roles'=>['@']
+                    ]
                 ],
             ],
         ];

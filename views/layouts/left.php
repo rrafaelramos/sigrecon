@@ -1,8 +1,8 @@
 <aside class="main-sidebar">
-
     <section class="sidebar">
 
         <!-- Sidebar user panel -->
+        <?php if(!Yii::$app->user->isGuest){ ?>
         <div class="user-panel">
             <div class="pull-left image">
                 <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
@@ -25,14 +25,15 @@
             </div>
         </form>
         <!-- /.search form -->
+        <?php } ?>
 
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'MENU', 'options' => ['class' => 'header']],
-                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
+//                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
+//                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     [
                         'label' => 'Cadastrar',
                         //'icon' => 'share',

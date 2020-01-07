@@ -6,6 +6,7 @@ use app\models\Rotina;
 use Yii;
 use app\models\Clienteavulso;
 use app\models\ClienteavulsoSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,6 +26,16 @@ class ClienteavulsoController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','update','view','delete','index'],
+                'rules' => [
+                    [
+                        'allow'=>true,
+                        'roles'=>['@']
+                    ]
                 ],
             ],
         ];

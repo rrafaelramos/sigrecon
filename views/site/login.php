@@ -63,7 +63,7 @@ $fieldOptions2 = [
         <!-- /.social-auth-links -->
 
         <a href="#">Esqueci a minha senha</a><br>
-        <a href="register.html" class="text-center">Registrar um novo membro</a>
+        <a href="index.php?r=usuario/create" class="text-center">Registrar um novo membro</a>
 
     </div>
     <!-- /.login-box-body -->

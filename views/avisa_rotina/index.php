@@ -4,8 +4,6 @@ use app\models\Empresa;
 use app\models\Rotina;
 use kartik\grid\GridView;
 use kartik\export\ExportMenu;
-use kartik\mpdf\Pdf;
-use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Avisa_rotinaSearch */

@@ -31,7 +31,7 @@ class EmpresaController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','update','view','delete'],
+                'only' => ['create','update','view','delete','index'],
                 'rules' => [
                     [
                         'allow'=>true,
