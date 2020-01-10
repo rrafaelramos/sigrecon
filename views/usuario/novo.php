@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -13,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Meu Perfil'];
 <?php
     function tipo($model){
         if($model->tipo == 0){
-            return 'Não autorizado!';
+            return 'Solicitação efetuada!';
         }elseif ($model->tipo == 1){
             return 'Gerente';
         }elseif ($model->tipo == 2){
@@ -24,7 +25,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Meu Perfil'];
     }
 ?>
 
-
+<?php
+echo Alert::widget([
+    'options' => [
+        'class' => 'alert-warning',
+    ],
+    'body' => 'Solicitação de cadastro efetuada!',
+]);
+?>
 <div class="usuario-view box box-primary">
     <div class="box-header with-border">
         <div class="col-sm-10">
@@ -32,15 +40,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Meu Perfil'];
         </div>
         <div>
             <div class="pull-right">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
+                <?= Html::a('Voltar', ['/site/index'], ['class' => 'btn btn-warning btn-flat']) ?>
             </div>
         </div>
     </div>
     <div class="panel-body">
         <div class="panel-group collapse in">
             <div class="panel panel-default">
-                <div class="panel-heading with-border col-xs-12">
+                <div class="panel-heading with-border col-sm-12">
                     <div class="col-sm-8">
                         <h2 class="panel-title">Informações Gerais</h2>
                     </div>
@@ -98,3 +105,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Meu Perfil'];
                     ]) ?>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+

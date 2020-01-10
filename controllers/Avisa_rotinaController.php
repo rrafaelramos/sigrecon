@@ -28,16 +28,6 @@ class Avisa_rotinaController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['create','update','view','delete','index'],
-                'rules' => [
-                    [
-                        'allow'=>true,
-                        'roles'=>['@']
-                    ]
-                ],
-            ],
         ];
     }
 

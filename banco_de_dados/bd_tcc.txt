@@ -197,3 +197,14 @@ create table avisa_rotina(
 	gera_auto date,
 	primary key (id)
 );
+
+create table mensagem(
+	id int auto_increment,
+	emissor int,
+	receptor int,
+	data_envio date,
+	titulo varchar(40),
+	conteudo text,
+	lido int,
+	primary key (id)
+);

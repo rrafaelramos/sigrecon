@@ -47,15 +47,15 @@ class LoginForm extends Model
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Combinação Inválida');
-            }
-            if($user->tipo == 0){
+            }elseif($user->tipo == 0){
                 $this->addError($attribute, 'Sua solicitação de acesso ainda não foi analizada, por favor contate o gerente!');
             }
-            if($user->tipo == 3){
+            elseif($user->tipo == 3){
                 $this->addError($attribute, 'Sua solicitação de acesso foi recusada pelo gerente!');
             }
         }
     }
+
 
     /**
      * Logs in a user using the provided username and password.

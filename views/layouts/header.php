@@ -4,6 +4,7 @@ use app\models\Alertaservico;
 use app\models\Avisa_rotina;
 use app\models\Caixa;
 use app\models\Empresa;
+use app\models\Mensagem;
 use app\models\Rotina;
 use app\models\Usuario;
 use yii\helpers\Html;
@@ -14,6 +15,22 @@ use yii\helpers\Html;
 
 <?php
 date_default_timezone_set('America/Sao_Paulo');
+// Verifica se possui novo recado
+function recado(){
+    $mensagem = Mensagem::find()->all();
+    if($mensagem) {
+        $cont = 0;
+        foreach ($mensagem as $m) {
+            if ($m->receptor == Yii::$app->user->identity->id && !$m->lido) {
+                $cont++;
+            }
+        }
+        return $cont;
+    }else{
+        return 0;
+    }
+
+}
 
 // verifica pedisdo para se inscrever no sistema
 function novoUsuario(){
@@ -27,7 +44,6 @@ function novoUsuario(){
 
 //essa função verifica se deverá ser gerado protocolo de entrega nesse mês
 function mensal(){
-    // todo mes os sistema vai gerar o relatório de entrega, e no dia especifico do aviso vai me mostar;
     $data = date('Y-m-d');
     $dataform = explode("-",$data);
     $mesatual = $dataform[1];
@@ -268,86 +284,19 @@ function rotinaPendente(){
                 <?php
                 if(!Yii::$app->user->isGuest){
                     ?>
-                    <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">4</span>
+
+                    <li class="messages-menu" >
+                        <a href = "/sigrecon/web/?r=mensagem" >
+
+                            <?php if(recado()) {
+                                echo '<i class="fa fa-envelope"></i >'.'<span class="label label-warning">';
+                                echo recado();
+                            }else{
+                                echo'<i class="fa fa-envelope-o"></i>';
+                            }
+                            ?>
+                            </span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 3 messages</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li><!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
-                                                     alt="User Image"/>
-                                            </div>
-                                            <h4>
-                                                Support Team
-                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <!-- end message -->
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="<?= $directoryAsset ?>/img/user3-128x128.jpg" class="img-circle"
-                                                     alt="user image"/>
-                                            </div>
-                                            <h4>
-                                                AdminLTE Design Team
-                                                <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="<?= $directoryAsset ?>/img/user4-128x128.jpg" class="img-circle"
-                                                     alt="user image"/>
-                                            </div>
-                                            <h4>
-                                                Developers
-                                                <small><i class="fa fa-clock-o"></i> Today</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="<?= $directoryAsset ?>/img/user3-128x128.jpg" class="img-circle"
-                                                     alt="user image"/>
-                                            </div>
-                                            <h4>
-                                                Sales Department
-                                                <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="<?= $directoryAsset ?>/img/user4-128x128.jpg" class="img-circle"
-                                                     alt="user image"/>
-                                            </div>
-                                            <h4>
-                                                Reviewers
-                                                <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="#">See All Messages</a></li>
-                        </ul>
                     </li>
 
                     <?php if (caixa()){
@@ -362,7 +311,7 @@ function rotinaPendente(){
                     </li>';
                     }?>
 
-                    <?php if (novoUsuario() && Yii::$app->user->identity->tipo == 1){
+                    <?php if(novoUsuario() && Yii::$app->user->identity->tipo == 1){
                         echo
                         '<li class="dropdown notifications-menu">
                         <a href="/sigrecon/web/?r=usuario"> 
@@ -370,7 +319,7 @@ function rotinaPendente(){
                             </i>
                             <span class="label label-warning">';
                         echo '!'.
-                        '</a>
+                            '</a>
                     </li>';
                     }?>
 
@@ -641,7 +590,7 @@ function rotinaPendente(){
 
                 <!-- User Account: style can be found in dropdown.less -->
                 <li>
-<!--                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>-->
+                    <!--                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>-->
                 </li>
             </ul>
         </div>
