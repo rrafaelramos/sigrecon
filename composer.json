@@ -26,7 +26,8 @@
         "yiibr/yii2-br-validator": "*",
         "kartik-v/yii2-money": "dev-master",
         "kartik-v/yii2-export": "dev-master",
-        "kartik-v/yii2-mpdf": "dev-master"
+        "kartik-v/yii2-mpdf": "dev-master",
+        "unclead/yii2-multiple-input": "~2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -169,8 +169,12 @@ class Empresa extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuarioFk()
-    {
-        return $this->hasOne(User::className(), ['id' => 'usuario_fk']);
-    }
+//    public function getUsuarioFk()
+//    {
+//        return $this->hasOne(User::className(), ['id' => 'usuario_fk']);
+//    }
+    
+//    public function getRotinas(){
+//        return $this->hasOne(Rotina::className(), ['empresa_fk' => 'id']);
+//    }
 }

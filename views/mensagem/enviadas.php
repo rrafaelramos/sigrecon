@@ -20,6 +20,15 @@ function emissor($model){
     }
 }
 
+function receptor($model){
+    $usuarios = Usuario::find()->all();
+    foreach ($usuarios as $u){
+        if ($u->id == $model->receptor){
+            return $u->nome;
+        }
+    }
+}
+
 ?>
 <div class="mensagem-index box box-primary">
     <div class="box-header with-border">
@@ -46,7 +55,10 @@ function emissor($model){
                         return emissor($model);
                     }
                 ],
-                //'receptor',
+                ['attribute' => 'receptor',
+                    'value' => function($model){
+                        return receptor($model);
+                    }],
                 ['attribute' => 'data_envio',
                     'format' => ['date', 'php: d/m/Y']
                 ],
@@ -58,7 +70,7 @@ function emissor($model){
 
                 [
                     'class' => '\kartik\grid\ActionColumn',
-                    'template' => '{view}{delete}',
+                    'template' => '{view}',
                 ],
             ],
         ]); ?>

@@ -35,6 +35,7 @@ class Mensagem extends \yii\db\ActiveRecord
             [['data_envio'], 'safe'],
             [['conteudo'], 'string'],
             [['titulo'], 'string', 'max' => 40],
+            [['receptor'],'required'],
         ];
     }
 

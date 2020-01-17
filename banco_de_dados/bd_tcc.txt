@@ -107,6 +107,7 @@ create table rotina(
 	id int auto_increment,
 	nome varchar(200),
 	repeticao int not null,
+	empresa_fk int,
 	doc_entrega varchar(200),
 	doc_busca varchar(200),
 	data_entrega DATE,

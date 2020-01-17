@@ -1,6 +1,8 @@
 <?php
 
+use app\models\Empresa;
 use kartik\datecontrol\DateControl;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -40,7 +42,7 @@ use yii\widgets\ActiveForm;
                         <?= $form->field($model, 'doc_entrega')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="col-sm-6">
-                            <?= $form->field($model, 'doc_busca')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'doc_busca')->textInput(['maxlength' => true]) ?>
                     </div>
                 </div>
             </div>
@@ -83,12 +85,17 @@ use yii\widgets\ActiveForm;
                 </div>
 
                 <div class="panel-body">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <?= $form->field($model, 'informacao')->textarea(['maxlength' => true]) ?>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <?= $form->field($model, 'msg_aviso')->textarea(['maxlength' => true]) ?>
                     </div>
+
+                    <!--                    <div class="col-sm-4">-->
+                    <!--                        --><?php //echo $form->field($model, 'empresa_fk')->dropDownList(ArrayHelper::map(Empresa::find()->all(),'id','razao_social'))->label('Empresas') ?>
+                    <!--                    </div>-->
+
                 </div>
             </div>
 
@@ -105,6 +112,8 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
-</div>
+
+
+

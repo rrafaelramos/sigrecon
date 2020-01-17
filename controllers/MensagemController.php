@@ -66,7 +66,9 @@ class MensagemController extends Controller
     public function actionView($id)
     {
         $mensagem = $this->findModel($id);
-        $mensagem->lido = 1;
+        if(Yii::$app->user->identity->id == $mensagem->receptor) {
+            $mensagem->lido = 1;
+        }
         $mensagem->save();
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -141,5 +143,16 @@ class MensagemController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionEnviadas(){
+        $searchModel = new MensagemSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Mensagem::find()->where(['emissor' => Yii::$app->user->identity->id])
+        ]);
+        return $this->render('enviadas', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

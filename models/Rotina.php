@@ -20,6 +20,11 @@ use Yii;
 class Rotina extends \yii\db\ActiveRecord
 {
     /**
+ * @var array virtual attribute for keeping empresa_fk
+ */
+    public $empresa_fk;
+
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -35,8 +40,9 @@ class Rotina extends \yii\db\ActiveRecord
         return [
             [['nome'],'unique'],
             [['nome'], 'required'],
+            [['empresa_fk'], 'safe'],
             [['repeticao'], 'required'],
-            [['data_entrega', 'data_aviso'], 'safe'],
+            [['data_entrega', 'data_aviso'], 'required'],
             [['nome', 'doc_entrega', 'doc_busca'], 'string', 'max' => 200],
             [['informacao', 'msg_aviso'], 'string', 'max' => 500],
 
@@ -60,6 +66,11 @@ class Rotina extends \yii\db\ActiveRecord
             'data_aviso' => 'Data de Aviso',
             'informacao' => 'Informações Adicionais',
             'msg_aviso' => 'Mensagem de Aviso',
+            'empresa_fk' => 'Empresa',
         ];
     }
+
+//    public function getEmpresa(){
+//        return $this->hasMany(Empresa::className(),['rotina' => 'id']);
+//    }
 }

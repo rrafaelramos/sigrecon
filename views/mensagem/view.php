@@ -35,6 +35,7 @@ function lido($model){
     if($model->lido == 1){
         return 'Sim';
     }
+    return 'Não';
 }
 ?>
     <div class="usuario-view box box-primary">
