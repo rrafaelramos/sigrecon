@@ -5,12 +5,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Mensagem */
 
-$this->title = 'Editar recado ';
+$this->title = 'Editar';
 $this->params['breadcrumbs'][] = ['label' => 'Recados', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Editar';
 ?>
-<div class="Reacado-update">
+<div class="Recado-update">
 
     <?= $this->render('_form', [
         'model' => $model,

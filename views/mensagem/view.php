@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Mensagem */
 
 $this->title = $model->titulo;
-$this->params['breadcrumbs'][] = ['label' => 'Mensagems', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Recados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

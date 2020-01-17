@@ -209,3 +209,11 @@ create table mensagem(
 	lido int,
 	primary key (id)
 );
+
+create table lembrete(
+    id int auto_increment,
+    data date not null,
+    info text not null,
+    usuario_fk int,
+    primary key (id)
+);
