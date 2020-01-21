@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Lembrete;
 use app\models\LembreteSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,16 @@ class LembreteController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','update','view','delete','index'],
+                'rules' => [
+                    [
+                        'allow'=>true,
+                        'roles'=>['@']
+                    ]
+                ],
+            ],
         ];
     }
 
@@ -35,12 +46,23 @@ class LembreteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LembreteSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//        $searchModel = new LembreteSearch();
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $lembretes = Lembrete::find()->all();
+
+        $events = [];
+        foreach ($lembretes as $lembrete) {
+            if($lembrete->usuario_fk == Yii::$app->user->identity->id) {
+                $event = new \yii2fullcalendar\models\Event();
+                $event->id = $lembrete->id;
+                $event->title = $lembrete->titulo;
+                $event->start = $lembrete->data;
+                $events[] = $event;
+            }
+        }
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'events' => $events,
         ]);
     }
 
@@ -49,11 +71,17 @@ class LembreteController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$titulo)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $lembrete = Lembrete::find()->all();
+
+        foreach ($lembrete as $lemb){
+            if($lemb->titulo == $titulo){
+                return $this->renderAjax('view', [
+                    'model' => $this->findModel($lemb->id),
+                ]);
+            }
+        }
     }
 
     /**
@@ -61,14 +89,16 @@ class LembreteController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($date)
     {
         $model = new Lembrete();
+        $model->data = $date;
+        $model->usuario_fk = Yii::$app->user->identity->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }
@@ -85,7 +115,7 @@ class LembreteController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

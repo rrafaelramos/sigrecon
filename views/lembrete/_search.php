@@ -19,7 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'data') ?>
 
-    <?= $form->field($model, 'info') ?>
+    <?= $form->field($model, 'titulo') ?>
+
+    <?= $form->field($model, 'corpo') ?>
 
     <?= $form->field($model, 'usuario_fk') ?>
 

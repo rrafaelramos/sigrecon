@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LembreteSearch */
@@ -10,26 +10,63 @@ use yii\grid\GridView;
 $this->title = 'Lembretes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php
+$this->registerJs('
+    $(document).on("click",".fc-day",function(){
+        var date = $(this).attr("data-date");
+        
+        $.get("index.php?r=lembrete/create",{"date":date},function(data){
+            $("#modal").modal("show")
+            .find("#modalContent")
+            .html(data);
+        });
+    });
+    
+    $(document).on("click",".fc-title",function(){
+        var titulo = $(this).text();
+        
+        $.get("index.php?r=lembrete/view&id=".concat(1).concat("&titulo=").concat(titulo),function(data){
+            $("#modalm").modal("show")
+            .find("#modalmContent")
+            .html(data);
+        });
+    });
+');
+?>
+
+
+
+
 <div class="lembrete-index box box-primary">
-    <div class="box-header with-border">
-        <?= Html::a('Create Lembrete', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-    </div>
     <div class="box-body table-responsive no-padding">
-        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'layout' => "{items}\n{summary}\n{pager}",
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+        <div class="col-sm-8 col-sm-offset-2">
+            <?php
+            Modal::begin([
+                'header'=>'<h4>Novo Lembrete</h4>',
+                'id'=>'modal',
+                'size'=> 'modal-lg',
+            ]);
+            echo "<div id='modalContent'>  </div>";
+            Modal::end();
 
-                'id',
-                'data',
-                'info:ntext',
-                'usuario_fk',
+            Modal::begin([
+                'header'=>'<h4>Visualizar</h4>',
+                'id'=>'modalm',
+                'size'=> 'modal-lg',
+            ]);
+            echo "<div id='modalmContent'>  </div>";
+            Modal::end();
 
-                ['class' => 'yii\grid\ActionColumn'],
-            ],
-        ]); ?>
+            ?>
+
+
+            <?= yii2fullcalendar\yii2fullcalendar::widget(array(
+                'events' => $events,
+                'clientOptions' => [
+                    'locale'=>'pt-br',
+                    'editable' => false,
+                ]
+            ))?>
+        </div>
     </div>
 </div>

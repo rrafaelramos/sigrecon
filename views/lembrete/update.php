@@ -5,10 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Lembrete */
 
-$this->title = 'Update Lembrete: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Lembretes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Editar Lembrete: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Lembrete', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'Editar';
 ?>
 <div class="lembrete-update">
 

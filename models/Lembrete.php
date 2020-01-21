@@ -9,7 +9,8 @@ use Yii;
  *
  * @property int $id
  * @property string $data
- * @property string $info
+ * @property string|null $titulo
+ * @property string $corpo
  * @property int|null $usuario_fk
  */
 class Lembrete extends \yii\db\ActiveRecord
@@ -28,10 +29,10 @@ class Lembrete extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data', 'info'], 'required'],
+            [['data', 'titulo'], 'required'],
             [['data'], 'safe'],
-            [['info'], 'string'],
             [['usuario_fk'], 'integer'],
+            [['titulo'], 'string', 'max' => 100],
         ];
     }
 
@@ -43,7 +44,8 @@ class Lembrete extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'data' => 'Data',
-            'info' => 'Info',
+            'titulo' => 'Titulo',
+            'corpo' => 'Corpo',
             'usuario_fk' => 'Usuario Fk',
         ];
     }

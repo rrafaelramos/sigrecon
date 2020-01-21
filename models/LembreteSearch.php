@@ -19,7 +19,7 @@ class LembreteSearch extends Lembrete
     {
         return [
             [['id', 'usuario_fk'], 'integer'],
-            [['data', 'info'], 'safe'],
+            [['data', 'titulo', 'corpo'], 'safe'],
         ];
     }
 
@@ -65,7 +65,8 @@ class LembreteSearch extends Lembrete
             'usuario_fk' => $this->usuario_fk,
         ]);
 
-        $query->andFilterWhere(['like', 'info', $this->info]);
+        $query->andFilterWhere(['like', 'titulo', $this->titulo])
+            ->andFilterWhere(['like', 'corpo', $this->corpo]);
 
         return $dataProvider;
     }

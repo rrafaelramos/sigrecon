@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Lembrete */
 
-$this->title = 'Create Lembrete';
-$this->params['breadcrumbs'][] = ['label' => 'Lembretes', 'url' => ['index']];
+$this->title = 'Novo Lembrete';
+$this->params['breadcrumbs'][] = ['label' => 'Lembrete', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lembrete-create">

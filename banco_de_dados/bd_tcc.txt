@@ -213,7 +213,7 @@ create table mensagem(
 create table lembrete(
     id int auto_increment,
     data date not null,
-    info text not null,
+    titulo varchar(250),
     usuario_fk int,
     primary key (id)
 );

@@ -7,20 +7,31 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Lembrete */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<?php
+function auxiliar($data){
+    $dataaux = explode('-',$data);
+    $dia = $dataaux[2];
+    $mes = $dataaux[1];
+    $ano = $dataaux[0];
+    return "$dia/$mes/$ano";
+}
+?>
 
 <div class="lembrete-form box box-primary">
     <?php $form = ActiveForm::begin(); ?>
     <div class="box-body table-responsive">
 
-        <?= $form->field($model, 'data')->textInput() ?>
+        <?php
+        echo '<h1><center>'.auxiliar($model->data).'</center></h1>';
+        ?>
 
-        <?= $form->field($model, 'info')->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'titulo')->textarea(['maxlength' => true, 'rows' => 3])->label('Lembre-me de:') ?>
 
-        <?= $form->field($model, 'usuario_fk')->textInput() ?>
+        <!--        --><?php //echo $form->field($model, 'usuario_fk')->textInput() ?>
 
     </div>
     <div class="box-footer">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success btn-flat']) ?>
+        <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
