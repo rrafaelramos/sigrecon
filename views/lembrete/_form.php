@@ -25,7 +25,7 @@ function auxiliar($data){
         echo '<h1><center>'.auxiliar($model->data).'</center></h1>';
         ?>
 
-        <?= $form->field($model, 'titulo')->textarea(['maxlength' => true, 'rows' => 3])->label('Lembre-me de:') ?>
+        <?= $form->field($model, 'titulo')->textInput(['maxlength' => true])->label('Lembre-me de:') ?>
 
         <!--        --><?php //echo $form->field($model, 'usuario_fk')->textInput() ?>
 

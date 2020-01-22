@@ -12,11 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lembrete-view box box-primary">
     <div class="box-header">
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
+        <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger btn-flat',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Deseja realmente apagar?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -25,10 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'id',
-                'data',
+                //'id',
+                [
+                    'attribute'=> 'data',
+                    'format' => ['date', 'php:d/m/Y']
+                ],
                 'titulo',
-                'usuario_fk',
+                [
+                    'attribute'=> 'usuario_fk',
+                    'value' => Yii::$app->user->identity->nome,
+                ],
             ],
         ]) ?>
     </div>

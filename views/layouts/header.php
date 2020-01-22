@@ -4,6 +4,7 @@ use app\models\Alertaservico;
 use app\models\Avisa_rotina;
 use app\models\Caixa;
 use app\models\Empresa;
+use app\models\Lembrete;
 use app\models\Mensagem;
 use app\models\Rotina;
 use app\models\Usuario;
@@ -217,6 +218,20 @@ function caixa(){
     }
     return 0;
 }
+//verifica se possui lembrete no dia
+function lembrete(){
+    date_default_timezone_set('America/Sao_Paulo');
+    if(!Yii::$app->user->isGuest) {
+        $lembretes = Lembrete::find()->all();
+        $cont = 0;
+        foreach ($lembretes as $lembrete) {
+            if ($lembrete->usuario_fk == Yii::$app->user->identity->id && $lembrete->data == date('Y-m-d')){
+                $cont++;
+            }
+        }
+        return $cont;
+    }
+}
 
 
 //verifica guias rotina que não foram recebidas para realizar o serviço
@@ -284,6 +299,18 @@ function rotinaPendente(){
                 <?php
                 if(!Yii::$app->user->isGuest){
                     ?>
+
+                    <li class="messages-menu" >
+                        <a href = "/sigrecon/web/?r=lembrete" >
+
+                            <?php if(lembrete()) {
+                                echo '<i class="fa fa-calendar"></i >'.'<span class="label label-warning">';
+                                echo lembrete();
+                            }
+                            ?>
+                            </span>
+                        </a>
+                    </li>
 
                     <li class="messages-menu" >
                         <a href = "/sigrecon/web/?r=mensagem" >

@@ -10,7 +10,6 @@ use Yii;
  * @property int $id
  * @property string $data
  * @property string|null $titulo
- * @property string $corpo
  * @property int|null $usuario_fk
  */
 class Lembrete extends \yii\db\ActiveRecord
@@ -44,9 +43,8 @@ class Lembrete extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'data' => 'Data',
-            'titulo' => 'Titulo',
-            'corpo' => 'Corpo',
-            'usuario_fk' => 'Usuario Fk',
+            'titulo' => 'Lembrete',
+            'usuario_fk' => 'Usuário',
         ];
     }
 }

@@ -39,7 +39,7 @@ $this->registerJs('
 
 <div class="lembrete-index box box-primary">
     <div class="box-body table-responsive no-padding">
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-12">
             <?php
             Modal::begin([
                 'header'=>'<h4>Novo Lembrete</h4>',
