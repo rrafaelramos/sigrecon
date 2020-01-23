@@ -86,7 +86,7 @@ class AbrircaixaController extends Controller
             $caixa->data = $data;
             $model->data = $data;
             $caixa->save();
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/site/index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

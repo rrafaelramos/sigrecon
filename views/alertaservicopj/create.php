@@ -7,7 +7,6 @@ use yii\helpers\Html;
 /* @var $model app\models\Alertaservicopj */
 
 $this->title = 'Cadastrar Alerta PJ';
-$this->params['breadcrumbs'][] = ['label' => 'Alertaservicopjs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alertaservicopj-create">

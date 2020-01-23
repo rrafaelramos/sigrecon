@@ -107,7 +107,8 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra'],],
-                            ['label' => 'Fechar Caixa', 'icon' => 'usd', 'url' => ['/fcaixa/create'],],
+                            ['label' => 'Fechar Caixa', 'icon' => 'lock', 'url' => ['/fcaixa/create'],],
+                            ['label' => 'Saldo', 'icon' => 'usd', 'url' => ['fcaixa/consulta']]
                         ],
                     ],
                     ['label' => 'Meus Lembretes', 'icon' => 'calendar', 'url' => ['/lembrete'],],

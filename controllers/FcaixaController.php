@@ -84,6 +84,7 @@ class FcaixaController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             foreach ($caixa as $c){
+                //se o estado for '0' significa que ainda não foi realizado o fechamento
                 if($c->estado == 0){
                     if($c->total>0){
                         $model->entrada += $c->total;
@@ -154,5 +155,28 @@ class FcaixaController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionConsulta(){
+        $caixa = Caixa::find()->all();
+        $entrada = 0;
+        $saida = 0;
+        $saldo =0;
+        foreach ($caixa as $c){
+            //se o estado for '0' significa que ainda não foi realizado o fechamento
+            if($c->estado == 0){
+                if($c->total>0){
+                    $entrada += $c->total;
+                }else{
+                    $saida += $c->total;
+                }
+                $saldo = $entrada + $saida;
+            }
+        }
+        return $this->render('saldo', ['valor' => $saldo]);
+    }
+
+    public function actionSaldo($valor){
+        return $this->render('saldo',['valor' => $valor]);
     }
 }

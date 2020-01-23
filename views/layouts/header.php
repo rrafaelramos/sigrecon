@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Alertaservico;
+use app\models\Alertaservicopj;
 use app\models\Avisa_rotina;
 use app\models\Caixa;
 use app\models\Empresa;
@@ -176,9 +177,28 @@ function servicoPendente(){
         }
     }
     if($cont>1) {
-        return " $cont serviços pendentes!";
+        return " $cont serviços PF pendentes!";
     }elseif($cont == 1){
-        return " $cont serviço pendente!";
+        return " $cont serviço PF pendente!";
+    }else{
+        return 0;
+    }
+}
+// retorna o número de servicos/PJ pendentes
+function servicopjPendente(){
+    $cont = 0;
+
+    $alerta = Alertaservicopj::find()->all();
+
+    foreach ($alerta as $a){
+        if($a->status_servico == 0  && Yii::$app->user->identity->id == $a->usuario_fk){
+            $cont++;
+        }
+    }
+    if($cont>1) {
+        return " $cont serviços PJ pendentes!";
+    }elseif($cont == 1){
+        return " $cont serviço PJ pendente!";
     }else{
         return 0;
     }
@@ -195,9 +215,28 @@ function servicoPronto(){
         }
     }
     if($cont>1) {
-        return " $cont serviços prontos para entrega!";
+        return " $cont serviços PF prontos para entrega!";
     }elseif($cont == 1){
-        return " $cont serviço pronto para entrega!";
+        return " $cont serviço PF pronto para entrega!";
+    }else{
+        return 0;
+    }
+}
+// retorna o número de servicos/pf prontos para entrega
+function servicopjPronto(){
+    $cont = 0;
+
+    $alerta = Alertaservicopj::find()->all();
+
+    foreach ($alerta as $a){
+        if($a->status_servico == 1  && Yii::$app->user->identity->id == $a->usuario_fk){
+            $cont++;
+        }
+    }
+    if($cont>1) {
+        return " $cont serviços PJ prontos para entrega!";
+    }elseif($cont == 1){
+        return " $cont serviço PJ pronto para entrega!";
     }else{
         return 0;
     }
@@ -368,7 +407,7 @@ function rotinaPendente(){
                             <li class="header">
                             </li>
                             <?php
-                            echo '<center>'."Notificações de serviços".'</center>';
+                            echo '<center>'."Notificações".'</center>';
                             ?>
                             <li>
                                 <!-- inner menu: contains the actual data -->
@@ -377,6 +416,13 @@ function rotinaPendente(){
                                         <?php
                                         if(servicoPronto()) {
                                             echo '<a href="/sigrecon/web/?r=alertaservico/pronto"> <i class="fa fa-check-circle text-green"></i>'.servicoPronto().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(servicopjPronto()) {
+                                            echo '<a href="/sigrecon/web/?r=alertaservicopj/pronto"> <i class="fa fa-check-circle text-green"></i>'.servicopjPronto().'</a>';
                                         }
                                         ?>
                                     </li>
@@ -398,6 +444,13 @@ function rotinaPendente(){
                                         <?php
                                         if(servicoPendente()) {
                                             echo '<a href="/sigrecon/web/?r=alertaservico/pendente"> <i class="fa fa-warning text-yellow"></i>'.servicoPendente().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(servicopjPendente()) {
+                                            echo '<a href="/sigrecon/web/?r=alertaservicopj/pendente"> <i class="fa fa-warning text-yellow"></i>'.servicopjPendente().'</a>';
                                         }
                                         ?>
                                     </li>

@@ -34,9 +34,6 @@ $this->registerJs('
 ');
 ?>
 
-
-
-
 <div class="lembrete-index box box-primary">
     <div class="box-body table-responsive no-padding">
         <div class="col-sm-12">

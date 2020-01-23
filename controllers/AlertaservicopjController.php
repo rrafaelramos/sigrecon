@@ -7,6 +7,7 @@ use app\models\Servico;
 use Yii;
 use app\models\Alertaservicopj;
 use app\models\AlertaservicopjSearch;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -56,6 +57,38 @@ class AlertaservicopjController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
+    //retorna a lista de serviços prontos para entrega
+    public function actionPronto()
+    {
+        $searchModel = new AlertaservicopjSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Alertaservicopj::find()->where(['status_servico' => '1'])
+        ]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    //retorna a lista de serviços prontos para entrega
+    public function actionPendente()
+    {
+        $searchModel = new AlertaservicopjSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Alertaservicopj::find()->where(['status_servico' => '0'])
+        ]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+
 
     /**
      * Displays a single Alertaservicopj model.

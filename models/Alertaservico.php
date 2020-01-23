@@ -38,7 +38,8 @@ class Alertaservico extends \yii\db\ActiveRecord
             [['info'], 'string'],
             [['status_pagamento'], 'required'],
             [['data_entrega'], 'validarData', 'on' => 'criar'],
-            [['data_entrega'], 'safe', 'on' => 'atualiza']
+            [['data_entrega'], 'safe', 'on' => 'atualiza'],
+            [['servico_fk'], 'required']
         ];
     }
 

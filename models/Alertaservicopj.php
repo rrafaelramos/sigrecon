@@ -40,7 +40,8 @@ class Alertaservicopj extends \yii\db\ActiveRecord
             [['status_pagamento'], 'required'],
             [['data_entrega'], 'validarData'],
             [['data_entrega'], 'validarData', 'on' => 'criar'],
-            [['data_entrega'], 'safe', 'on' => 'atualiza']
+            [['data_entrega'], 'safe', 'on' => 'atualiza'],
+            [['servico_fk'], 'required']
         ];
     }
 
