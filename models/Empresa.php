@@ -40,6 +40,8 @@ use yiibr\brvalidator\CeiValidator;
  * @property int $usuario_fk
  *
  * @property User $usuarioFk
+ * @property Rotina_empresa[] $rotinaEmpresas
+ * @property Rotina[] $rotinas
  */
 class Empresa extends \yii\db\ActiveRecord
 {
@@ -169,12 +171,12 @@ class Empresa extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-//    public function getUsuarioFk()
-//    {
-//        return $this->hasOne(User::className(), ['id' => 'usuario_fk']);
-//    }
-    
-//    public function getRotinas(){
-//        return $this->hasOne(Rotina::className(), ['empresa_fk' => 'id']);
-//    }
+    public function getRotinaEmpresas(){
+        return $this->hasMany(Rotina_empresa::className(),['empresa_fk' => 'id']);
+    }
+
+    public function getRotinas(){
+        return $this->hasMany(Rotina::className(), ['id' => 'rotina'])
+            ->viaTable(Rotina_empresa::tableName(), ['rotina_fk' => 'id']);
+    }
 }

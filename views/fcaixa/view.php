@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-//use yii\widgets\DetailView;
 use kartik\detail\DetailView;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Fcaixa */
 
@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php
+
 function formatar($model){
     if (!$model){
         return "R$ 0,00";
@@ -21,6 +22,7 @@ function formatar($model){
     $dinheiro = str_replace("pt-br", "R$", $formatado);
     return $dinheiro;
 }
+
 ?>
 <div class="col-sm-12">
     <div class="col-sm-offset-2">
@@ -49,7 +51,7 @@ function formatar($model){
                                                 [
                                                     'attribute' => 'data_fechamento',
                                                     'value' => $model->data_fechamento,
-                                                    'format' => ['date', 'php:d/m/Y'],
+                                                    'format' => ['date', 'php:d/m/Y H:i:s'],
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
@@ -87,7 +89,13 @@ function formatar($model){
                                     ],
                                 ]) ?>
                                 <div>
-                                    <?= Html::a('Início', ['/site/index'],[ 'class' => 'btn btn-warning btn-flat pull-right']) ?>
+                                    <?= Html::a('Finalizar', ['/site/index'],[ 'class' => 'btn btn-success btn-flat pull-right']) ?>
+
+                                    <?php
+                                        $data = $model->data_fechamento;
+                                    ?>
+
+                                    <?= Html::a('Vizualizar Relatório', ['relatorio_caixa/fechamento', 'data_fim' => $data, ],[ 'class' => 'btn btn-primary btn-flat pull-left']) ?>
                                 </div>
                             </div>
                         </div>

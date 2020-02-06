@@ -1,5 +1,6 @@
 <?php
 
+use kartik\datecontrol\DateControl;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -17,21 +18,33 @@ function auxiliar($data){
 }
 ?>
 
-<div class="lembrete-form box box-primary">
+<div class="lembrete-form box box-primary ">
     <?php $form = ActiveForm::begin(); ?>
-    <div class="box-body table-responsive">
+    <div class="box-body table-responsive col-sm-6 col-sm-offset-3">
 
-        <?php
-        echo '<h1><center>'.auxiliar($model->data).'</center></h1>';
-        ?>
-
+<!--        --><?php
+//        echo '<h1><center>'.auxiliar($model->data).'</center></h1>';
+//        ?>
+        <div>
+        <?= $form->field($model, 'data')->widget(DateControl::classname(), [
+            'type'=>DateControl::FORMAT_DATE,
+            'widgetOptions' => [
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'php:d/m/Y'
+                ]
+            ],
+            'language' => 'pt-BR'
+        ]); ?>
+        </div>
         <?= $form->field($model, 'titulo')->textInput(['maxlength' => true])->label('Lembre-me de:') ?>
 
         <!--        --><?php //echo $form->field($model, 'usuario_fk')->textInput() ?>
-
-    </div>
-    <div class="box-footer">
         <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right']) ?>
+        <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
+    </div>
+
+    <div class="box-footer">
     </div>
     <?php ActiveForm::end(); ?>
 </div>

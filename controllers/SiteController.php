@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Empresa;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -61,6 +62,24 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+//        /** @var Empresa[] $empresas */
+//        /** @var @var Rotina[] $rotinas */
+//
+//        $empresas = Empresa::find()->all();
+//
+//        foreach ($empresas as $empresa){
+//            echo "<h2>";
+//            echo $empresa->razao_social;
+//            echo "<ul>";
+//                foreach ($empresa->rotinas as $rotina){
+//                    echo "<li>$rotina->nome</li>";
+//                }
+//            echo "</ul>";
+//            echo "</h2>";
+//        }
+//
+//        die;
+
         return $this->render('index');
     }
 

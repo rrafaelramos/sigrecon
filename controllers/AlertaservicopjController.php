@@ -126,6 +126,7 @@ class AlertaservicopjController extends Controller
                     $model->data_pago = $data;
                 }
             }
+            $model->status_servico = 0;
             $caixa->save();
             $model->save();
 

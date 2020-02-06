@@ -76,7 +76,7 @@ class AbrircaixaController extends Controller
     public function actionCreate()
     {
         date_default_timezone_set('America/Sao_Paulo');
-        $data = date('Y-m-d');
+        $data = date('Y-m-d H:i:s');
 
         $model = new Abrircaixa();
         $caixa = new Caixa();
@@ -85,6 +85,7 @@ class AbrircaixaController extends Controller
             $caixa->total = $model->valor;
             $caixa->data = $data;
             $model->data = $data;
+            $model->save();
             $caixa->save();
             return $this->redirect(['/site/index']);
         } else {

@@ -34,6 +34,7 @@
                     ['label' => 'MENU', 'options' => ['class' => 'header']],
 //                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
 //                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
+                    ['label' => 'Meus Lembretes', 'icon' => 'calendar', 'url' => ['/lembrete'],],
                     [
                         'label' => 'Cadastrar',
                         //'icon' => 'share',
@@ -111,8 +112,16 @@
                             ['label' => 'Saldo', 'icon' => 'usd', 'url' => ['fcaixa/consulta']]
                         ],
                     ],
-                    ['label' => 'Meus Lembretes', 'icon' => 'calendar', 'url' => ['/lembrete'],],
+                    [
+                        'label' => 'Relatórios',
+                        'icon' => 'share',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Vendas Realizadas', 'icon' => 'usd', 'url' => ['/relatorio_caixa'],],
+                        ],
+                    ],
                 ],
+
             ]
         ) ?>
 

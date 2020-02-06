@@ -272,7 +272,6 @@ function lembrete(){
     }
 }
 
-
 //verifica guias rotina que não foram recebidas para realizar o serviço
 function rotinaAguardando(){
     $avisa_rotina = Avisa_rotina::find()->all();
@@ -330,9 +329,7 @@ function rotinaPendente(){
         </a>
 
         <div class="navbar-custom-menu">
-
             <ul class="nav navbar-nav">
-
                 <!-- Messages: style can be found in dropdown.less-->
                 <!--                Verifica se tem um usuário Logado!-->
                 <?php
@@ -358,7 +355,7 @@ function rotinaPendente(){
                                 echo '<i class="fa fa-envelope"></i >'.'<span class="label label-warning">';
                                 echo recado();
                             }else{
-                                echo'<i class="fa fa-envelope-o"></i>';
+                                echo'<i class="fa fa-envelope"></i>';
                             }
                             ?>
                             </span>
@@ -367,41 +364,39 @@ function rotinaPendente(){
 
                     <?php if (caixa()){
                         echo
-                        '<li class="dropdown notifications-menu">
-                        <a href="/sigrecon/web/?r=abrircaixa/create"> Abrir Caixa
-                            <i class="fa fa-usd">
-                            </i>
-                            <span class="label label-warning">';
+                        '<li class="dropdown notifications-menu">'.
+                        '<a href="/sigrecon/web/?r=abrircaixa/create">'.'Abrir Caixa'.
+                            '<i class="fa fa-usd">'.
+                            '</i>'.
+                            '<span class="label label-warning">';
                         echo
-                        '</a>
-                    </li>';
+                        '</a>'.
+                    '</li>';
                     }?>
 
                     <?php if(novoUsuario() && Yii::$app->user->identity->tipo == 1){
                         echo
-                        '<li class="dropdown notifications-menu">
-                        <a href="/sigrecon/web/?r=usuario"> 
-                            <i class="fa fa-user">
-                            </i>
-                            <span class="label label-warning">';
+                        '<li class="dropdown notifications-menu">'.
+                        '<a href="/sigrecon/web/?r=usuario">'.
+                            '<i class="fa fa-user">'.
+                            '</i>'.
+                            '<span class="label label-warning">';
                         echo '!'.
-                            '</a>
-                    </li>';
+                            '</a>'.
+                    '</li>';
                     }?>
 
                     <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
                             <!--                        //class warning para nova notificação-->
                             <?php
                             if(certificado() || procuracao() || servicoPronto() || servicoPendente()){
-                                echo '<i class="fa fa-bell"></i>'.'<span class="label label-warning">';
-                                echo '!';
-                            }else{
-                                echo '<i class="fa fa-bell-o"></i>';
+                                echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.'<i class="fa fa-bell"></i>'.'<span class="label label-warning">'.'!'.
+                                '</span>'.
+                                '</a>';
                             }
                             ?>
-                            </span>
-                        </a>
+
 
                         <ul class="dropdown-menu">
                             <li class="header">
@@ -454,11 +449,6 @@ function rotinaPendente(){
                                         }
                                         ?>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-user text-red"></i> You changed your username
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                             <li class="footer"><a href="#">View all</a></li>
@@ -468,19 +458,18 @@ function rotinaPendente(){
 
                     <li class="dropdown notifications-menu">
                         <!-- ISSO DEFINE O QUE FICA NO HEADEAR-->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
                             <!--                        //class warning para nova notificação-->
                             <?php
                             mensal();
                             if(rotinaAguardando()|| rotinaPronto() || rotinaPendente()){
-                                echo '<i class="fa fa-flag"></i>'.'<span class="label label-warning">';
-                                echo '!';
-                            }else {
-                                echo '<i class="fa fa-flag-o"></i>';
+                                echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.
+                                        '<i class="fa fa-flag"></i>'.'<span class="label label-warning">'.
+                                            '!'.'</span>'.
+                                     '</a>';
                             }
                             ?>
-                            </span>
-                        </a>
+
                         <ul class="dropdown-menu">
                             <li class="header">
                                 <?php

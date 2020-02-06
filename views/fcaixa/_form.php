@@ -8,9 +8,9 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Fcaixa */
 /* @var $form yii\widgets\ActiveForm */
+$data = 0;
 function verificaFechamento(){
     $todos = Fcaixa::find()->all();
-
     if($todos){
         $fechamento = Fcaixa::find()->max('id');
         foreach ($todos as $t){
@@ -53,7 +53,7 @@ function verificaFechamento(){
 <!--                        </div>-->
                         <div>
                             <?= Html::a('Voltar', ['/site/index'],[ 'class' => 'btn btn-warning btn-flat']) ?>
-                            <?= Html::submitButton('Fechar Caixa', ['class' => 'btn btn-success btn-flat pull-right', 'data' => [
+                            <?= Html::submitButton('Fechar Caixa',['class' => 'btn btn-success btn-flat pull-right', 'data' => [
                                 'confirm' => "Deseja realmente fechar o caixa?",
                                 'method' => 'post',
                             ]]) ?>

@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Caixa;
+use app\models\Compra;
+use app\models\Servico;
 use Yii;
 use app\models\Fcaixa;
 use app\models\FcaixaSearch;
@@ -77,10 +79,7 @@ class FcaixaController extends Controller
     {
         date_default_timezone_set('America/Sao_Paulo');
         $model = new Fcaixa();
-        $modelcaixa = new Caixa();
-
         $caixa = Caixa::find()->all();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             foreach ($caixa as $c){
@@ -101,7 +100,7 @@ class FcaixaController extends Controller
             $model->data_fechamento = date('Y-m-d');
             $model->save();
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id,]);
         } else {
             return $this->render('create', [
                 'model' => $model,

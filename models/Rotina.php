@@ -16,14 +16,11 @@ use Yii;
  * @property string $data_aviso
  * @property string $informacao
  * @property string $msg_aviso
+ * @property Rotina_empresa[] $rotinaEmpresas
+ * @property Empresa[] $empresas
  */
 class Rotina extends \yii\db\ActiveRecord
 {
-    /**
- * @var array virtual attribute for keeping empresa_fk
- */
-    public $empresa_fk;
-
     /**
      * {@inheritdoc}
      */
@@ -70,7 +67,12 @@ class Rotina extends \yii\db\ActiveRecord
         ];
     }
 
-//    public function getEmpresa(){
-//        return $this->hasMany(Empresa::className(),['rotina' => 'id']);
-//    }
+    public function getRotinaEmpresas(){
+        return $this->hasMany(Rotina_empresa::className(),['rotina_fk' => 'id']);
+    }
+
+    public function getEmpresas(){
+        return $this->hasMany(Empresa::className(), ['id' => 'empresa_fk'])
+            ->viaTable(Rotina_empresa::tableName(), ['empresa_fk' => 'id']);
+    }
 }

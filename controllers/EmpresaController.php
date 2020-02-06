@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use app\models\Empresa;
 use app\models\EmpresaSearch;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

@@ -3,7 +3,6 @@
 use app\models\Clienteavulso;
 use app\models\Servico;
 use app\models\Usuario;
-use kartik\money\MaskMoney;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 
