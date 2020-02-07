@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Abrircaixa;
 use app\models\Servico;
 use app\models\Caixa;
 use Yii;
@@ -94,10 +95,8 @@ class VendaController extends Controller
             $model->data = $data;
             $model->save();
 
-
             $model_caixa->data = $data;
             $model_caixa->total = $model->total;
-
             $model_caixa->save();
 
             return $this->redirect(['update', 'id' => $model->id]);
@@ -129,6 +128,14 @@ class VendaController extends Controller
             }
             $model->usuario_fk = Yii::$app->user->identity->id;
             $model->save();
+
+            $verifica_abrircaixa = Abrircaixa::find()->all();
+
+            if(!$verifica_abrircaixa) {
+                $abrir_caixa = new Abrircaixa();
+                $abrir_caixa->data = $model->data;
+                $abrir_caixa->save();
+            }
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

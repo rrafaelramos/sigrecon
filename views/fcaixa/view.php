@@ -95,7 +95,7 @@ function formatar($model){
                                         $data = $model->data_fechamento;
                                     ?>
 
-                                    <?= Html::a('Vizualizar Relatório', ['relatorio_caixa/fechamento', 'data_fim' => $data, ],[ 'class' => 'btn btn-primary btn-flat pull-left']) ?>
+                                    <?= Html::a('Vizualizar Relatório', ['relatorio_caixa/fechamento', 'data_fim' => $data],[ 'class' => 'btn btn-primary btn-flat pull-left']) ?>
                                 </div>
                             </div>
                         </div>

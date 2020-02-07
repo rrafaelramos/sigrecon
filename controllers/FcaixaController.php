@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Abrircaixa;
 use app\models\Caixa;
 use app\models\Compra;
 use app\models\Servico;
@@ -97,8 +98,14 @@ class FcaixaController extends Controller
                     $model->saldo = $model->entrada + $model->saida;
                 }
             }
-            $model->data_fechamento = date('Y-m-d');
+            $data = date('Y-m-d H:i:s');
+            $model->data_fechamento = $data;
             $model->save();
+
+            $abrir_caixa = new Abrircaixa();
+            $abrir_caixa->data = $data;
+            $abrir_caixa->valor = 0;
+            $abrir_caixa->save();
 
             return $this->redirect(['view', 'id' => $model->id,]);
         } else {

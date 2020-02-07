@@ -49,6 +49,9 @@ function valor($model){
 
 function formatar($model){
     $formatter = Yii::$app->formatter;
+    if(!$model){
+        return 'R$ 0,00';
+    }
     $formatado = $formatter->asCurrency($model);
     $dinheiro = str_replace("pt-br", "R$", $formatado);
     return $dinheiro;
@@ -72,8 +75,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="box-body table-responsive">
                         <?php foreach ($models as $model) {
                             $data = explode(" ",$model->data);
-
-                            if (strtotime($inicio) <= strtotime($data[0]) && strtotime($fim) >= strtotime($data[0])) {
+                            echo $inicio;
+                            echo "<br>$fim";
+                            if (strtotime($inicio) <= strtotime($model->data) && strtotime($fim) >= strtotime($model->data)) {
                                 ?>
                                 <?= DetailView::widget([
                                     'model' => $model,
@@ -153,6 +157,30 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php }
                         }
                         ?>
+
+                        <?= DetailView::widget([
+                            'model' => $valor_abertura,
+                            'condensed' => true,
+                            'bordered' => true,
+                            'striped' => false,
+                            'enableEditMode' => false,
+                            'mode' => DetailView::MODE_VIEW,
+                            'attributes' => [
+                                [
+                                    'columns' => [
+                                        [
+                                            'label' => 'Abertura do caixa:',
+                                            'value' => formatar($valor_abertura),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ]);
+                        ?>
+
+
                         <div class="pull-right">
                             <?= Html::a('Finalizar', ['/site/index'], ['class' => 'btn btn-primary btn-flat']) ?>
                         </div>

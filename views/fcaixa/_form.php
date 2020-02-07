@@ -15,12 +15,17 @@ function verificaFechamento(){
         $fechamento = Fcaixa::find()->max('id');
         foreach ($todos as $t){
             if($t->id == $fechamento){
-                $data = str_replace("00:00:00", "",$t->data_fechamento);
-                $dataf = explode("-",$data);
-                $dia = $dataf[2];
-                $mes = $dataf[1];
-                $ano = $dataf[0];
-                return "<p class='text-justify'>Serão contabilizados todos os valores de vendas e compras desde o último fechamento em:</p><center>$dia/$mes/$ano</center>";
+//                $data = str_replace("00:00:00", "",$t->data_fechamento);
+                $dataf = explode(" ",$t->data_fechamento);
+
+                $hora = $dataf[1];
+
+                $aux = $dataf[0];
+                $ano_ymd = explode("-",$aux);
+                $ano = $ano_ymd[0];
+                $mes = $ano_ymd[1];
+                $dia = $ano_ymd[2];
+                return "<p class='text-justify'>Serão contabilizados todos os valores de vendas e compras desde o último fechamento em:</p><center>$dia/$mes/$ano às $hora</center>";
             }
         }
     }else
