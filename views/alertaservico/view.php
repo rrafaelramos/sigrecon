@@ -213,7 +213,6 @@ function responsavel($model){
                                     //'id',
                                 ],
                             ],
-
                         ],
                     ]) ?>
                 </div>

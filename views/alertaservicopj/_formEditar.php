@@ -51,13 +51,27 @@ use yii\widgets\ActiveForm;
                         <div class="col-sm-4">
                             <?= $form->field($model, 'quantidade')->textInput(['type'=>'number','disabled' => 'disabled']) ?>
                         </div>
-                        <div class="col-sm-2">
-                            <?= $form->field($model, 'status_pagamento')->dropDownList([
-                                '0' => 'Aguardando Pagamento',
-                                '1' => 'Pago',
-                                '2' => 'Pago no honorário',
-                            ],['prompt' => 'Selecione'])->label('Pagamento') ?>
-                        </div>
+
+                        <?php
+                        if($model->status_pagamento == 1 || $model->status_pagamento == 2){
+                            ?>
+                            <div class="col-sm-2">
+                                <?= $form->field($model, 'status_pagamento')->dropDownList([
+                                    '0' => 'Aguardando Pagamento',
+                                    '1' => 'Pago',
+                                    '2' => 'Pago no honorário',
+                                ],['prompt' => 'Selecione', 'disabled' => 'disabled'])->label('Pagamento') ?>
+                            </div>
+                        <?php }else{ ?>
+                            <div class="col-sm-2">
+                                <?= $form->field($model, 'status_pagamento')->dropDownList([
+                                    '0' => 'Aguardando Pagamento',
+                                    '1' => 'Pago',
+                                    '2' => 'Pago no honorário',
+                                ],['prompt' => 'Selecione'])->label('Pagamento') ?>
+                            </div>
+                        <?php } ?>
+
                         <div class="col-sm-2">
                             <?= $form->field($model, 'status_servico')->dropDownList([
                                 '0' => 'Pendente',

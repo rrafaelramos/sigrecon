@@ -2,6 +2,8 @@
 namespace app\controllers;
 
 use app\models\Abrircaixa;
+use app\models\Alertaservico;
+use app\models\Caixa;
 use app\models\Servico;
 use app\models\Usuario;
 use app\models\Venda;
@@ -71,7 +73,7 @@ class Relatorio_caixaController extends Controller
         $servicos = Servico::find()->all();
         $vendas = Venda::find()->all();
 
-        return $this->render('relatorio',[
+        return $this->render('relatorio-comum',[
             'inicio' => $inicio,
             'fim' => $fim,
             'usuarios' => $usuarios,
@@ -105,15 +107,18 @@ class Relatorio_caixaController extends Controller
         $usuarios = Usuario::find()->all();
         $servicos = Servico::find()->all();
         $vendas = Venda::find()->all();
+        $alerta_servicos = Alertaservico::find()->all();
+        $caixas = Caixa::find()->all();
 
-
-        return $this->render('relatorio',[
+        return $this->render('relatorio-fechamento',[
             'inicio' => $inicio,
             'fim' => $fim,
             'usuarios' => $usuarios,
             'servicos' => $servicos,
             'models' => $vendas,
             'valor_abertura' => $valor_abertura,
+            'alerta_servicos' => $alerta_servicos,
+            'caixas' => $caixas,
         ]);
     }
 

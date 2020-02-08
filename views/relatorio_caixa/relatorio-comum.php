@@ -57,6 +57,15 @@ function formatar($model){
     return $dinheiro;
 }
 
+function responsavel($model){
+    $usuario = Usuario::find()->all();
+    foreach ($usuario as $u){
+        if($u->id == $model->usuario_fk){
+            return $u->nome;
+        }
+    }
+}
+
 $this->title = "Relatório de Vendas";
 $this->params['breadcrumbs'][] = ['label' => 'Vendas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -68,16 +77,35 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel panel-default">
                     <div class="panel-heading with-border col-sm-12">
                         <div class="col-sm-10">
-                            <h4>Dados Gerais</h4>
+                            <?php
+                            $aux1 = explode("-",$inicio);
+                            $dia1 = $aux1[2];
+                            $mes1 = $aux1[1];
+                            $ano1 = $aux1[0];
+                            if($inicio != $fim){
+                                $aux2 = explode("-",$fim);
+                                $dia2 = $aux2[2];
+                                $mes2 = $aux2[1];
+                                $ano2 = $aux2[0];
+                                echo "<h4>Relatório:"." $dia1/$mes1/$ano1"." à "."$dia2/$mes2/$ano2"."</h4>";
+                            }else{
+                                echo "<h4>Relatório do dia:"." $dia1/$mes1/$ano1"."</h4>";
+                            }
+                            ?>
                         </div>
                     </div>
 
                     <div class="box-body table-responsive">
-                        <?php foreach ($models as $model) {
-                            $data = explode(" ",$model->data);
-                            echo $inicio;
-                            echo "<br>$fim";
-                            if (strtotime($inicio) <= strtotime($model->data) && strtotime($fim) >= strtotime($model->data)) {
+
+                        <?php
+                        $valor_total =0;
+                        foreach ($models as $model) {
+
+                            $aux = explode(" ",$model->data);
+                            $data = $aux[0];
+
+                            if (strtotime($inicio) <= strtotime($data) && strtotime($fim) >= strtotime($data)) {
+                                $valor_total += $model->total;
                                 ?>
                                 <?= DetailView::widget([
                                     'model' => $model,
@@ -140,7 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'columns' => [
                                                 [
                                                     'label' => 'Atendente:',
-                                                    'value' => Yii::$app->user->identity->nome,
+                                                    'value' => responsavel($model),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
@@ -155,34 +183,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                 ]) ?>
                             <?php }
+                            //adicionar alerta de erro
+
+                            //aki vou adicionar o relatório das vendas sobre alerta de servico
+
+
                         }
                         ?>
-
-                        <?= DetailView::widget([
-                            'model' => $valor_abertura,
-                            'condensed' => true,
-                            'bordered' => true,
-                            'striped' => false,
-                            'enableEditMode' => false,
-                            'mode' => DetailView::MODE_VIEW,
-                            'attributes' => [
-                                [
-                                    'columns' => [
-                                        [
-                                            'label' => 'Abertura do caixa:',
-                                            'value' => formatar($valor_abertura),
-                                            'labelColOptions' => ['style' => 'width:15%'],
-                                            'valueColOptions' => ['style' => 'width:35%'],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ]);
-                        ?>
-
-
-                        <div class="pull-right">
-                            <?= Html::a('Finalizar', ['/site/index'], ['class' => 'btn btn-primary btn-flat']) ?>
+                        <div class="col-sm-6">
+                            <?php echo "<h4>"."Valor total: ".formatar($valor_total)."</h4>"; ?>
+                        </div>
+                        <div class="col-sm-6">
+                            <?= Html::a('Finalizar', ['/site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
                         </div>
                     </div>
                 </div>
