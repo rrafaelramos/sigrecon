@@ -3,10 +3,13 @@ namespace app\controllers;
 
 use app\models\Abrircaixa;
 use app\models\Alertaservico;
+use app\models\Alertaservicopj;
 use app\models\Caixa;
+use app\models\Compra;
 use app\models\Servico;
 use app\models\Usuario;
 use app\models\Venda;
+use app\models\Vendapj;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\base\Controller;
@@ -106,9 +109,16 @@ class Relatorio_caixaController extends Controller
 
         $usuarios = Usuario::find()->all();
         $servicos = Servico::find()->all();
+        // venda pf
         $vendas = Venda::find()->all();
+        //venda pj
+        $vendaspj = Vendapj::find()->all();
+        //alerta para pf
         $alerta_servicos = Alertaservico::find()->all();
+        //alerta para pj
+        $alertas_pj = Alertaservicopj::find()->all();
         $caixas = Caixa::find()->all();
+        $compras = Compra::find()->all();
 
         return $this->render('relatorio-fechamento',[
             'inicio' => $inicio,
@@ -116,9 +126,12 @@ class Relatorio_caixaController extends Controller
             'usuarios' => $usuarios,
             'servicos' => $servicos,
             'models' => $vendas,
+            'vendaspj' => $vendaspj,
             'valor_abertura' => $valor_abertura,
             'alerta_servicos' => $alerta_servicos,
+            'alertas_pj' => $alertas_pj,
             'caixas' => $caixas,
+            'compras' => $compras,
         ]);
     }
 

@@ -36,6 +36,7 @@ class Alertaservicopj extends \yii\db\ActiveRecord
         return [
             [['empresa_fk', 'servico_fk', 'quantidade', 'status_pagamento', 'status_servico', 'usuario_fk'], 'integer'],
             [['data_entrega', 'data_pago'], 'safe'],
+            [['data_entrega'],'required'],
             [['info'], 'string'],
             [['status_pagamento'], 'required'],
             [['data_entrega'], 'validarData'],
@@ -66,12 +67,12 @@ class Alertaservicopj extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'empresa_fk' => 'Empresa Fk',
-            'data_entrega' => 'Data Entrega',
+            'data_entrega' => 'Data de Entrega',
             'data_pago' => 'Data Pago',
-            'servico_fk' => 'Servico Fk',
+            'servico_fk' => 'Servico',
             'quantidade' => 'Quantidade',
             'info' => 'Info',
-            'status_pagamento' => 'Status Pagamento',
+            'status_pagamento' => 'Pagamento',
             'status_servico' => 'Status Servico',
             'usuario_fk' => 'Usuario Fk',
         ];

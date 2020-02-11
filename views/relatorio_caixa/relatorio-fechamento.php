@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Clienteavulso;
+use app\models\Empresa;
 use app\models\Servico;
 use app\models\Usuario;
 use yii\helpers\Html;
@@ -14,6 +15,15 @@ function cliente($model){
     foreach ($cliente as $c) {
         if ($c->id == $model->cliente_fk) {
             return $c->nome;
+        }
+    }
+}
+
+function empresa($model){
+    $empresa = Empresa::find()->all();
+    foreach ($empresa as $e) {
+        if ($e->id == $model->empresa_fk) {
+            return $e->razao_social;
         }
     }
 }
@@ -99,9 +109,16 @@ function responsavel($model){
     }
 }
 
-$this->title = "Relatório de Vendas";
-$this->params['breadcrumbs'][] = ['label' => 'Vendas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+function quantidade($model){
+    if($model>1){
+        return "$model unidades";
+    }
+    return "$model unidade";
+}
+
+$this->title = "Fechamento Caixa";
+$this->params['breadcrumbs'][] = "Caixa";
+$this->params['breadcrumbs'][] = "Fechar Caixa";
 ?>
 <div class="relatorio-view box box-primary">
     <div class="box-header with-border">
@@ -137,11 +154,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="box-body table-responsive">
 
                         <?php
-                        $valor_total = 0;
+                        $valor_totalpf = 0;
+                        $valor_totalpj = 0;
+                        $valor_compra = 0;
+                        //venda pf
                         foreach ($models as $model) {
                             $data = explode(" ",$model->data);
                             if (strtotime($inicio) <= strtotime($model->data) && strtotime($fim) >= strtotime($model->data)) {
-                                $valor_total += $model->total;
+                                $valor_totalpf += $model->total;
                                 ?>
                                 <?= DetailView::widget([
                                     'model' => $model,
@@ -222,7 +242,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                         ?>
 
-                        <?php if($valor_abertura) {
+                        <?php
+                        if($valor_abertura) {
                             DetailView::widget([
                                 'model' => $valor_abertura,
                                 'condensed' => true,
@@ -247,12 +268,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         ?>
 
                         <?php
+                        //alerta de servico para PF
                         if($alerta_servicos){
                             foreach ($alerta_servicos as $alerta_servico) {
                                 if (strtotime($inicio) <= strtotime($alerta_servico->data_pago) && strtotime($fim) >= strtotime($alerta_servico->data_pago)) {
                                     foreach ($caixas as $caixa){
                                         if ($alerta_servico->data_pago == $caixa->data && strtotime($inicio) <= strtotime($alerta_servico->data_pago) && strtotime($fim) >= strtotime($alerta_servico->data_pago)){
-                                            $valor_total += $caixa->total;
+                                            $valor_totalpf += $caixa->total;
                                         }
                                     }
                                     ?>
@@ -354,9 +376,383 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                         ?>
                         <div class="col-sm-6">
-                            <?php echo "<h4>"."Valor total: ".formatar($valor_total)."</h4>"; ?>
+                            <?php echo "<h4>"."Total Vendas PF: ".formatar($valor_totalpf)."</h4>"; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Daki para baixo é a vertificação de venda para pj-->
+<div class="relatorio-view box box-primary">
+    <div class="box-header with-border">
+        <div class="panel-body">
+            <div class="panel-group collapse in">
+                <div class="panel panel-default">
+                    <div class="panel-heading with-border col-sm-12">
+                        <div class="col-sm-10">
+                            <?php
+                            $aux1 = explode(" ",$inicio);
+                            $aux1_data = $aux1[0];
+                            $aux1_hora = $aux1[1];
+                            $data1 = explode("-",$aux1_data);
+                            $dia1 = $data1[2];
+                            $mes1 = $data1[1];
+                            $ano1 = $data1[0];
+                            if($inicio != $fim){
+                                $aux2 = explode(" ",$fim);
+                                $aux2_data = $aux2[0];
+                                $aux2_hora = $aux2[1];
+                                $data2=explode("-",$aux2_data);
+                                $dia2 = $data2[2];
+                                $mes2 = $data2[1];
+                                $ano2 = $data2[0];
+                                echo "<h4>Relatório:"." $dia1/$mes1/$ano1 às $aux1_hora"." à "."$dia2/$mes2/$ano2 às $aux2_hora"."</h4>";
+                            }else{
+                                echo "<h4>Relatório do dia:"." $dia1/$mes1/$ano1"."</h4>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="box-body table-responsive">
+
+                        <?php
+                        //venda pj
+                        foreach ($vendaspj as $vendapj) {
+                            $data = explode(" ",$model->data);
+                            if (strtotime($inicio) <= strtotime($vendapj->data) && strtotime($fim) >= strtotime($vendapj->data)) {
+                                $valor_totalpj += $vendapj->total;
+                                ?>
+                                <?= DetailView::widget([
+                                    'model' => $vendapj,
+                                    'condensed' => true,
+                                    'bordered' => true,
+                                    'striped' => false,
+                                    'enableEditMode' => false,
+                                    'mode' => DetailView::MODE_VIEW,
+                                    'attributes' => [
+                                        [
+                                            'columns' => [
+                                                [
+                                                    'label' => 'Empresa:',
+                                                    'value' => empresa($vendapj),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                [
+                                                    'label' => 'Código da venda:',
+                                                    'value' => $vendapj->id,
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'columns' => [
+                                                [
+                                                    'label' => 'Serviço:',
+                                                    'value' => servico($vendapj),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                [
+                                                    'label' => 'Valor Unitário:',
+                                                    'value' => valor($vendapj->servico_fk),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'columns' => [
+                                                [
+                                                    'label' => 'Data da Venda:',
+                                                    'value' => $vendapj->data,
+                                                    'format' => ['date', 'php:d/m/Y'],
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                [
+                                                    'label' => 'Quantidade:',
+                                                    'value' => "$vendapj->quantidade x " . valor($vendapj->servico_fk),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'columns' => [
+                                                [
+                                                    'label' => 'Atendente:',
+                                                    'value' => responsavel($vendapj),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                [
+                                                    'label' => 'Total:',
+                                                    'value' => formatar($vendapj->total),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ]) ?>
+                            <?php }
+                        }
+                        ?>
+
+                        <?php
+                        //alerta de servico para Pj
+                        if($alertas_pj){
+                            foreach ($alertas_pj as $alerta_pj) {
+                                if (strtotime($inicio) <= strtotime($alerta_pj->data_pago) && strtotime($fim) >= strtotime($alerta_pj->data_pago)) {
+                                    foreach ($caixas as $caixa){
+                                        if ($alerta_pj->data_pago == $caixa->data && strtotime($inicio) <= strtotime($alerta_pj->data_pago) && strtotime($fim) >= strtotime($alerta_pj->data_pago)){
+                                            $valor_totalpj += $caixa->total;
+                                        }
+                                    }
+                                    ?>
+
+                                    <?= DetailView::widget([
+                                        'model' => $alerta_pj,
+                                        'condensed' => true,
+                                        'bordered' => true,
+                                        'striped' => false,
+                                        'enableEditMode' => false,
+                                        'mode' => DetailView::MODE_VIEW,
+                                        'attributes' => [
+                                            [
+                                                'columns' => [
+                                                    [
+                                                        'label' => 'Serviço',
+                                                        'value' =>  servico($alerta_pj),
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                    [
+                                                        'label' => 'Data de entrega',
+                                                        'value' => $alerta_pj->data_entrega,
+                                                        'format' => ['date', 'php:d/m/Y'],
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                ],
+                                            ],
+                                            [
+                                                'columns' => [
+                                                    [
+                                                        'label' => 'Empresa',
+                                                        'value' => empresa($alerta_pj),
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                    [
+                                                        'label' => 'Informações adicionais',
+                                                        'value' => $alerta_pj->info,
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                ],
+                                            ],
+                                            [
+                                                'columns' => [
+                                                    [
+                                                        'label' => 'Valor Unitário:',
+                                                        'value' => valor($alerta_pj->servico_fk),
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                    [
+                                                        'label' => 'Quantidade:',
+                                                        'value' => "$alerta_pj->quantidade x ".valor($alerta_pj->servico_fk),
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                ],
+                                            ],
+                                            [
+                                                'columns' => [
+                                                    [
+                                                        'label' => 'Status do Serviço',
+                                                        'value' => statusServico($alerta_pj),
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                    [
+                                                        'label' => 'Total',
+                                                        'value' => total($alerta_pj),
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                ],
+                                            ],
+                                            [
+                                                'columns' => [
+                                                    [
+                                                        'label' => 'Status do pagamento',
+                                                        'attribute' => 'Status do Pagamento',
+                                                        'value' => statusPagamento($alerta_pj),
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                    [
+                                                        'label' => 'Responsável pelo servico',
+                                                        'value' => responsavel($alerta_pj),
+                                                        'labelColOptions' => ['style' => 'width:15%'],
+                                                        'valueColOptions' => ['style' => 'width:35%'],
+                                                    ],
+                                                ],
+                                            ],
+                                        ],
+                                    ]);
+                                }
+                            }
+                        }
+                        ?>
+                        <div class="col-sm-6">
+                            <?php echo "<h4>"."Total Vendas PJ: ".formatar($valor_totalpj)."</h4>"; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="relatorio-view box box-primary">
+    <div class="box-header with-border">
+        <div class="panel-body">
+            <div class="panel-group collapse in">
+                <div class="panel panel-default">
+                    <div class="panel-heading with-border col-sm-12">
+                        <div class="col-sm-10">
+                            <?php
+                            echo "<h4>Retiradas:</h4>";
+                            ?>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive">
+
+                        <?php
+                        foreach ($compras as $compra) {
+                            $data = explode(" ", $compra->data);
+                            if (strtotime($inicio) <= strtotime($compra->data) && strtotime($fim) >= strtotime($compra->data)) {
+                                $valor_compra += $compra->valor;
+                                ?>
+                                <?= DetailView::widget([
+                                    'model' => $compra,
+                                    'condensed' => true,
+                                    'bordered' => true,
+                                    'striped' => false,
+                                    'enableEditMode' => false,
+                                    'mode' => DetailView::MODE_VIEW,
+                                    'attributes' => [
+                                        [
+                                            'columns' => [
+                                                [
+                                                    'label' => 'Descrição',
+                                                    'value' =>  $compra->descricao,
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                [
+                                                    'label' => 'Quantidade',
+                                                    'value' => quantidade($compra->quantidade),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'columns' => [
+                                                [
+                                                    'label' => 'Data',
+                                                    'value' =>  $compra->data,
+                                                    'format' => ['date', 'php: d/m/Y'],
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                [
+                                                    'label' => 'Valor total',
+                                                    'value' =>  formatar($compra->valor),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'columns' => [
+                                                [
+                                                    'label' => 'Usuário',
+                                                    'value' =>  usuario($compra),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ]);
+                            }
+                        }
+                        ?>
+                        <div class="col-sm-6">
+                            <?php echo "<h4>"."Total Retiradas: ".formatar($valor_compra)."</h4>"; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Resumo das Operações-->
+<div class="relatorio-view box box-primary">
+    <div class="box-header with-border">
+        <div class="panel-body">
+            <div class="panel-group collapse in">
+                <div class="panel panel-default">
+                    <div class="panel-heading with-border col-sm-12">
+                        <div class="col-sm-10">
+                            <?php
+                            echo "<h4>Resumo Geral:</h4>";
+                            ?>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive">
+                        <div class="col-sm-6">
+                            <?php
+                            echo "<h4>Vendas PF: "."<font color='#006400'>".formatar($valor_totalpf)."</font>"."</h4>";
+                            ?>
                         </div>
                         <div class="col-sm-6">
+                            <?php
+                            echo "<h4>Vendas PJ: "."<font color='#006400'>".formatar($valor_totalpj)."</font>"."</h4>";
+                            ?>
+                        </div>
+                        <div class="col-sm-6">
+                            <?php
+                            echo "<h4>Retiradas: "."<font color='#8b0000'>".formatar($valor_compra)."</font>"."</h4>";
+                            ?>
+                        </div>
+                        <div class="col-sm-6">
+                            <?php echo "<h4>"."Valor Abertura do Caixa: "."<font color='#00008b'>".formatar($valor_abertura)."</font>"."</h4>"; ?>
+                        </div>
+                        <div class="col-sm-12">
+                            <?php
+                            $saldo = (($valor_totalpf+$valor_totalpj+$valor_abertura)-$valor_compra);
+                            if($saldo>=0) {
+                                echo "<h3>Saldo da operação: "."<font color='#228b22'>"."+ ".formatar($saldo) ."</font>"."</h3>";
+                            }else{
+                                echo "<h3>Saldo da operação: "."<font color='#8b0000'>".formatar($saldo) ."</font>"."</h3>";
+                            }
+                            ?>
+                        </div>
+                        <div class="col-sm-12">
                             <?= Html::a('Finalizar', ['/site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
                         </div>
                     </div>
@@ -365,4 +761,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+
 

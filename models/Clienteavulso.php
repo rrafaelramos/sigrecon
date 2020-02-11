@@ -51,7 +51,7 @@ class Clienteavulso extends \yii\db\ActiveRecord
             [['telefone'], 'string', 'max' => 20],
             [['rua', 'bairro', 'cidade'], 'string', 'max' => 200],
             [['cep'], 'string',],
-            [['uf'], 'string', 'max' => 2],
+            [['uf'], 'string'],
             [['complemento'], 'string', 'max' => 255],
             [['cpf'], 'unique'],
             [['usuario_fk'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_fk' => 'id']],
