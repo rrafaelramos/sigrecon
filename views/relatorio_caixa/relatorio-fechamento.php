@@ -745,9 +745,11 @@ $this->params['breadcrumbs'][] = "Fechar Caixa";
                         <div class="col-sm-12">
                             <?php
                             $saldo = (($valor_totalpf+$valor_totalpj+$valor_abertura)-$valor_compra);
-                            if($saldo>=0) {
+                            if(!$saldo){
+                                echo "<h3>Saldo da operação: "."<font color='black'>".formatar($saldo) ."</font>"."</h3>";
+                            }elseif($saldo>0) {
                                 echo "<h3>Saldo da operação: "."<font color='#228b22'>"."+ ".formatar($saldo) ."</font>"."</h3>";
-                            }else{
+                            }elseif($saldo<0){
                                 echo "<h3>Saldo da operação: "."<font color='#8b0000'>".formatar($saldo) ."</font>"."</h3>";
                             }
                             ?>

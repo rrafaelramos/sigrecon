@@ -74,7 +74,16 @@ class Relatorio_caixaController extends Controller
 
         $usuarios = Usuario::find()->all();
         $servicos = Servico::find()->all();
+        // venda pf
         $vendas = Venda::find()->all();
+        //venda pj
+        $vendaspj = Vendapj::find()->all();
+        //alerta para pf
+        $alerta_servicos = Alertaservico::find()->all();
+        //alerta para pj
+        $alertas_pj = Alertaservicopj::find()->all();
+        $caixas = Caixa::find()->all();
+        $compras = Compra::find()->all();
 
         return $this->render('relatorio-comum',[
             'inicio' => $inicio,
@@ -82,9 +91,20 @@ class Relatorio_caixaController extends Controller
             'usuarios' => $usuarios,
             'servicos' => $servicos,
             'models' => $vendas,
+            'vendaspj' => $vendaspj,
             'valor_abertura' => $valor_abertura,
-            ]);
+            'alerta_servicos' => $alerta_servicos,
+            'alertas_pj' => $alertas_pj,
+            'caixas' => $caixas,
+            'compras' => $compras,
+        ]);
     }
+
+
+
+
+
+
 
     public function actionFechamento(){
         $fim = $_GET['data_fim'];
