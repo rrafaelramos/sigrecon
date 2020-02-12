@@ -99,13 +99,7 @@ class Relatorio_caixaController extends Controller
             'compras' => $compras,
         ]);
     }
-
-
-
-
-
-
-
+    
     public function actionFechamento(){
         $fim = $_GET['data_fim'];
         $inicio = 0;
@@ -113,10 +107,13 @@ class Relatorio_caixaController extends Controller
         $abrircaixa = Abrircaixa::find()->all();
         $valor_abertura = 0;
 
+        $cont = count($abrircaixa);
+
         if($abrircaixa){
             $abertura = Abrircaixa::find()->max('id');
-            $abertura--;
-            $id_abertura = $abertura;
+            if($cont>1){
+                $abertura--;
+            }
             foreach ($abrircaixa as $a){
                 if($abertura == $a->id){
                     $inicio = $a->data;
