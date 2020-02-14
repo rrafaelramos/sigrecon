@@ -659,12 +659,12 @@ $this->params['breadcrumbs'][] = "Fechar Caixa";
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
-                                                [
-                                                    'label' => 'Quantidade',
-                                                    'value' => quantidade($compra->quantidade),
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
+//                                                [
+//                                                    'label' => 'Quantidade',
+//                                                    'value' => quantidade($compra->quantidade),
+//                                                    'labelColOptions' => ['style' => 'width:15%'],
+//                                                    'valueColOptions' => ['style' => 'width:35%'],
+//                                                ],
                                             ],
                                         ],
                                         [

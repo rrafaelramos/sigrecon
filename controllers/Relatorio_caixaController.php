@@ -99,7 +99,7 @@ class Relatorio_caixaController extends Controller
             'compras' => $compras,
         ]);
     }
-    
+
     public function actionFechamento(){
         $fim = $_GET['data_fim'];
         $inicio = 0;

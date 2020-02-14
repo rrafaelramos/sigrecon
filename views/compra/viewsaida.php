@@ -2,7 +2,6 @@
 
 use app\models\Usuario;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Compra */
@@ -12,14 +11,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Compras', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
-function quantidade($model){
-    if($model>1){
-        return "$model unidades";
-    }
-    return "$model unidade";
-}
-
 function formatar($model){
+
     if(!$model){
         return "R$ 0,00";
     }
@@ -41,7 +34,7 @@ function usuario($model){
 
 
 ?>
-<div class="compra-view box box-primary">
+<div class="clienteavulso-view box box-primary">
     <div class="box-header with-border">
         <div class="col-xs-10">
             <h4 class="panel-title">Dados da Compra</h4>
@@ -80,14 +73,8 @@ function usuario($model){
                             [
                                 'columns' => [
                                     [
-                                        'label' => 'Descrição',
+                                        'label' => 'Observação',
                                         'value' =>  $model->descricao,
-                                        'labelColOptions' => ['style' => 'width:15%'],
-                                        'valueColOptions' => ['style' => 'width:35%'],
-                                    ],
-                                    [
-                                        'label' => 'Quantidade',
-                                        'value' => quantidade($model->quantidade),
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
@@ -109,7 +96,7 @@ function usuario($model){
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
                                     [
-                                        'label' => 'Valor total',
+                                        'label' => 'Valor retirado',
                                         'value' =>  formatar($model->valor),
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],

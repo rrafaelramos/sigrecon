@@ -206,3 +206,15 @@ create table lembrete(
     usuario_fk int,
     primary key (id)
 );
+
+create table honorario(
+    id int auto_increment,
+    valor float,
+    data_pagamento date,
+    data_caixa datetime,
+    referencia date,
+    usuario_fk int,
+    empresa_fk int,
+    observacao text,
+    primary key (id)
+);

@@ -107,9 +107,11 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra'],],
+                            ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra/saida'],],
+                            ['label' => 'Lançar Saída', 'icon' => 'pencil', 'url' => ['compra/saida'],],
+                            ['label' => 'Lançar Honorário', 'icon' => 'usd', 'url' => ['/honorario'],],
                             ['label' => 'Fechar Caixa', 'icon' => 'lock', 'url' => ['/fcaixa/create'],],
-                            ['label' => 'Saldo', 'icon' => 'usd', 'url' => ['fcaixa/consulta']]
+                            ['label' => 'Consultar Saldo', 'icon' => 'usd', 'url' => ['fcaixa/consulta']]
                         ],
                     ],
                     [

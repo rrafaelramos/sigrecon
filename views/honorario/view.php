@@ -1,22 +1,34 @@
 <?php
 
+use app\models\Empresa;
 use app\models\Usuario;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-
+use kartik\detail\DetailView;
 /* @var $this yii\web\View */
-/* @var $model app\models\Compra */
+/* @var $model app\models\Honorario */
 
-$this->title = $model->descricao;
-$this->params['breadcrumbs'][] = ['label' => 'Compras', 'url' => ['index']];
+$this->title = 'Lançar Honorário';
+$this->params['breadcrumbs'][] = ['label' => 'Caixa'];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <?php
-function quantidade($model){
-    if($model>1){
-        return "$model unidades";
+function usuario($model){
+    $usuario = Usuario::find()->all();
+    foreach ($usuario as $u){
+        if ($u->id == $model){
+            return $u->nome;
+        }
     }
-    return "$model unidade";
+}
+
+function empresa($model){
+    $empresa = Empresa::find()->all();
+    foreach ($empresa as $e) {
+        if ($e->id == $model->empresa_fk) {
+            return $e->razao_social;
+        }
+    }
 }
 
 function formatar($model){
@@ -28,48 +40,30 @@ function formatar($model){
     $dinheiro = str_replace("pt-br", "", $formatado);
     return "R$ $dinheiro";
 }
-
-function usuario($model){
-    $usuario = Usuario::find()->all();
-
-    foreach ($usuario as $u){
-        if ($u->id == $model){
-            return $u->nome;
-        }
-    }
-}
-
-
 ?>
-<div class="compra-view box box-primary">
+
+<div class="honorario-view box box-primary">
     <div class="box-header with-border">
-        <div class="col-xs-10">
-            <h4 class="panel-title">Dados da Compra</h4>
+        <div class="col-sm-8">
+            <h4 class="panel-title"></h4>
         </div>
         <div>
-            <div class="pull-right">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-                <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger btn-flat',
-                    'data' => [
-                        'confirm' => 'Deseja realmente apagar?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
+            <div class="col-sm-12">
+                <?= Html::a('Voltar', ['/site/index'], ['class' => 'btn btn-warning btn-flat pull-left']) ?>
+                <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
             </div>
         </div>
     </div>
     <div class="panel-body">
         <div class="panel-group collapse in">
             <div class="panel panel-default">
-                <div class="panel-heading with-border col-xs-12">
-                    <div class="col-xs-10">
-                        <h2 class="panel-title">Informações Gerais</h2>
+                <div class="panel-heading with-border col-sm-12">
+                    <div class="col-sm-8">
+                        <h2 class="panel-title">Honorário</h2>
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <?= \kartik\detail\DetailView::widget([
+                    <?= DetailView::widget([
                         'model' => $model,
                         'condensed' => true,
                         'bordered' => true,
@@ -77,17 +71,18 @@ function usuario($model){
                         'enableEditMode' => false,
                         'mode' => \kartik\detail\DetailView::MODE_VIEW,
                         'attributes' => [
+                            //'id',
                             [
                                 'columns' => [
-                                    [
-                                        'label' => 'Descrição',
-                                        'value' =>  $model->descricao,
+                                    ['attribute' => 'empresa_fk',
+                                        'label' => 'Empresa',
+                                        'value' => empresa($model),
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
-                                    [
-                                        'label' => 'Quantidade',
-                                        'value' => quantidade($model->quantidade),
+                                    ['attribute' => 'valor',
+                                        'label' => 'Valor Pago',
+                                        'value' => formatar($model->valor),
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
@@ -95,22 +90,14 @@ function usuario($model){
                             ],
                             [
                                 'columns' => [
-//                                    [
-//                                        'label' => 'ID',
-//                                        'value' =>  $model->id,
-//                                        'labelColOptions' => ['style' => 'width:15%'],
-//                                        'valueColOptions' => ['style' => 'width:35%'],
-//                                    ],
-                                    [
-                                        'label' => 'Data',
-                                        'value' =>  $model->data,
-                                        'format' => ['date', 'php: d/m/Y'],
+                                    ['attribute' => 'referencia',
+                                        'format' => ['date', 'php:d/m/Y'],
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
-                                    [
-                                        'label' => 'Valor total',
-                                        'value' =>  formatar($model->valor),
+                                    ['attribute' => 'data_pagamento',
+                                        'label' => 'Data de Pagamento',
+                                        'format' => ['date', 'php:d/m/Y'],
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
@@ -118,9 +105,14 @@ function usuario($model){
                             ],
                             [
                                 'columns' => [
-                                    [
+                                    ['attribute' => 'usuario_fk',
                                         'label' => 'Usuário',
-                                        'value' =>  usuario($model->usuario_fk),
+                                        'value' => usuario($model->usuario_fk),
+                                        'labelColOptions' => ['style' => 'width:15%'],
+                                        'valueColOptions' => ['style' => 'width:35%'],
+                                    ],
+                                    ['attribute' => 'observacao',
+                                        'label' => 'Observação',
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
@@ -130,3 +122,6 @@ function usuario($model){
                     ]) ?>
                 </div>
             </div>
+        </div>
+    </div>
+</div>

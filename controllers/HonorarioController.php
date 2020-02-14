@@ -4,17 +4,17 @@ namespace app\controllers;
 
 use app\models\Caixa;
 use Yii;
-use app\models\Compra;
-use app\models\CompraSearch;
+use app\models\Honorario;
+use app\models\HonorarioSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CompraController implements the CRUD actions for Compra model.
+ * HonorarioController implements the CRUD actions for Honorario model.
  */
-class CompraController extends Controller
+class HonorarioController extends Controller
 {
     /**
      * @inheritdoc
@@ -42,12 +42,12 @@ class CompraController extends Controller
     }
 
     /**
-     * Lists all Compra models.
+     * Lists all Honorario models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CompraSearch();
+        $searchModel = new HonorarioSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -57,7 +57,7 @@ class CompraController extends Controller
     }
 
     /**
-     * Displays a single Compra model.
+     * Displays a single Honorario model.
      * @param integer $id
      * @return mixed
      */
@@ -68,35 +68,28 @@ class CompraController extends Controller
         ]);
     }
 
-    public function actionViewsaida($id)
-    {
-        return $this->render('viewSaida', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
     /**
-     * Creates a new Compra model.
+     * Creates a new Honorario model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
         date_default_timezone_set('America/Sao_Paulo');
-        $data = date('Y-m-d H:i:s');
+        $data = date('Y-m-d');
+        $data_caixa = date('Y-m-d H:i:s');
 
+        $model = new Honorario();
         $caixa = new Caixa();
-        $model = new Compra();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            $model->data = $data;
-
             $model->usuario_fk = Yii::$app->user->identity->id;
-            $caixa->data = $data;
-            $caixa->total -= $model->valor;
-
+            $model->data_pagamento = $data;
+            $model->data_caixa = $data_caixa;
             $model->save();
+
+            $caixa->data = $data_caixa;
+            $caixa->total = $model->valor;
             $caixa->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -107,34 +100,8 @@ class CompraController extends Controller
         }
     }
 
-    public function actionSaida(){
-        date_default_timezone_set('America/Sao_Paulo');
-        $data = date('Y-m-d H:i:s');
-
-        $caixa = new Caixa();
-        $model = new Compra();
-        $model->quantidade = 1;
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            $model->data = $data;
-
-            $model->usuario_fk = Yii::$app->user->identity->id;
-            $caixa->data = $data;
-            $caixa->total -= $model->valor;
-
-            $model->save();
-            $caixa->save();
-
-            return $this->redirect(['viewsaida', 'id' => $model->id]);
-        } else {
-            return $this->render('saida', [
-                'model' => $model,
-            ]);
-        }
-    }
     /**
-     * Updates an existing Compra model.
+     * Updates an existing Honorario model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -143,19 +110,19 @@ class CompraController extends Controller
     {
         $model = $this->findModel($id);
 
-        $caixa = Caixa::find()->all();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            foreach ($caixa as $c){
-                if($c->data == $model->data){
-                    $pegacaixa = $this->findCaixa($c->id);
-                    $pegacaixa->total =0;
-                    $pegacaixa->data = $model->data;
-                    $pegacaixa->total -= $model->valor;
-                    $pegacaixa->save();
+            $caixas = Caixa::find()->all();
+
+            //pega o model no bd
+            foreach ($caixas as $caixa) {
+                if($caixa->data == $model->data_caixa){
+                    $modelcaixa = $this->findCaixa($caixa->id);
+                    $modelcaixa->total = $model->valor;
+                    $modelcaixa->save();
                 }
             }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -165,47 +132,55 @@ class CompraController extends Controller
     }
 
     /**
-     * Deletes an existing Compra model.
+     * Deletes an existing Honorario model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $caixa = Caixa::find()->all();
+        $honorarios = Honorario::find()->all();
+        $caixas = Caixa::find()->all();
+        $data = 0;
+        $idcaixa = 0;
 
-        $model = $this->findModel($id);
-
-        //compara se a data de inserção no caixa é igual a data do model e chama o delete()
-        foreach ($caixa as $c){
-            if($c->data == $model->data){
-                $this->findCaixa($c->id)->delete();
+        foreach ($honorarios as $honorario){
+            if($honorario->id == $id){
+                $data = $honorario->data_caixa;
             }
         }
+
+        foreach ($caixas as $caixa) {
+            if($caixa->data == $data){
+                $idcaixa = $caixa->id;
+            }
+        }
+
         $this->findModel($id)->delete();
+        $this->findCaixa($idcaixa)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Compra model based on its primary key value.
+     * Finds the Honorario model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Compra the loaded model
+     * @return Honorario the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Compra::findOne($id)) !== null) {
+        if (($model = Honorario::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
-    protected function findCaixa($id)
+    protected function findCaixa($idcaixa)
     {
-        if (($model = Caixa::findOne($id)) !== null) {
+        if (($model = Caixa::findOne($idcaixa)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
