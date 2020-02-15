@@ -6,6 +6,7 @@ use app\models\Alertaservico;
 use app\models\Alertaservicopj;
 use app\models\Caixa;
 use app\models\Compra;
+use app\models\Honorario;
 use app\models\Servico;
 use app\models\Usuario;
 use app\models\Venda;
@@ -74,6 +75,8 @@ class Relatorio_caixaController extends Controller
 
         $usuarios = Usuario::find()->all();
         $servicos = Servico::find()->all();
+        // todos os honorários
+        $honorarios = Honorario::find()->all();
         // venda pf
         $vendas = Venda::find()->all();
         //venda pj
@@ -97,6 +100,7 @@ class Relatorio_caixaController extends Controller
             'alertas_pj' => $alertas_pj,
             'caixas' => $caixas,
             'compras' => $compras,
+            'honorarios' => $honorarios,
         ]);
     }
 
@@ -124,6 +128,8 @@ class Relatorio_caixaController extends Controller
             }
         }
 
+        $honorarios = Honorario::find()->all();
+
         $usuarios = Usuario::find()->all();
         $servicos = Servico::find()->all();
         // venda pf
@@ -149,6 +155,7 @@ class Relatorio_caixaController extends Controller
             'alertas_pj' => $alertas_pj,
             'caixas' => $caixas,
             'compras' => $compras,
+            'honorarios' => $honorarios,
         ]);
     }
 

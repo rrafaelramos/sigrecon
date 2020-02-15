@@ -120,6 +120,112 @@ $this->title = "Relatório de Vendas";
 $this->params['breadcrumbs'][] = ['label' => 'Vendas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<div class="relatorio-view box box-primary">
+    <div class="box-header with-border">
+        <div class="panel-body">
+            <div class="panel-group collapse in">
+                <div class="panel panel-default">
+                    <div class="panel-heading with-border col-sm-12">
+                        <div class="col-sm-10">
+                            <?php
+                            $aux1 = explode("-",$inicio);
+                            $dia1 = $aux1[2];
+                            $mes1 = $aux1[1];
+                            $ano1 = $aux1[0];
+                            if($inicio != $fim){
+                                $aux2 = explode("-",$fim);
+                                $dia2 = $aux2[2];
+                                $mes2 = $aux2[1];
+                                $ano2 = $aux2[0];
+                                echo "<h4>Honorários recebidos:"." $dia1/$mes1/$ano1"." à "."$dia2/$mes2/$ano2"."</h4>";
+                            }else{
+                                echo "<h4>Honorários recebidos:"." $dia1/$mes1/$ano1"."</h4>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive">
+                        <?php
+                        $valor_honorario = 0;
+                        foreach ($honorarios as $honorario) {
+
+                            $aux = explode(" ", $honorario->data_pagamento);
+                            $data = $aux[0];
+
+                            if (strtotime($inicio) <= strtotime($data) && strtotime($fim) >= strtotime($data)) {
+                                $valor_honorario += $honorario->valor;
+
+                                echo DetailView::widget([
+                                    'model' => $honorario,
+                                    'condensed' => true,
+                                    'bordered' => true,
+                                    'striped' => false,
+                                    'enableEditMode' => false,
+                                    'mode' => \kartik\detail\DetailView::MODE_VIEW,
+                                    'attributes' => [
+                                        //'id',
+                                        [
+                                            'columns' => [
+                                                ['attribute' => 'empresa_fk',
+                                                    'label' => 'Empresa',
+                                                    'value' => empresa($honorario),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                ['attribute' => 'valor',
+                                                    'label' => 'Valor Pago',
+                                                    'value' => formatar($honorario->valor),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'columns' => [
+                                                ['attribute' => 'referencia',
+                                                    'format' => ['date', 'php:d/m/Y'],
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                ['attribute' => 'data_pagamento',
+                                                    'label' => 'Data de Pagamento',
+                                                    'format' => ['date', 'php:d/m/Y'],
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'columns' => [
+                                                ['attribute' => 'usuario_fk',
+                                                    'label' => 'Usuário',
+                                                    'value' => usuario($honorario),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                                ['attribute' => 'observacao',
+                                                    'label' => 'Observação',
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ])
+                                ?>
+                            <?php }
+                        }?>
+                        <div class="col-sm-6">
+                            <?php echo "<h4>"."<font color ='#006400'>"."Honorários recebidos: ".formatar($valor_honorario)."</font>"."</h4>"; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="relatorio-view box box-primary">
     <div class="box-header with-border">
         <div class="panel-body">
@@ -663,10 +769,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             echo "<h4 align='right'>À receber PJ: "."<font color='#8b0000'>".formatar($valor_pj_receber)."</font>"."</h4>";
                             ?>
                         </div>
+                        <div class="col-sm-6">
+                            <?php
+                            echo "<h4 align='left'>Honorários Recebidos:"."<font color='#006400'>".formatar($valor_honorario)."</font >"."</h4>";
+                            ?>
+                        </div>
 
                         <div class="col-sm-12">
                             <?php
-                            echo "<h3 align='center'>Total Recebido: "."<font color='#006400'>".formatar($valor_totalpj+$valor_totalpf)."</font>"."</h3>";
+                            echo "<h3 align='center'>Total Recebido: "."<font color='#006400'>".formatar($valor_totalpj+$valor_totalpf+$valor_honorario)."</font>"."</h3>";
                             ?>
                         </div>
 
