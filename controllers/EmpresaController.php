@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Avisa_rotina;
+use app\models\Rotina;
 use Yii;
 use app\models\Empresa;
 use app\models\EmpresaSearch;
@@ -78,7 +80,55 @@ class EmpresaController extends Controller
     {
         $model = new Empresa();
 
+        date_default_timezone_set('America/Sao_Paulo');
+        $data = date('Y-m-d');
+        $dataaux = explode("-",$data);
+        $anoatual = $dataaux[0];
+        $mesatual = $dataaux[1];
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //1 é o id do simples nacional
+            if($model->rotina == 1) {
+                // insere na tabela os DAS
+                $model_avisa = new Avisa_rotina();
+                $model_avisa->empresa_fk = $model->id;
+                $model_avisa->rotina_fk = $model->rotina;
+
+                $rotinas = Rotina::find()->all();
+                foreach ($rotinas as $r) {
+                    if ($model_avisa->rotina_fk == $model->rotina) {
+                        $dataaux = explode("-", $r->data_entrega);
+                        $dia = $dataaux[2];
+                    }
+                }
+                $model_avisa->data_entrega = "$anoatual-$mesatual-$dia";
+                $model_avisa->nome_rotina = 'Simples Nacional';
+                $model_avisa->gera_auto = $data;
+                $model_avisa->status_chegada = 0;
+                $model_avisa->status_entrega = 0;
+                $model_avisa->save();
+            }
+            if($model->rotina == 1 && $mesatual == '03') {
+                // insere na tabela os DAS
+                $model_avisa = new Avisa_rotina();
+                $model_avisa->empresa_fk = $model->id;
+                $model_avisa->rotina_fk = $model->rotina;
+
+                $rotinas = Rotina::find()->all();
+                foreach ($rotinas as $r) {
+                    if ($model_avisa->rotina_fk == $model->rotina) {
+                        $dataaux = explode("-", $r->data_entrega);
+                        $dia = $dataaux[2];
+                    }
+                }
+                $model_avisa->data_entrega = "$anoatual-$mesatual-31";
+                $model_avisa->nome_rotina = 'DEFIS';
+                $model_avisa->gera_auto = $data;
+                $model_avisa->status_chegada = 1;
+                $model_avisa->status_entrega = 0;
+                $model_avisa->save();
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

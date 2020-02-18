@@ -11,26 +11,8 @@ $this->title = 'Abrir Caixa';
 $this->params['breadcrumbs'][] = ['label' => 'Abrir Caixas'];
 ?>
 
-<?php
-function formatar($model){
-    if(!$model){
-        return "R$ 0,00";
-    }
-    $formatter = Yii::$app->formatter;
-    $formatado = $formatter->asCurrency($model);
-    $dinheiro = str_replace("pt-br", "", $formatado);
-    return "R$ $dinheiro";
-}
-?>
-
 <div class="abrircaixa-view box box-primary">
     <div class="box-header">
-        <div class="col-sm-6">
-            <?= Html::a('Alterar Valor', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat pull-left']) ?>
-        </div>
-        <div class="col-sm-6">
-            <?= Html::a('Início', ['/site/index'], ['class' => 'btn btn-success btn-flat pull-right']) ?>
-        </div>
     </div>
     <div class="box-body table-responsive">
         <div class="col-sm-12">
@@ -40,10 +22,13 @@ function formatar($model){
                     'options' => [
                         'class' => 'alert-warning',
                     ],
-                    'body' => "<h3><center>".formatar($model->valor).' Adicionado ao Caixa!'."</center></h3>",
+                    'body' => "<h3><center>".'O caixa já está aberto!'."</center></h3>",
                 ]);
                 ?>
             </div>
+        </div>
+        <div class="col-sm-12">
+            <?= Html::a('Início', ['/site/index'], ['class' => 'btn btn-success btn-flat pull-right']) ?>
         </div>
     </div>
 </div>

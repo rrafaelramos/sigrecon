@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Avisa_rotina;
 use app\models\Empresa;
 use app\models\Rotina;
 use kartik\grid\GridView;
@@ -21,17 +22,18 @@ function empresa($model){
         }
     }
 }
+
 function rotina($model){
-    $rotinas = Rotina::find()->all();
-    foreach ($rotinas as $r){
-        if ($r->id == $model->rotina_fk) {
-            return "$r->nome";
-        }
-    }
+    return $model->nome_rotina;
 }
+
 function chegada($model){
     $rotinas = Rotina::find()->all();
     $doc = 0;
+    if($model->nome_rotina == 'DEFIS'){
+        return "Extrato do SN - Disponível no portal do Simples Nacional";
+    }
+
     foreach ($rotinas as $r){
         if($r->id == $model->rotina_fk){
             $doc = $r->doc_busca;
@@ -43,6 +45,7 @@ function chegada($model){
         return "$doc recebido(s)!";
     }
 }
+
 function entrega($model){
     if(!$model->status_entrega){
         return "Pendente!";

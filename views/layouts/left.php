@@ -91,6 +91,7 @@
                         'items' => [
                             ['label' => 'Vendas Realizadas', 'icon' => 'usd', 'url' => ['/venda'],],
                             ['label' => 'Compras Realizadas ', 'icon' => 'usd', 'url' => ['/compra'],],
+                            ['label' => 'Serviços', 'icon' => '', 'url' => ['/servico'],],
                             [
                                 'label' => 'Empresas',
                                 'icon' => 'home',

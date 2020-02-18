@@ -44,16 +44,17 @@ function novoUsuario(){
     }
 }
 
-//essa função verifica se deverá ser gerado protocolo de entrega nesse mês
-function mensal(){
+//essa função verifica se deverá ser gerado protocolo de entrega das empresas do simples
+function simplesNacional()
+{
+    date_default_timezone_set('America/Sao_Paulo');
     $data = date('Y-m-d');
-    $dataform = explode("-",$data);
+    $dataform = explode("-", $data);
     $mesatual = $dataform[1];
     $anoatual = $dataform[0];
 
     $rotinas = Rotina::find()->all();
     $empresas = Empresa::find()->all();
-    $avisarotina = Avisa_rotina::find()->all();
 
     $mes_tabela = '00';
     $numeroempresa = count($empresas);
@@ -62,33 +63,26 @@ function mensal(){
     $arrayempresa = array();
     //cria um array para ir setando as rotinas que se encaixam na rotina mensal
     $arrayrotina = array();
-    $cont=0;
-    $cont2=0;
-    //pegar o nome da rotina
-//    for($i=0; $i<$numerorotina; $i++){
-//        if(strtotime($rotinas[$i]->data_aviso) == strtotime($data)){
-//            $arrayrotina[$cont] = $rotinas[$i];
-//            $cont++;
-//        }
-//    }
+    $cont = 0;
+    $cont2 = 0;
 
     //pegar ultima data das rotinas geradas;
     $data_tabela = Avisa_rotina::find()->max('gera_auto');
-    if(!$data_tabela) {
+    if (!$data_tabela) {
         $mes_tabela = '00';
-    }else{
+    } else {
         $d_tabela = explode("-", $data_tabela);
         $mes_tabela = $d_tabela[1];
         $ano_tabela = $d_tabela[0];
     }
 
     //verifica o mes atual e o ultimo mes salvo para gerar novo "avisa_rotina"
-    if ($mesatual != $mes_tabela){
+    if ($mesatual != $mes_tabela) {
         // cria um array com as empresas da rotina mensal e sua respectiva rotina
-        for($i=0; $i<$numeroempresa; $i++) {
+        for ($i = 0; $i < $numeroempresa; $i++) {
             for ($j = 0; $j < $numerorotina; $j++) {
-                //verifica todas as empresas que possuem a rotina mensal;
-                if (($empresas[$i]->rotina == $rotinas[$j]->id) && $rotinas[$j]->repeticao == 1) {
+                //verifica todas as empresas que possuem a rotina do simples nacional;
+                if (($empresas[$i]->rotina == $rotinas[$j]->id) && $rotinas[$j]->nome == 'Simples Nacional') {
                     $arrayempresa[$cont2] = $empresas[$i];
                     $cont2++;
                 }
@@ -100,31 +94,52 @@ function mensal(){
         $dia = $dataaux[2];
         $ano = $dataaux[0];
         //salva as empresas no model
-        if($arrayempresa){
+        if ($arrayempresa) {
+            // insere na tabela os DAS
             do {
                 $model_avisa = new Avisa_rotina();
                 $model_avisa->empresa_fk = $arrayempresa[$aux]->id;
                 $model_avisa->rotina_fk = $arrayempresa[$aux]->rotina;
-                foreach ($rotinas as $r){
-                    if($model_avisa->rotina_fk == $r->id){
+                foreach ($rotinas as $r) {
+                    if ($model_avisa->rotina_fk == $r->id) {
                         $dataaux = explode("-", $r->data_entrega);
                         $dia = $dataaux[2];
                         $ano = $dataaux[0];
                     }
                 }
                 $model_avisa->data_entrega = "$anoatual-$mesatual-$dia";
+                $model_avisa->nome_rotina = 'Simples Nacional';
                 $model_avisa->gera_auto = $data;
                 $model_avisa->status_chegada = 0;
                 $model_avisa->status_entrega = 0;
                 $model_avisa->save();
                 $aux++;
-            }while($aux < $cont2);
-            return 1;
-        }else{
-            return 0;
+            } while ($aux < $cont2);
+
+            $aux = 0;
+            // insere na tabela a DEFIS
+            if ($arrayempresa && $mesatual == '03') {
+                do {
+                    $model_avisa = new Avisa_rotina();
+                    $model_avisa->empresa_fk = $arrayempresa[$aux]->id;
+                    $model_avisa->rotina_fk = $arrayempresa[$aux]->rotina;
+                    $model_avisa->nome_rotina = 'DEFIS';
+                    $model_avisa->data_entrega = "$anoatual-$mesatual-31";
+                    $model_avisa->status_chegada = 1;
+                    $model_avisa->status_entrega = 0;
+                    $model_avisa->data_chegada = "$anoatual-01-01";
+                    $model_avisa->gera_auto = $data;
+                    $model_avisa->save();
+                    $aux++;
+                } while ($aux < $cont2);
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 }
+
 // retorna o número de certificados que irão expirar no dia!
 function certificado(){
     $data = date('Y-m-d');
@@ -313,7 +328,7 @@ function rotinaPendente(){
         }
     }
     if($cont){
-        return "$cont guias pendentes";
+        return "$cont documentos pendentes";
     }
 }
 ?>
@@ -364,38 +379,38 @@ function rotinaPendente(){
 
                     <?php if (caixa()){
                         echo
-                        '<li class="dropdown notifications-menu">'.
-                        '<a href="/sigrecon/web/?r=abrircaixa/create">'.'Abrir Caixa'.
+                            '<li class="dropdown notifications-menu">'.
+                            '<a href="/sigrecon/web/?r=abrircaixa/create">'.'Abrir Caixa'.
                             '<i class="fa fa-usd">'.
                             '</i>'.
                             '<span class="label label-warning">';
                         echo
-                        '</a>'.
-                    '</li>';
+                            '</a>'.
+                            '</li>';
                     }?>
 
                     <?php if(novoUsuario() && Yii::$app->user->identity->tipo == 1){
                         echo
-                        '<li class="dropdown notifications-menu">'.
-                        '<a href="/sigrecon/web/?r=usuario">'.
+                            '<li class="dropdown notifications-menu">'.
+                            '<a href="/sigrecon/web/?r=usuario">'.
                             '<i class="fa fa-user">'.
                             '</i>'.
                             '<span class="label label-warning">';
                         echo '!'.
                             '</a>'.
-                    '</li>';
+                            '</li>';
                     }?>
 
                     <li class="dropdown notifications-menu">
 
-                            <!--                        //class warning para nova notificação-->
-                            <?php
-                            if(certificado() || procuracao() || servicoPronto() || servicoPendente()){
-                                echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.'<i class="fa fa-bell"></i>'.'<span class="label label-warning">'.'!'.
+                        <!--                        //class warning para nova notificação-->
+                        <?php
+                        if(certificado() || procuracao() || servicoPronto() || servicoPendente()){
+                            echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.'<i class="fa fa-bell"></i>'.'<span class="label label-warning">'.'!'.
                                 '</span>'.
                                 '</a>';
-                            }
-                            ?>
+                        }
+                        ?>
 
 
                         <ul class="dropdown-menu">
@@ -459,16 +474,16 @@ function rotinaPendente(){
                     <li class="dropdown notifications-menu">
                         <!-- ISSO DEFINE O QUE FICA NO HEADEAR-->
 
-                            <!--                        //class warning para nova notificação-->
-                            <?php
-                            mensal();
-                            if(rotinaAguardando()|| rotinaPronto() || rotinaPendente()){
-                                echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.
-                                        '<i class="fa fa-flag"></i>'.'<span class="label label-warning">'.
-                                            '!'.'</span>'.
-                                     '</a>';
-                            }
-                            ?>
+                        <!--                        //class warning para nova notificação-->
+                        <?php
+                        simplesNacional();
+                        if(rotinaAguardando()|| rotinaPronto() || rotinaPendente()){
+                            echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.
+                                '<i class="fa fa-flag"></i>'.'<span class="label label-warning">'.
+                                '!'.'</span>'.
+                                '</a>';
+                        }
+                        ?>
 
                         <ul class="dropdown-menu">
                             <li class="header">

@@ -6,6 +6,7 @@ use app\models\Caixa;
 use Yii;
 use app\models\Abrircaixa;
 use app\models\AbrircaixaSearch;
+use yii\bootstrap\Alert;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -75,6 +76,20 @@ class AbrircaixaController extends Controller
      */
     public function actionCreate()
     {
+        //verifica se o caixa está aberto
+        $caixa = Caixa::find()->all();
+        $cont = count($caixa);
+        $cont2 =0;
+        foreach ($caixa as $c){
+            if($c->estado == 1 ){
+                $cont2++;
+            }
+        }
+        //caixa já está abertp
+        if($cont != $cont2){
+            return $this->render('caixa_aberto');
+        }
+
         date_default_timezone_set('America/Sao_Paulo');
         $data = date('Y-m-d H:i:s');
 
@@ -87,7 +102,7 @@ class AbrircaixaController extends Controller
             $model->data = $data;
             $model->save();
             $caixa->save();
-            return $this->redirect(['/site/index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -106,6 +121,16 @@ class AbrircaixaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //atualiza o valor salvo no caixa
+            $caixas = Caixa::find()->all();
+
+            foreach ($caixas as $caixa){
+                if($caixa->data == $model->data){
+                    $model_caixa = $this->findCaixa($caixa->id);
+                    $model_caixa->total = $model->valor;
+                    $model_caixa->save();
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -137,6 +162,15 @@ class AbrircaixaController extends Controller
     protected function findModel($id)
     {
         if (($model = Abrircaixa::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findCaixa($id)
+    {
+        if (($model = Caixa::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

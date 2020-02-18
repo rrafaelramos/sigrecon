@@ -95,15 +95,24 @@ create table caixa(
 create table rotina(
 	id int auto_increment,
 	nome varchar(200),
-	repeticao int not null,
-	empresa_fk int,
 	doc_entrega varchar(200),
 	doc_busca varchar(200),
 	data_entrega DATE,
-	data_aviso DATE,
-	informacao varchar(500),
-	msg_aviso varchar(500),
 	primary key (id)
+);
+
+INSERT INTO `rotina`(
+    `id`,
+    `nome`,
+    `doc_entrega`,
+    `doc_busca`,
+   `data_entrega`
+    )VALUES(
+    1,
+    'Simples Nacional',
+    'DAS',
+    'NOTAS FISCAIS',
+    '2020-02-20'
 );
 
 create table venda(
@@ -178,6 +187,7 @@ create table avisa_rotina(
 	id int auto_increment,
 	empresa_fk int,
 	rotina_fk int,
+	nome_rotina varchar(250),
 	data_entrega date,
 	status_chegada int,
 	status_entrega int,

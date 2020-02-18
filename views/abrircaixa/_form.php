@@ -29,11 +29,12 @@ use yii\widgets\ActiveForm;
                                 'id' => 'total',
                                 'name' => 'total',
                             ]
-                        ]);
+                        ])->label('Valor de Abertura:');
                         ?>
                     </div>
                     <div>
-                        <?= Html::submitButton('Abrir Caixa', ['class' => 'btn btn-success btn-flat', 'data' => [
+                        <?= Html::a('Cancelar',['/site/index'], ['class' => 'btn btn-warning btn-flat pull-left'])?>
+                        <?= Html::submitButton('Abrir Caixa', ['class' => 'btn btn-success btn-flat pull-right', 'data' => [
                             'confirm' => "Deseja realmente Salvar?",
                             'method' => 'post',
                         ]]) ?>
