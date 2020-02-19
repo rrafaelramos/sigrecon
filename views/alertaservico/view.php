@@ -95,24 +95,10 @@ function responsavel($model){
 }
 ?>
 
-<div class="clienteavulso-view box box-primary">
+<div class="alertaservico-view box box-primary">
     <div class="box-header with-border">
-        <div class="col-xs-10">
-            <h4 class="panel-title">Dados do Alerta</h4>
-        </div>
-        <div>
-            <div class="pull-right">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-                <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger btn-flat',
-                    'data' => [
-                        'confirm' => 'Deseja realmente apagar?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
-            </div>
-        </div>
+        <!--        <div class="col-sm-12">-->
+        <h4>Dados do Alerta</h4>
     </div>
     <div class="panel-body">
         <div class="panel-group collapse in">
@@ -215,5 +201,19 @@ function responsavel($model){
                             ],
                         ],
                     ]) ?>
+                    <div class="col-sm-12">
+                        <?= Html::a('Cancelar', ['delete', 'id' => $model->id], [
+                            'class' => 'btn btn-danger btn-flat',
+                            'data' => [
+                                'confirm' => 'Deseja realmente Cancelar?',
+                                'method' => 'post',
+                            ],
+                        ]) ?>
+                        <?= Html::a('Confirmar', ['index'], ['class' => 'btn btn-success btn-flat pull-right']) ?>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+

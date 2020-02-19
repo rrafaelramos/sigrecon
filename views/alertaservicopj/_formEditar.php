@@ -83,12 +83,12 @@ use yii\widgets\ActiveForm;
                         <div class="col-sm-8 col-sm-offset-2">
                             <?= $form->field($model, 'info')->textarea(['rows' => 3,'disabled' => 'disabled'])->label('Informações adicionais') ?>
                         </div>
-                        <div class="col-sm-3 pull-right">
-                            <?= Html::submitButton('Atualizar', ['class' => 'btn btn-success btn-flat', 'data' => [
+                        <div class="col-sm-12">
+                            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat pull-left']) ?>
+                            <?= Html::submitButton('Atualizar', ['class' => 'btn btn-success btn-flat pull-right', 'data' => [
                                 'confirm' => "Deseja realmente Salvar?",
                                 'method' => 'post',
                             ]]) ?>
-                            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
                         </div>
                     </div>
                 </div>
