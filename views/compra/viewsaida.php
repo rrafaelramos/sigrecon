@@ -32,25 +32,19 @@ function usuario($model){
     }
 }
 
-
 ?>
 <div class="clienteavulso-view box box-primary">
     <div class="box-header with-border">
-        <div class="col-xs-10">
-            <h4 class="panel-title">Dados da Compra</h4>
-        </div>
-        <div>
-            <div class="pull-right">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-                <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger btn-flat',
-                    'data' => [
-                        'confirm' => 'Deseja realmente apagar?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
-            </div>
+        <div class="col-sm-12">
+            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
+            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
+            <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger btn-flat',
+                'data' => [
+                    'confirm' => 'Deseja realmente apagar?',
+                    'method' => 'post',
+                ],
+            ]) ?>
         </div>
     </div>
     <div class="panel-body">

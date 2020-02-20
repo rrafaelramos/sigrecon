@@ -33,17 +33,14 @@ function formatar($valor){
                                     <center> <h4><?php echo "Saldo Disponível";?></h4></center>
                                 </div>
                             </div>
-
                             <div class="box-body table-responsive">
-                            <center><h4><?php echo formatar($valor);?></h4></center>
+                                <center><h4><?php echo formatar($valor);?></h4></center>
                             </div>
-
                         </div>
-
                     </div>
                     <div>
                         <?= Html::a('Fechar caixa', ['/fcaixa/create'],[ 'class' => 'btn btn-danger btn-flat pull-left']) ?>
-                        <?= Html::a('Início', ['/site/index'],[ 'class' => 'btn btn-warning btn-flat pull-right']) ?>
+                        <?= Html::a('Início', ['/site/index'],[ 'class' => 'btn btn-primary btn-flat pull-right']) ?>
                     </div>
                 </div>
             </div>

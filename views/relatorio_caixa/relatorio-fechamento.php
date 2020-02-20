@@ -116,9 +116,10 @@ function quantidade($model){
     return "$model unidade";
 }
 
-$this->title = "Fechamento Caixa";
+$this->title = "Relatório Caixa";
 $this->params['breadcrumbs'][] = "Caixa";
-$this->params['breadcrumbs'][] = "Fechar Caixa";
+$this->params['breadcrumbs'][] = "Fechar";
+$this->params['breadcrumbs'][] = "Relatório";
 ?>
 
 
@@ -224,7 +225,7 @@ $this->params['breadcrumbs'][] = "Fechar Caixa";
                             <?php }
                         }?>
                         <div class="col-sm-6">
-                            <?php echo "<h4>"."<font color ='#006400'>"."Honorários recebidos: ".formatar($valor_honorario)."</font>"."</h4>"; ?>
+                            <?php echo "<h4>"."Honorários recebidos: ".formatar($valor_honorario)."</h4>"; ?>
                         </div>
                     </div>
                 </div>

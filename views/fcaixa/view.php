@@ -6,9 +6,9 @@ use kartik\detail\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Fcaixa */
 
-$this->title = "Fechamento: ".$model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Caixa Fechados', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = "Fechar caixa ";
+$this->params['breadcrumbs'][] = ['label' => 'Caixa'];
+$this->params['breadcrumbs'][] = ['label' => 'Fechar'];
 ?>
 
 <?php
@@ -21,6 +21,19 @@ function formatar($model){
     $formatado = $formatter->asCurrency($model);
     $dinheiro = str_replace("pt-br", "R$", $formatado);
     return $dinheiro;
+}
+
+function formatarData($model){
+    $dataf = explode(" ",$model->data_fechamento);
+
+    $hora = $dataf[1];
+
+    $aux = $dataf[0];
+    $ano_ymd = explode("-",$aux);
+    $ano = $ano_ymd[0];
+    $mes = $ano_ymd[1];
+    $dia = $ano_ymd[2];
+    return "$dia/$mes/$ano às $hora";
 }
 
 ?>
@@ -36,7 +49,6 @@ function formatar($model){
                                     <h4>Dados Gerais</h4>
                                 </div>
                             </div>
-
                             <div class="box-body table-responsive">
                                 <?= DetailView::widget([
                                     'model' => $model,
@@ -50,8 +62,7 @@ function formatar($model){
                                             'columns' => [
                                                 [
                                                     'attribute' => 'data_fechamento',
-                                                    'value' => $model->data_fechamento,
-                                                    'format' => ['date', 'php:d/m/Y H:i:s'],
+                                                    'value' => formatarData($model),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
@@ -61,14 +72,14 @@ function formatar($model){
                                             'columns' =>[
                                                 [
                                                     'attribute' => 'saida',
-                                                    'label' => 'Compras efetuadas',
+                                                    'label' => 'Saídas',
                                                     'value' => formatar($model->saida),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
                                                 [
                                                     'attribute' => 'entrada',
-                                                    'label' => 'Vendas realizadas',
+                                                    'label' => 'Entradas',
                                                     'value' => formatar($model->entrada),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
@@ -92,7 +103,7 @@ function formatar($model){
                                     <?= Html::a('Finalizar', ['/site/index'],[ 'class' => 'btn btn-success btn-flat pull-right']) ?>
 
                                     <?php
-                                        $data = $model->data_fechamento;
+                                    $data = $model->data_fechamento;
                                     ?>
 
                                     <?= Html::a('Vizualizar Relatório', ['relatorio_caixa/fechamento', 'data_fim' => $data],[ 'class' => 'btn btn-primary btn-flat pull-left']) ?>

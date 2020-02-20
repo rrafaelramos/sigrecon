@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-//use yii\grid\GridView;
 use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\FcaixaSearch */
@@ -21,10 +20,24 @@ function formatar($model){
     $dinheiro = str_replace("pt-br", "", $formatado);
     return "R$ $dinheiro";
 }
+
+function formatarData($model){
+    $dataf = explode(" ",$model->data_fechamento);
+
+    $hora = $dataf[1];
+
+    $aux = $dataf[0];
+    $ano_ymd = explode("-",$aux);
+    $ano = $ano_ymd[0];
+    $mes = $ano_ymd[1];
+    $dia = $ano_ymd[2];
+    return "$dia/$mes/$ano às $hora";
+}
+
 ?>
 <div class="fcaixa-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Início', ['/site/index'], ['class' => 'btn btn-warning btn-flat']) ?>
+        <?= Html::a('Início', ['/site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -40,15 +53,18 @@ function formatar($model){
                 //'id',
 
                 ['attribute' => 'data_fechamento',
-                    'label' => 'Término',
-                    'format' => ['date', 'php: d/m/Y']],
+                    'label' => 'Data Fechamento',
+                    'value' => function($model){
+                        return formatarData($model);
+                    },
+                ],
                 ['attribute' => 'entrada',
-                    'label' => 'Total de Vendas',
+                    'label' => 'Total de Entrada (+)',
                     'value' => function($model){
                         return formatar($model->entrada);
                     }
                 ],['attribute' => 'saida',
-                    'label' => 'Total de Gastos',
+                    'label' => 'Total de Saída (-)',
                     'value' => function($model){
                         return formatar($model->saida);
                     }

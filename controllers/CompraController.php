@@ -150,7 +150,7 @@ class CompraController extends Controller
             foreach ($caixa as $c){
                 if($c->data == $model->data){
                     $pegacaixa = $this->findCaixa($c->id);
-                    $pegacaixa->total =0;
+                    $pegacaixa->total = 0;
                     $pegacaixa->data = $model->data;
                     $pegacaixa->total -= $model->valor;
                     $pegacaixa->save();

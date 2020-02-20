@@ -45,7 +45,7 @@ class Clienteavulso extends \yii\db\ActiveRecord
         return [
             [['cpf', 'nome'], 'required'],
             [['numero', 'rotina', 'usuario_fk'], 'integer'],
-            [['datanascimento'], 'safe'],
+            [['datanascimento'], 'validarIdade'],
             [['cpf'], 'string',],
             [['nome'], 'string', 'max' => 120],
             [['telefone'], 'string', 'max' => 20],
@@ -88,5 +88,42 @@ class Clienteavulso extends \yii\db\ActiveRecord
     public function getUsuarioFk()
     {
         return $this->hasOne(Usuario::className(), ['id' => 'usuario_fk']);
+    }
+
+    public function validarIdade($attribute, $params, $validator)
+    {
+        date_default_timezone_set('America/Sao_Paulo');
+        $data = date("Y/m/d");
+        $guardadata = explode('/',$data);
+        $ano = $guardadata[0];
+        $mes = $guardadata[1];
+        $dia = $guardadata[2];
+        $ano = intval($ano);
+        $mes = intval($mes);
+        $dia = intval($dia);
+
+        $dataform = explode('-',$this->datanascimento);
+        $anoform = $dataform[0];
+        $mesform = $dataform[1];
+        $diaform = $dataform[2];
+        $anoform = intval($anoform);
+        $mesform = intval($mesform);
+        $diaform = intval($diaform);
+
+        $idadeano = ($ano-$anoform);
+        $idademes = ($mes-$mesform);
+        $idadedia = ($dia-$diaform);
+
+        if(strtotime($this->datanascimento) >= strtotime($data)){
+            return $this->addError($attribute, 'Data inválida!');
+        }
+
+        if ($idadeano<18) {
+            $this->addError($attribute, 'Não pode ser Menor de Idade!');
+        }elseif($idadeano==18 && $mes<$mesform){
+            $this->addError($attribute, 'Não pode ser Menor de Idade!');
+        }elseif ($idadeano==18 && $idademes==0 && $dia<$diaform){
+            $this->addError($attribute, 'Não pode ser Menor de Idade!');
+        }
     }
 }

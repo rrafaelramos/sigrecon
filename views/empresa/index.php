@@ -1,6 +1,5 @@
 <?php
 
-use app\models\User;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 
@@ -15,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="empresa-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Cadastrar Empresa', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btn-flat']) ?>
+        <?= Html::a('Novo +', ['create'], ['class' => 'btn btn-success btn-flat pull-left']) ?>
+        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -80,3 +79,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
 </div>
+

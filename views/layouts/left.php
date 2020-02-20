@@ -41,10 +41,10 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa'],],
-                            ['label' => 'Cliente avulso', 'icon' => 'user', 'url' => ['/clienteavulso'],],
-                            ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina'],],
-                            ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico'],],
+                            ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa/create'],],
+                            ['label' => 'Cliente PF', 'icon' => 'user-plus', 'url' => ['/clienteavulso/create'],],
+//                            ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina'],],
+                            ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico/create'],],
                             //['label' => 'Empresa', 'icon' => 'institution', 'url' => ['/servico'],],
 //                            [
 //                                'label' => 'Level One',
@@ -89,18 +89,29 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Vendas Realizadas', 'icon' => 'usd', 'url' => ['/venda'],],
-                            ['label' => 'Compras Realizadas ', 'icon' => 'usd', 'url' => ['/compra'],],
-                            ['label' => 'Serviços', 'icon' => '', 'url' => ['/servico'],],
                             [
                                 'label' => 'Empresas',
                                 'icon' => 'home',
                                 'url' => '#',
                                 'items' => [
-                                    ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/empresa'],],
+                                    ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/empresa']],
+                                    ['label' => 'Docs. de Rotina', 'icon' => 'folder-open', 'url' => ['/avisa_rotina',]],
                                     ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/empresa/datavenc',]],
+
                                 ],
                             ],
+                            [
+                                'label' => 'Caixa',
+                                'icon' => 'tasks',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Vendas', 'icon' => 'usd', 'url' => ['/venda'],],
+                                    ['label' => 'Compras', 'icon' => 'usd', 'url' => ['/compra'],],
+                                    ['label' => 'Fechamentos', 'icon' => 'pencil-square-o', 'url' => ['/fcaixa']],
+                                ],
+                            ],
+                            ['label' => 'Cliente PF', 'icon' => 'user', 'url' => ['/clienteavulso'],],
+                            ['label' => 'Serviços', 'icon' => '', 'url' => ['/servico'],],
                         ],
                     ],
                     [
@@ -108,7 +119,7 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra/saida'],],
+                            ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra/create'],],
                             ['label' => 'Lançar Saída', 'icon' => 'pencil', 'url' => ['compra/saida'],],
                             ['label' => 'Lançar Honorário', 'icon' => 'usd', 'url' => ['/honorario'],],
                             ['label' => 'Fechar Caixa', 'icon' => 'lock', 'url' => ['/fcaixa/create'],],

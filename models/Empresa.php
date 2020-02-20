@@ -71,8 +71,8 @@ class Empresa extends \yii\db\ActiveRecord
             ['data_certificado', 'compare', 'compareAttribute' => 'data_abertura', 'operator' => '>=', 'message' => 'Data Inválida!' ],
             [['datanascimento_socio'], 'validarIdade' ],
 
-
-            [['numero','cnpj'], 'string',],
+            [['numero'],'integer'],
+            [['cnpj'], 'string',],
             [['razao_social', 'nome_fantasia'], 'string', 'max' => 200],
             [['email'], 'email'],
             [['telefone', 'celular'], 'string', 'max' => 20],
@@ -124,6 +124,10 @@ class Empresa extends \yii\db\ActiveRecord
         $idademes = ($mes-$mesform);
         $idadedia = ($dia-$diaform);
 
+        if(strtotime($this->datanascimento_socio) >= strtotime($data)){
+            return $this->addError($attribute, 'Data inválida!');
+        }
+
         if ($idadeano<18) {
             $this->addError($attribute, 'O Sócio não pode ser Menor de Idade!');
         }elseif($idadeano==18 && $mes<$mesform){
@@ -146,7 +150,7 @@ class Empresa extends \yii\db\ActiveRecord
             'email' => 'E-mail',
             'telefone' => 'Telefone',
             'celular' => 'Celular',
-            'numero' => 'N°',
+            'numero' => 'Número',
             'complemento' => 'Complemento',
             'rua' => 'Logradouro',
             'bairro' => 'Bairro',

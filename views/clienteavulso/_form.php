@@ -1,8 +1,6 @@
 <?php
 
-use app\models\Clienteavulso;
 use app\models\Rotina;
-use yii\bootstrap\Dropdown;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\datecontrol\DateControl;
@@ -23,7 +21,7 @@ use yii\helpers\ArrayHelper;
                 <div class="panel-heading">
                     <h3 class="panel-title">Dados Pessoais</h3>
                 </div>
-<!--                div de Dados pessoais do Cliente-->
+                <!--                div de Dados pessoais do Cliente-->
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
@@ -109,32 +107,34 @@ use yii\helpers\ArrayHelper;
                             'SC' => 'SC',
                             'SE' => 'SE',
                             'SP' => 'SP',
-                            'TO' => 'TO']) ?>
+                            'TO' => 'TO']); ?>
                     </div>
                 </div>
             </div>
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Serviço Avulso ou Recorrente</h3>
+                    <h3 class="panel-title">Serviço Recorrente</h3>
                 </div>
                 <div class="panel-body">
                     <div class="col-sm-6">
-                        <?= $form->field($model, 'rotina')->dropDownList(ArrayHelper::map(Rotina::find()->all(),'id', 'nome'),['prompt' => 'Selecione a Rotina'])?>
+                        <?= $form->field($model, 'rotina')->dropDownList(ArrayHelper::map(Rotina::find()->all(),'id', 'nome'),['prompt' => 'Selecione o Serviço'])?>
                     </div>
                 </div>
             </div>
-            <div class="pull-right">
-                <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat']) ?>
+            <div class="col-sm-12">
+                <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right']) ?>
                 <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                <?= Html::a('Apagar',['delete', 'id' => $model->id], ['class' => 'btn btn-danger btn-flat', 'data' => [
-                    'confirm' => 'Deseja realmente apagar?',
-                    'method' => 'post',
-                ],]) ?>
+                <?php
+                    if($model->id){
+                        echo Html::a('Apagar',['delete', 'id' => $model->id], ['class' => 'btn btn-danger btn-flat', 'data' => [
+                            'confirm' => 'Deseja realmente apagar?',
+                            'method' => 'post',
+                        ],]);
+                    }
+                ?>
             </div>
         </div>
     </div>
 </div>
 <?php ActiveForm::end(); ?>
-
-</div>

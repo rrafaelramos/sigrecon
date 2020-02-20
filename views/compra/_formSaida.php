@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
             <div class="col-lg-offset-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Lançar Saída</h3>
+                        <h3 class="panel-title">Registrar Saída</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-sm-12">
@@ -37,11 +37,10 @@ use yii\widgets\ActiveForm;
                         </div>
                         <div class="col-sm-12">
                             <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat pull-left']) ?>
-                            <?= Html::submitButton('Retirar', ['class' => 'btn btn-success btn-flat pull-right', 'data' => [
+                            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right', 'data' => [
                                 'confirm' => "Deseja realmente Salvar?",
                                 'method' => 'post',
                             ]]) ?>
-
                         </div>
                     </div>
                 </div>

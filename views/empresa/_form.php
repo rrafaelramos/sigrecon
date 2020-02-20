@@ -14,8 +14,8 @@ use kartik\icons\Icon;
 
 <div class="empresa-form box box-primary">
     <?php
-        date_default_timezone_set('America/Sao_Paulo');
-        $form = ActiveForm::begin();
+    date_default_timezone_set('America/Sao_Paulo');
+    $form = ActiveForm::begin();
     ?>
     <div class="box-body table-responsive">
         <div class="panel panel-default">
@@ -58,7 +58,7 @@ use kartik\icons\Icon;
                     <?= $form->field($model, 'bairro')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-sm-2">
-                    <?= $form->field($model, 'numero')->textInput() ?>
+                    <?= $form->field($model, 'numero')->textInput()->label('N°') ?>
                 </div>
                 <div class="col-sm-5">
                     <?= $form->field($model, 'cidade')->textInput(['maxlength' => true]) ?>
@@ -191,16 +191,18 @@ use kartik\icons\Icon;
                 </div>
             </div>
         </div>
-        <div class="pull-right">
+        <div class="col-sm-12">
             <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-            <?php echo Html::a('Apagar', ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger btn-flat',
-                'data' => [
-                    'confirm' => 'Deseja realmente apagar?',
-                    'method' => 'post',
-                ],
-            ]) ?>
-            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat']) ?>
+            <?php if($model->id){
+                echo Html::a('Apagar', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger btn-flat',
+                    'data' => [
+                        'confirm' => 'Deseja realmente apagar?',
+                        'method' => 'post',
+                    ],
+                ]);
+            } ?>
+            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right']) ?>
         </div>
     </div>
 </div>

@@ -10,7 +10,7 @@ use kartik\icons\Icon;
 /* @var $model app\models\Avisa_rotina */
 
 $this->title = rotina($model->rotina_fk);
-$this->params['breadcrumbs'][] = ['label' => 'Avisa Rotinas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Rotina', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -52,21 +52,16 @@ function entrega($model){
 
 <div class="clienteavulso-view box box-primary">
     <div class="box-header with-border">
-        <div class="col-xs-10">
-            <h4 class="panel-title">Dados da Rotina</h4>
-        </div>
-        <div>
-            <div class="pull-right">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-            </div>
+        <div class="col-sm-12">
+            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat pull-left']) ?>
+            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
         </div>
     </div>
     <div class="panel-body">
         <div class="panel-group collapse in">
             <div class="panel panel-default">
-                <div class="panel-heading with-border col-xs-12">
-                    <div class="col-xs-10">
+                <div class="panel-heading with-border col-sm-12">
+                    <div class="col-sm-10">
                         <h2 class="panel-title">Rotina</h2>
                     </div>
                 </div>

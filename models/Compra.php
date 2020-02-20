@@ -34,6 +34,7 @@ class Compra extends \yii\db\ActiveRecord
         return [
             [['usuario_fk', 'quantidade'], 'integer'],
             [['quantidade', 'valor', 'descricao'], 'required'],
+            [['valor'], 'validaValor'],
             [['data'], 'safe'],
             [['valor'], 'number'],
             [['descricao'], 'string', 'max' => 200],
@@ -62,5 +63,14 @@ class Compra extends \yii\db\ActiveRecord
     public function getUsuarioFk()
     {
         return $this->hasOne(Usuario::className(), ['id' => 'usuario_fk']);
+    }
+
+    public function validaValor($attribute, $params, $validator)
+    {
+        if ($this->$attribute == 0) {
+            $this->addError($attribute, 'Valor não pode ser R$ 0,00 ');
+        }elseif ($this->$attribute < 0){
+            $this->addError($attribute, 'Valor não pode ser menor que R$ 0,00');
+        }
     }
 }

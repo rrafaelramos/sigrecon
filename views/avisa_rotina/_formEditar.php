@@ -136,14 +136,14 @@ function nome($model){
                                         ]
                                     ],'disabled' => 'disabled',
                                     'language' => 'pt-BR'
-                                ])->label('Data entregue');
-
-                            '</div>';
+                                ])->label('Data entregue').'</div>';
                         }
                         ?>
+                        <br>
+
                         <div class="col-sm-12">
                             <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right']) ?>
-                            <?= Html::a('Voltar',['index'],['class' => 'btn btn-warning btn-flat']) ?>
+                            <?= Html::a('Listar documentos',['index'],['class' => 'btn btn-warning btn-flat']) ?>
                         </div>
                     </div>
                 </div>

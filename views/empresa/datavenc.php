@@ -46,7 +46,6 @@ function certifica($model){
 
 ?>
 
-
 <?php
 
 $gridColumns = [
@@ -77,11 +76,9 @@ echo ExportMenu::widget([
     ],
 ]);
 ?>
-
 <div class="empresa-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Cadastrar Empresa', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btn-flat']) ?>
+        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

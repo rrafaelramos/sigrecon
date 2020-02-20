@@ -39,32 +39,26 @@ function usuario($model){
     }
 }
 
-
 ?>
 <div class="compra-view box box-primary">
     <div class="box-header with-border">
-        <div class="col-xs-10">
-            <h4 class="panel-title">Dados da Compra</h4>
-        </div>
-        <div>
-            <div class="pull-right">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-                <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger btn-flat',
-                    'data' => [
-                        'confirm' => 'Deseja realmente apagar?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
-            </div>
+        <div class="col-sm-12">
+            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
+            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
+            <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger btn-flat',
+                'data' => [
+                    'confirm' => 'Deseja realmente apagar?',
+                    'method' => 'post',
+                ],
+            ]) ?>
         </div>
     </div>
     <div class="panel-body">
         <div class="panel-group collapse in">
             <div class="panel panel-default">
-                <div class="panel-heading with-border col-xs-12">
-                    <div class="col-xs-10">
+                <div class="panel-heading with-border col-sm-12">
+                    <div class="col-sm-10">
                         <h2 class="panel-title">Informações Gerais</h2>
                     </div>
                 </div>

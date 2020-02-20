@@ -14,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="clienteavulso-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Cadastrar Cliente', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btn-flat']) ?>
+        <?= Html::a('Novo +', ['create'], ['class' => 'btn btn-success btn-flat pull-left']) ?>
+        <?= Html::a('Início', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

@@ -79,6 +79,7 @@ class FcaixaController extends Controller
     public function actionCreate()
     {
         date_default_timezone_set('America/Sao_Paulo');
+        $data = date('Y-m-d H:i:s');
         $model = new Fcaixa();
         $caixa = Caixa::find()->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -98,7 +99,6 @@ class FcaixaController extends Controller
                     $model->saldo = $model->entrada + $model->saida;
                 }
             }
-            $data = date('Y-m-d H:i:s');
             $model->data_fechamento = $data;
             $model->save();
 

@@ -17,13 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="empresa-view box box-primary">
         <div class="box-header with-border">
-            <div class="col-xs-10">
-                <h4>Dados da Empresa</h4>
-            </div>
             <div>
-                <div class="pull-right">
-                    <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                    <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
+                <div class="col-sm-12">
+                    <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
+                    <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
                     <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
                         'class' => 'btn btn-danger btn-flat',
                         'data' => [
@@ -49,8 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
             <div class="panel-group collapse in">
                 <div class="panel panel-default">
-                    <div class="panel-heading with-border col-xs-12">
-                        <div class="col-xs-10">
+                    <div class="panel-heading with-border col-sm-12">
+                        <div class="col-sm-10">
                             <h4>Dados Gerais</h4>
                         </div>
                     </div>
@@ -127,8 +124,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
             <div class="panel-group collapse in">
                 <div class="panel panel-default">
-                    <div class="panel-heading with-border col-xs-12">
-                        <div class="col-xs-10">
+                    <div class="panel-heading with-border col-sm-12">
+                        <div class="col-sm-10">
                             <h4>Endereço</h4>
                         </div>
                     </div>
@@ -203,8 +200,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
             <div class="panel-group collapse in">
                 <div class="panel panel-default">
-                    <div class="panel-heading with-border col-xs-12">
-                        <div class="col-xs-10">
+                    <div class="panel-heading with-border col-sm-12">
+                        <div class="col-sm-10">
                             <h4>Dados do Sócio Administrador</h4>
                         </div>
                     </div>
@@ -299,8 +296,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
             <div class="panel-group collapse in">
                 <div class="panel panel-default">
-                    <div class="panel-heading with-border col-xs-12">
-                        <div class="col-xs-10">
+                    <div class="panel-heading with-border col-sm-12">
+                        <div class="col-sm-10">
                             <h4>Informações adicionais</h4>
                         </div>
                     </div>

@@ -31,7 +31,7 @@ if($servico){
                             <div class="col-sm-6">
                                 <?= $form->field($model, 'empresa_fk')->
                                 dropDownList(ArrayHelper::map(Empresa::find()->all(),'id', 'razao_social'),['prompt' => 'Selecione'])->
-                                label('Cliente')
+                                label('Empresa')
                                 ?>
                             </div>
                             <div class="col-sm-6">

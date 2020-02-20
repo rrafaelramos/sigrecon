@@ -202,11 +202,9 @@ function servicoPendente(){
 // retorna o número de servicos/PJ pendentes
 function servicopjPendente(){
     $cont = 0;
-
-    $alerta = Alertaservicopj::find()->all();
-
-    foreach ($alerta as $a){
-        if($a->status_servico == 0  && Yii::$app->user->identity->id == $a->usuario_fk){
+    $alertapj = Alertaservicopj::find()->all();
+    foreach ($alertapj as $a){
+        if(($a->status_servico == 0)  && (Yii::$app->user->identity->id == $a->usuario_fk)){
             $cont++;
         }
     }
@@ -283,7 +281,9 @@ function lembrete(){
                 $cont++;
             }
         }
-        return $cont;
+        if($cont){
+            return $cont;
+        }
     }
 }
 
@@ -350,18 +350,16 @@ function rotinaPendente(){
                 <?php
                 if(!Yii::$app->user->isGuest){
                     ?>
-
-                    <li class="messages-menu" >
-                        <a href = "/sigrecon/web/?r=lembrete" >
-
-                            <?php if(lembrete()) {
-                                echo '<i class="fa fa-calendar"></i >'.'<span class="label label-warning">';
-                                echo lembrete();
-                            }
-                            ?>
-                            </span>
-                        </a>
-                    </li>
+                    <?php if(lembrete()) {
+                        echo '<li class="messages-menu" >'.
+                            '<a href = "/sigrecon/web/?r=lembrete" >'.
+                            '<i class="fa fa-calendar"></i >'.'<span class="label label-warning">'.
+                            lembrete()
+                            .'</span>'.
+                            '</a>'.
+                            '</li>';
+                    }
+                    ?>
 
                     <li class="messages-menu" >
                         <a href = "/sigrecon/web/?r=mensagem" >
@@ -405,20 +403,19 @@ function rotinaPendente(){
 
                         <!--                        //class warning para nova notificação-->
                         <?php
-                        if(certificado() || procuracao() || servicoPronto() || servicoPendente()){
+                        if(certificado() || procuracao() || servicoPronto() || servicoPendente() || servicopjPronto() || servicopjPendente()){
                             echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.'<i class="fa fa-bell"></i>'.'<span class="label label-warning">'.'!'.
                                 '</span>'.
                                 '</a>';
                         }
                         ?>
 
-
                         <ul class="dropdown-menu">
                             <li class="header">
+                                <?php
+                                echo '<center>'."Notificações".'</center>';
+                                ?>
                             </li>
-                            <?php
-                            echo '<center>'."Notificações".'</center>';
-                            ?>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">

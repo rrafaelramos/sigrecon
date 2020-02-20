@@ -35,13 +35,12 @@ use yii\widgets\ActiveForm;
                             ])->label('Valor Total');
                             ?>
                         </div>
-                        <div class="pull-right">
-                            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat', 'data' => [
+                        <div class="col-sm-12">
+                            <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat pull-left']) ?>
+                            <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right', 'data' => [
                                 'confirm' => "Deseja realmente Salvar?",
                                 'method' => 'post',
                             ]]) ?>
-
                         </div>
                     </div>
                 </div>

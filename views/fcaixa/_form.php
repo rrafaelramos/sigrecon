@@ -25,7 +25,7 @@ function verificaFechamento(){
                 $ano = $ano_ymd[0];
                 $mes = $ano_ymd[1];
                 $dia = $ano_ymd[2];
-                return "<p class='text-justify'>Serão contabilizados todos os valores de vendas e compras desde o último fechamento em:</p><center>$dia/$mes/$ano às $hora</center>";
+                return "<p class='text-justify'>Serão contabilizados todas as movimentações financeiras desde o último fechamento em:</p><center>$dia/$mes/$ano às $hora</center>";
             }
         }
     }else
