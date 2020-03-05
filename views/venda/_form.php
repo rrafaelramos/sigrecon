@@ -47,19 +47,19 @@ if(!Yii::$app->user->isGuest){
                             </div>
 
                             <?php if($model->id) {?>
-                            <div class="col-sm-6">
-                                <?= $form->field($model, 'tot_sem_desconto')->widget(MaskMoney::classname(), [
-                                    'options' => ['readOnly' => 'true'],
-                                    'pluginOptions' => [
-                                        'prefix' => 'R$ ',
-                                        'suffix' => '',
-                                        'allowNegative' => false,
-                                        'id' => 'tot_sem_desconto',
-                                        'name' => 'tot_sem_desconto',
-                                    ]
-                                ]);
-                                ?>
-                            </div>
+                                <div class="col-sm-6">
+                                    <?= $form->field($model, 'tot_sem_desconto')->widget(MaskMoney::classname(), [
+                                        'options' => ['readOnly' => 'true'],
+                                        'pluginOptions' => [
+                                            'prefix' => 'R$ ',
+                                            'suffix' => '',
+                                            'allowNegative' => false,
+                                            'id' => 'tot_sem_desconto',
+                                            'name' => 'tot_sem_desconto',
+                                        ]
+                                    ]);
+                                    ?>
+                                </div>
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
                                         <?= $form->field($model, 'desconto')->widget(MaskMoney::classname(), [

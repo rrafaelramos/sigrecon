@@ -14,6 +14,9 @@ use Yii;
  * @property int $servico_fk
  * @property int $quantidade
  * @property float|null $total
+ * @property float|null $desconto
+ * @property float|null $tot_sem_desconto
+ *
  *
  * @property Servico $servicoFk
  */
@@ -36,7 +39,7 @@ class Vendapj extends \yii\db\ActiveRecord
             [['data'], 'safe'],
             [['empresa_fk', 'usuario_fk', 'servico_fk', 'quantidade'], 'integer'],
             [['servico_fk', 'quantidade'], 'required'],
-            [['total'], 'number'],
+            [['total','desconto','tot_sem_desconto'], 'number'],
             [['servico_fk'], 'exist', 'skipOnError' => true, 'targetClass' => Servico::className(), 'targetAttribute' => ['servico_fk' => 'id']],
         ];
     }
@@ -54,6 +57,8 @@ class Vendapj extends \yii\db\ActiveRecord
             'servico_fk' => 'Servico Fk',
             'quantidade' => 'Quantidade',
             'total' => 'Total',
+            'desconto' => 'desconto',
+            'tot_sem_desconto' => 'Total sem desconto',
         ];
     }
 

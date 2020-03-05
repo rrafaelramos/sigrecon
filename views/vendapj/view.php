@@ -4,6 +4,7 @@ use app\models\Empresa;
 use app\models\Servico;
 use app\models\Usuario;
 use kartik\money\MaskMoney;
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 
@@ -101,8 +102,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
                                         [
-                                            'label' => 'Código da venda:',
-                                            'value' => $model->id,
+                                            'label' => 'Valor Unitário:',
+                                            'value' => valor($model->servico_fk),
                                             'labelColOptions' => ['style' => 'width:15%'],
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
@@ -117,8 +118,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
                                         [
-                                            'label' => 'Valor Unitário:',
-                                            'value' => valor($model->servico_fk),
+                                            'label' => 'Quantidade:',
+                                            'value' => "$model->quantidade x ".valor($model->servico_fk),
                                             'labelColOptions' => ['style' => 'width:15%'],
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
@@ -134,8 +135,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
                                         [
-                                            'label' => 'Quantidade:',
-                                            'value' => "$model->quantidade x ".valor($model->servico_fk),
+                                            'label' => 'Valor Venda:',
+                                            'value' => formatar($model->tot_sem_desconto),
                                             'labelColOptions' => ['style' => 'width:15%'],
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
@@ -145,12 +146,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'columns' => [
                                         [
                                             'label' => 'Atendente:',
-                                            'value' => Yii::$app->user->identity->nome,
+                                            'value' => usuario($model),
                                             'labelColOptions' => ['style' => 'width:15%'],
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
                                         [
-                                            'label' => 'Total:',
+                                            'label' => 'Desconto:',
+                                            'value' => "- ".formatar($model->desconto),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                    ],
+                                ],
+                                [
+                                    'columns' => [
+                                        [
+                                            'label' => 'Total recebido:',
                                             'value' => formatar($model->total),
                                             'labelColOptions' => ['style' => 'width:15%'],
                                             'valueColOptions' => ['style' => 'width:35%'],
@@ -159,9 +170,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ],
                         ]) ?>
-                        <div class="pull-right">
-                            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
+                        <div class="col-sm-12">
                             <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger btn-flat',
                                 'data' => [
@@ -169,6 +178,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'method' => 'post',
                                 ],
                             ]) ?>
+                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
+                            <?= Html::a('Ir para Vendas PJ', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']);?>
                         </div>
                     </div>
                 </div>
@@ -176,4 +187,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-
+<div class="col-sm-4 col-sm-offset-4">
+    <?php
+    echo Alert::widget([
+        'options' => [
+            'class' => 'alert-success',
+        ],
+        'body' => "Esta venda foi Realizada com sucesso!</br>". formatar($model->total)." foram adicionado ao caixa!",
+    ]);
+    ?>
+</div>

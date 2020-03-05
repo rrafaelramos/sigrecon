@@ -137,6 +137,8 @@ create table vendapj(
 	servico_fk int not null,
 	quantidade int not null,
 	total float,
+	tot_sem_desconto float,
+    desconto float,
 	primary key (id),
 	foreign key (servico_fk) references servico (id)
 );

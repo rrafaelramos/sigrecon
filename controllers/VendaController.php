@@ -88,6 +88,7 @@ class VendaController extends Controller
             foreach ($servico as $serv){
                 if($serv->id == $model->servico_fk){
                     $model->total = (($model->quantidade *$serv->valor) - $model->desconto);
+                    $model_caixa->total = $model->total;
                     $model->tot_sem_desconto = $model->quantidade *$serv->valor;
                 }
             }
@@ -97,7 +98,6 @@ class VendaController extends Controller
             $model->save();
 
             $model_caixa->data = $data;
-            $model_caixa->total = $model->total;
             $model_caixa->save();
 
             return $this->redirect(['update', 'id' => $model->id]);
@@ -124,7 +124,11 @@ class VendaController extends Controller
             $servico = Servico::find()->all();
             foreach ($servico as $serv){
                 if($serv->id == $model->servico_fk){
-                    $model->total = (($model->quantidade *$serv->valor) - $model->desconto);
+                    if($model->desconto) {
+                        $model->total = (($model->quantidade * $serv->valor) - $model->desconto);
+                    }else{
+                        $model->total = ($model->quantidade * $serv->valor);
+                    }
                     $model->tot_sem_desconto = $model->quantidade *$serv->valor;
                 }
             }
@@ -134,6 +138,15 @@ class VendaController extends Controller
                     'id' => $model->id,
                     'model' => $model,
                 ]);
+            }
+
+            $caixas = Caixa::find()->all();
+            foreach ($caixas as $caixa){
+                if ($caixa->data == $model->data){
+                    $model_caixa = $this->findCaixa($caixa->id);
+                    $model_caixa->total = $model->total;
+                    $model_caixa->save();
+                }
             }
 
             $model->usuario_fk = Yii::$app->user->identity->id;

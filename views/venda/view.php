@@ -145,7 +145,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'columns' => [
                                         [
                                             'label' => 'Atendente:',
-                                            'value' => Yii::$app->user->identity->nome,
+                                            'value' => usuario($model),
                                             'labelColOptions' => ['style' => 'width:15%'],
                                             'valueColOptions' => ['style' => 'width:35%'],
                                         ],
@@ -178,7 +178,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ]) ?>
                             <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
-                            <?= Html::a('Ir para Vendas', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']);?>
+                            <?= Html::a('Ir para Vendas PF', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']);?>
                         </div>
                     </div>
                 </div>
@@ -192,7 +192,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'options' => [
             'class' => 'alert-success',
         ],
-        'body' => "Venda Realizada! ". formatar($model->total)." adicionado ao caixa!",
+        'body' => "Esta venda foi Realizada com sucesso!</br>". formatar($model->total)." foram adicionado ao caixa!",
     ]);
     ?>
 </div>

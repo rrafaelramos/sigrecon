@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Abrircaixa;
 use app\models\Servico;
 use app\models\Caixa;
 use Yii;
@@ -86,7 +87,9 @@ class VendapjController extends Controller
             $servico = Servico::find()->all();
             foreach ($servico as $serv){
                 if($serv->id == $model->servico_fk){
-                    $model->total = ($model->quantidade *$serv->valor);
+                    $model->total = (($model->quantidade *$serv->valor) - $model->desconto);
+                    $model_caixa->total = $model->total;
+                    $model->tot_sem_desconto = $model->quantidade *$serv->valor;
                 }
             }
             $model->usuario_fk = Yii::$app->user->identity->id;
@@ -94,10 +97,7 @@ class VendapjController extends Controller
             $model->data = $data;
             $model->save();
 
-
             $model_caixa->data = $data;
-            $model_caixa->total = $model->total;
-
             $model_caixa->save();
 
             return $this->redirect(['update', 'id' => $model->id]);
@@ -109,7 +109,7 @@ class VendapjController extends Controller
     }
 
     /**
-     * Updates an existing Venda model.
+     * Updates an existing Vendapj model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -124,11 +124,41 @@ class VendapjController extends Controller
             $servico = Servico::find()->all();
             foreach ($servico as $serv){
                 if($serv->id == $model->servico_fk){
-                    $model->total = ($model->quantidade *$serv->valor);
+                    if($model->desconto) {
+                        $model->total = (($model->quantidade * $serv->valor) - $model->desconto);
+                    }else{
+                        $model->total = ($model->quantidade * $serv->valor);
+                    }
+                    $model->tot_sem_desconto = $model->quantidade *$serv->valor;
                 }
             }
+
+            if($model->desconto > $model->tot_sem_desconto){
+                return $this->render('_formErro', [
+                    'id' => $model->id,
+                    'model' => $model,
+                ]);
+            }
+
+            $caixas = Caixa::find()->all();
+            foreach ($caixas as $caixa){
+                if ($caixa->data == $model->data){
+                    $model_caixa = $this->findCaixa($caixa->id);
+                    $model_caixa->total = $model->total;
+                    $model_caixa->save();
+                }
+            }
+
             $model->usuario_fk = Yii::$app->user->identity->id;
             $model->save();
+
+            $verifica_abrircaixa = Abrircaixa::find()->all();
+
+            if(!$verifica_abrircaixa) {
+                $abrir_caixa = new Abrircaixa();
+                $abrir_caixa->data = $model->data;
+                $abrir_caixa->save();
+            }
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
