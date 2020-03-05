@@ -6,12 +6,10 @@ use yii\helpers\Html;
 /* @var $model app\models\Venda */
 
 $this->title = 'Finalizar Venda';
-$this->params['breadcrumbs'][] = ['label' => 'Vendas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = ['label' => 'Venda PF'];
+$this->params['breadcrumbs'][] = ['label' => 'Venda Rápida'];
 ?>
 <div class="venda-update">
-
     <?= $this->render('_formEditar', [
         'model' => $model,
     ]) ?>

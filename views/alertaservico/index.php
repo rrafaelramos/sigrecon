@@ -78,13 +78,13 @@ function status($model){
             'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                //['class' => 'kartik\grid\SerialColumn'],
 //                [
 //                    'attribute' => 'id',
 //                    'label' => 'N° do Alerta',
 //                ],
                 [
-                'attribute' => 'cliente_fk',
+                    'attribute' => 'cliente_fk',
                     'label' => 'Cliente',
                     'value' => function($model){
                         return cliente($model);
@@ -101,11 +101,11 @@ function status($model){
                     }],
                 //'quantidade',
                 // 'info:ntext',
-                 ['attribute' => 'status_pagamento',
-                     'label' => 'Situação do Pagamento',
-                     'value' => function($model){
+                ['attribute' => 'status_pagamento',
+                    'label' => 'Situação do Pagamento',
+                    'value' => function($model){
                         return pagamento($model);
-                     }],
+                    }],
                 ['attribute' => 'status_servico',
                     'label' => 'Status',
                     'value' => function ($model){
@@ -113,7 +113,7 @@ function status($model){
                     }],
                 // 'usuario_fk',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                 ['class' => 'kartik\grid\ActionColumn'],
             ],
         ]); ?>
     </div>

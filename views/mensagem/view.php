@@ -40,13 +40,17 @@ function lido($model){
 ?>
     <div class="usuario-view box box-primary">
         <div class="box-header with-border">
-            <div class="col-sm-10">
-                <h4 class="panel-title"><?php echo '"'.$model->titulo.'"'?></h4>
-            </div>
             <div>
-                <div class="pull-right">
-                    <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                    <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
+                <div class="col-sm-12">
+                    <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
+                    <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
+                    <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
+                        'class' => 'btn btn-danger btn-flat',
+                        'data' => [
+                            'confirm' => 'Deseja realmente apagar?',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
                 </div>
             </div>
         </div>

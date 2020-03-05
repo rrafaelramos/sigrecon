@@ -16,8 +16,8 @@ if(Yii::$app->user->identity->tipo == 1) {
     ?>
 
     <div class="col-sm-12">
-        <div class="col-sm-offset-4">
-            <div class="clienteavulso-form col-sm-6">
+        <div class="col-sm-offset-2">
+            <div class="clienteavulso-form col-sm-8">
 
                 <div class="clienteavulso-form box box-primary">
                     <?php $form = ActiveForm::begin(); ?>
@@ -27,9 +27,9 @@ if(Yii::$app->user->identity->tipo == 1) {
                                 <h3 class="panel-title">Dados do Serviço</h3>
                             </div>
                             <div class="panel-body">
-                                <div>
-                                    <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
 
+                                <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
+                                <div class="col-sm-6">
                                     <?= $form->field($model, 'valor')->widget(MaskMoney::classname(), [
                                         'pluginOptions' => [
                                             'prefix' => 'R$ ',
@@ -38,7 +38,8 @@ if(Yii::$app->user->identity->tipo == 1) {
                                         ]
                                     ]);
                                     ?>
-
+                                </div>
+                                <div class="col-sm-6">
                                     <?= $form->field($model, 'valor_minimo')->widget(MaskMoney::classname(), [
                                         'pluginOptions' => [
                                             'prefix' => 'R$ ',
@@ -47,11 +48,21 @@ if(Yii::$app->user->identity->tipo == 1) {
                                         ]
                                     ]);
                                     ?>
-
                                 </div>
-                                <div class="pull-right">
+
+                                <div class="col-sm-12">
                                     <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']); ?>
-                                    <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat']) ?>
+
+                                    <?php if($model->id){
+                                        echo Html::a('Apagar', ['delete', 'id' => $model->id], [
+                                            'class' => 'btn btn-danger btn-flat',
+                                            'data' => [
+                                                'confirm' => 'Deseja realmente apagar?',
+                                                'method' => 'post',
+                                            ],
+                                        ]);
+                                    } ?>
+                                    <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right']) ?>
                                 </div>
                                 <?php ActiveForm::end(); ?>
                             </div>

@@ -108,6 +108,7 @@
                                     ['label' => 'Vendas', 'icon' => 'usd', 'url' => ['/venda'],],
                                     ['label' => 'Compras', 'icon' => 'usd', 'url' => ['/compra'],],
                                     ['label' => 'Fechamentos', 'icon' => 'pencil-square-o', 'url' => ['/fcaixa']],
+                                    ['label' => 'Honorários recebidos', 'icon' => '', 'url' => ['/honorario']],
                                 ],
                             ],
                             ['label' => 'Cliente PF', 'icon' => 'user', 'url' => ['/clienteavulso'],],
@@ -121,7 +122,7 @@
                         'items' => [
                             ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra/create'],],
                             ['label' => 'Lançar Saída', 'icon' => 'pencil', 'url' => ['compra/saida'],],
-                            ['label' => 'Lançar Honorário', 'icon' => 'usd', 'url' => ['/honorario'],],
+                            ['label' => 'Lançar Honorário', 'icon' => 'usd', 'url' => ['/honorario/create'],],
                             ['label' => 'Fechar Caixa', 'icon' => 'lock', 'url' => ['/fcaixa/create'],],
                             ['label' => 'Consultar Saldo', 'icon' => 'usd', 'url' => ['fcaixa/consulta']]
                         ],

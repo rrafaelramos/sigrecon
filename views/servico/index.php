@@ -28,8 +28,8 @@ function formatar($model){
 
 <div class="servico-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Cadastrar Serviço', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btn-flat'])?>
+        <?= Html::a('Novo +', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
+        <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right'])?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -41,7 +41,7 @@ function formatar($model){
             'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                //['class' => 'yii\grid\SerialColumn'],
                // 'id',
                 'descricao',
                 ['attribute' => 'valor',

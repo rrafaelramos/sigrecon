@@ -12,14 +12,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lembrete-view box box-primary">
     <div class="box-header">
-        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
         <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger btn-flat',
+            'class' => 'btn btn-danger btn-flat pull-left',
             'data' => [
                 'confirm' => 'Deseja realmente apagar?',
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?= DetailView::widget([

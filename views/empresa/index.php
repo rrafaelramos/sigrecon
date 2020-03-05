@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                //['class' => 'yii\grid\SerialColumn'],
 
                 //'id',
                 ['attribute' => 'cnpj',

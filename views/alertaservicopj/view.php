@@ -207,7 +207,7 @@ function responsavel($model){
                         <?= Html::a('Cancelar', ['delete', 'id' => $model->id], [
                             'class' => 'btn btn-danger btn-flat',
                             'data' => [
-                                'confirm' => 'Deseja realmente Cancelar?',
+                                'confirm' => 'Deseja realmente excluir?',
                                 'method' => 'post',
                             ],
                         ]) ?>

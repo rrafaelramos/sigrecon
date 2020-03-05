@@ -463,10 +463,8 @@ function rotinaPendente(){
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
                         </ul>
                     </li>
-
 
                     <li class="dropdown notifications-menu">
                         <!-- ISSO DEFINE O QUE FICA NO HEADEAR-->

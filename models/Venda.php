@@ -14,6 +14,8 @@ use Yii;
  * @property int $servico_fk
  * @property int $quantidade
  * @property float|null $total
+ * @property float|null $desconto
+ * @property float|null $tot_sem_desconto
  *
  * @property Usuario $usuarioFk
  * @property Servico $servicoFk
@@ -37,7 +39,7 @@ class Venda extends \yii\db\ActiveRecord
             [['servico_fk', 'quantidade'], 'required'],
             [['data'], 'safe'],
             [['cliente_fk', 'usuario_fk', 'servico_fk', 'quantidade'], 'integer'],
-            [['total'], 'number'],
+            [['total','desconto','tot_sem_desconto'], 'number'],
             [['servico_fk'], 'exist', 'skipOnError' => true, 'targetClass' => Servico::className(), 'targetAttribute' => ['servico_fk' => 'id']],
         ];
     }
@@ -55,6 +57,8 @@ class Venda extends \yii\db\ActiveRecord
             'servico_fk' => 'Servico',
             'quantidade' => 'Quantidade',
             'total' => 'Total',
+            'desconto' => 'Desconto',
+            'tot_sem_desconto' => 'Total Geral',
         ];
     }
 

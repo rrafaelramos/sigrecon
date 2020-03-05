@@ -87,7 +87,8 @@ class VendaController extends Controller
             $servico = Servico::find()->all();
             foreach ($servico as $serv){
                 if($serv->id == $model->servico_fk){
-                    $model->total = ($model->quantidade *$serv->valor);
+                    $model->total = (($model->quantidade *$serv->valor) - $model->desconto);
+                    $model->tot_sem_desconto = $model->quantidade *$serv->valor;
                 }
             }
             $model->usuario_fk = Yii::$app->user->identity->id;
@@ -123,9 +124,18 @@ class VendaController extends Controller
             $servico = Servico::find()->all();
             foreach ($servico as $serv){
                 if($serv->id == $model->servico_fk){
-                    $model->total = ($model->quantidade *$serv->valor);
+                    $model->total = (($model->quantidade *$serv->valor) - $model->desconto);
+                    $model->tot_sem_desconto = $model->quantidade *$serv->valor;
                 }
             }
+
+            if($model->desconto > $model->tot_sem_desconto){
+                return $this->render('_formErro', [
+                    'id' => $model->id,
+                    'model' => $model,
+                ]);
+            }
+
             $model->usuario_fk = Yii::$app->user->identity->id;
             $model->save();
 

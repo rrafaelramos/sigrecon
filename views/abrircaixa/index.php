@@ -21,13 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                //['class' => 'yii\grid\SerialColumn'],
 
                 'id',
                 'data',
                 'valor',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                ['class' => 'kartik\grid\ActionColumn'],
             ],
         ]); ?>
     </div>

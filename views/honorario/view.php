@@ -49,7 +49,8 @@ function formatar($model){
         </div>
         <div>
             <div class="col-sm-12">
-                <?= Html::a('Voltar', ['/site/index'], ['class' => 'btn btn-warning btn-flat pull-left']) ?>
+<!--                JavaScript: window.history.back();-->
+                <?= Html::a('Voltar para Honorários', ['index'], ['class' => 'btn btn-warning btn-flat pull-left']) ?>
                 <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
             </div>
         </div>

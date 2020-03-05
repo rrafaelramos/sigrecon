@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel app\models\MensagemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mensagems';
+$this->title = 'Recados';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
@@ -19,7 +19,6 @@ function emissor($model){
         }
     }
 }
-
 function receptor($model){
     $usuarios = Usuario::find()->all();
     foreach ($usuarios as $u){
@@ -28,11 +27,11 @@ function receptor($model){
         }
     }
 }
-
 ?>
+
 <div class="mensagem-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Novo Recado', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
+        <?= Html::a('Novo +', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
         <?= Html::a('Voltar', ['site/index'], ['class' => 'btn btn-warning btn-flat']) ?>
         <?= Html::a('Enviadas', ['enviadas'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
 
@@ -47,7 +46,7 @@ function receptor($model){
             'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+ //               ['class' => 'yii\grid\SerialColumn'],
 
                 //'id',
                 ['attribute' => 'emissor',

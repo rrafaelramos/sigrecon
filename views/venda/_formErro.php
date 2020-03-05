@@ -3,6 +3,7 @@
 use app\models\Clienteavulso;
 use app\models\Servico;
 use kartik\money\MaskMoney;
+use yii\bootstrap\Alert;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -118,6 +119,14 @@ if(!Yii::$app->user->isGuest){
             </div>
         </div>
     </div>
+    <div class="col-sm-6 col-sm-offset-3">
+    <?php
+    echo Alert::widget([
+        'options' => [
+            'class' => 'alert-warning',
+        ],
+        'body' => "O valor do desconto não pode ser Maior que ".formatar($model->tot_sem_desconto),
+    ]);
+    ?>
+    </div>
 <?php }?>
-
-

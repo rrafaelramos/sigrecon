@@ -78,7 +78,7 @@ function status($model){
             'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                //['class' => 'yii\grid\SerialColumn'],
 //                [
 //                    'attribute' => 'id',
 //                    'label' => 'N° do Alerta',
@@ -113,7 +113,7 @@ function status($model){
                     }],
                 // 'usuario_fk',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                ['class' => 'kartik\grid\ActionColumn'],
             ],
         ]); ?>
     </div>

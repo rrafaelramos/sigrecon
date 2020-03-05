@@ -92,7 +92,7 @@ echo ExportMenu::widget([
             'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+               // ['class' => 'yii\grid\SerialColumn'],
                 //'id',
 //                ['attribute' => 'cnpj',
 //                    'format' => 'html',
@@ -100,7 +100,8 @@ echo ExportMenu::widget([
 //                        return preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '${1}.${2}.${3}/${4}-${5}', $model->cnpj);
 //                    },
 //                ],
-                'razao_social',
+                ['attribute' => 'razao_social',
+                    'label' => 'Empresa'],
                 //'nome_fantasia',
                 //'email:email',
 //                ['attribute' => 'telefone',

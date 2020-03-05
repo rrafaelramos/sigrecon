@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
             <div class="box-body table-responsive col-sm-6 col-sm-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Novo Recado</h3>
+                        <h3 class="panel-title">Enviar recado</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-sm-12">

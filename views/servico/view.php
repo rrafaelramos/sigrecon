@@ -16,12 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     function formatar($model){
         $formatter = Yii::$app->formatter;
-
         if($model) {
             $formatado = $formatter->asCurrency($model);
-
             //$remove = array("pt-br");
-
             $dinheiro = str_replace("pt-br", "", $formatado);
             return $dinheiro;
         }else
@@ -33,17 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-offset-3">
         <div class="clienteavulso-form col-sm-7">
             <div class="empresa-view box box-primary">
-                <div class="box-header with-border">
-                    <div class="col-xs-10">
-                        <h4>Dados do Serviço</h4>
-                    </div>
-                </div>
-
                 <div class="panel-body">
                     <div class="panel-group collapse in">
                         <div class="panel panel-default">
-                            <div class="panel-heading with-border col-xs-12">
-                                <div class="col-xs-10">
+                            <div class="panel-heading with-border col-sm-12">
+                                <div class="col-sm-10">
                                     <h4>Dados Gerais</h4>
                                 </div>
                             </div>
@@ -62,15 +53,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 [
                                                     'attribute' => 'descricao',
                                                     'value' => $model->descricao,
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                    'labelColOptions' => ['style' => 'width:35%'],
+                                                    'valueColOptions' => ['style' => 'width:65%'],
                                                 ],
-                                                [
-                                                    'attribute' => 'id',
-                                                    'value' => $model->id,
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
+//                                                [
+//                                                    'attribute' => 'id',
+//                                                    'value' => $model->id,
+//                                                    'labelColOptions' => ['style' => 'width:15%'],
+//                                                    'valueColOptions' => ['style' => 'width:35%'],
+//                                                ],
                                             ],
                                         ],
                                         [
@@ -96,16 +87,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                     <div>
-                        <div class="pull-right">
-                            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-                            <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
-                                'class' => 'btn btn-danger btn-flat',
-                                'data' => [
-                                    'confirm' => 'Deseja realmente apagar?',
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
+                        <div class="col-sm-12">
+                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
+                            <?= Html::a('Finalizar', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
                         </div>
                     </div>
                 </div>
