@@ -3,10 +3,10 @@
 use app\models\Empresa;
 use app\models\Servico;
 use app\models\Usuario;
-use kartik\money\MaskMoney;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Venda */
@@ -21,10 +21,10 @@ foreach ($servico as $ser){
 }
 
 function empresa($model){
-    $empresa = Empresa::find()->all();
-    foreach ($empresa as $e) {
-        if ($e->id == $model->empresa_fk) {
-            return $e->razao_social;
+    $cliente = Empresa::find()->all();
+    foreach ($cliente as $c) {
+        if ($c->id == $model->empresa_fk) {
+            return $c->razao_social;
         }
     }
 }
@@ -59,13 +59,20 @@ function valor($model){
 }
 
 function formatar($model){
-    if(!$model){
+    if($model == 0){
         return "R$ 0,00";
     }
     $formatter = Yii::$app->formatter;
     $formatado = $formatter->asCurrency($model);
     $dinheiro = str_replace("pt-br", "R$", $formatado);
     return $dinheiro;
+}
+
+function statusPag($model){
+    if($model == '0'){
+        return 'Valor recebido:';
+    }
+    return 'Valor à receber:';
 }
 
 $this->title = "Venda de: $nome_ser";
@@ -161,7 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'columns' => [
                                         [
-                                            'label' => 'Total recebido:',
+                                            'label' => statusPag($model->form_pagamento),
                                             'value' => formatar($model->total),
                                             'labelColOptions' => ['style' => 'width:15%'],
                                             'valueColOptions' => ['style' => 'width:35%'],
@@ -178,7 +185,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'method' => 'post',
                                 ],
                             ]) ?>
-                            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
+                            <?php if($model->form_pagamento == '1'){
+                                echo Html::a('Alterar pagamento', ['update', 'id' => $model->id], [
+                                    'class' => 'btn btn-success btn-flat',
+                                    'data' => [
+                                        'confirm' => 'Deseja realmente alterar pagamento?',
+                                        'method' => 'post',
+                                    ],
+                                ]);
+                            }
+                            ?>
                             <?= Html::a('Ir para Vendas PJ', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']);?>
                         </div>
                     </div>
@@ -189,11 +205,20 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <div class="col-sm-4 col-sm-offset-4">
     <?php
-    echo Alert::widget([
-        'options' => [
-            'class' => 'alert-success',
-        ],
-        'body' => "Esta venda foi Realizada com sucesso!</br>". formatar($model->total)." foram adicionado ao caixa!",
-    ]);
+    if($model->form_pagamento == '0') {
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-success',
+            ],
+            'body' => "Esta venda foi Realizada com sucesso!</br>" . formatar($model->total) . " foram adicionado ao caixa!",
+        ]);
+    }else{
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-warning',
+            ],
+            'body' => "<center>Venda Realizada!</center></br> Aguardando recebimento de: ".formatar($model->total),
+        ]);
+    }
     ?>
 </div>

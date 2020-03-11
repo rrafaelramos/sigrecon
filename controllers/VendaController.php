@@ -8,6 +8,7 @@ use app\models\Caixa;
 use Yii;
 use app\models\Venda;
 use app\models\VendaSearch;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -88,7 +89,6 @@ class VendaController extends Controller
             foreach ($servico as $serv){
                 if($serv->id == $model->servico_fk){
                     $model->total = (($model->quantidade *$serv->valor) - $model->desconto);
-                    $model_caixa->total = $model->total;
                     $model->tot_sem_desconto = $model->quantidade *$serv->valor;
                 }
             }
@@ -98,6 +98,11 @@ class VendaController extends Controller
             $model->save();
 
             $model_caixa->data = $data;
+            if($model->form_pagamento == '0') {
+                $model_caixa->total = $model->total;
+            }else{
+                $model_caixa->total = 0;
+            }
             $model_caixa->save();
 
             return $this->redirect(['update', 'id' => $model->id]);
@@ -106,6 +111,19 @@ class VendaController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionPrazopf()
+    {
+        $searchModel = new VendaSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Venda::find()->where(['form_pagamento' => '1']),
+        ]);
+
+        return $this->render('indexUpdate', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -140,12 +158,14 @@ class VendaController extends Controller
                 ]);
             }
 
-            $caixas = Caixa::find()->all();
-            foreach ($caixas as $caixa){
-                if ($caixa->data == $model->data){
-                    $model_caixa = $this->findCaixa($caixa->id);
-                    $model_caixa->total = $model->total;
-                    $model_caixa->save();
+            if($model->form_pagamento == '0'){
+                $caixas = Caixa::find()->all();
+                foreach ($caixas as $caixa){
+                    if ($caixa->data == $model->data){
+                        $model_caixa = $this->findCaixa($caixa->id);
+                        $model_caixa->total = $model->total;
+                        $model_caixa->save();
+                    }
                 }
             }
 

@@ -18,7 +18,7 @@ class VendapjSearch extends Vendapj
     public function rules()
     {
         return [
-            [['id', 'empresa_fk', 'usuario_fk', 'servico_fk', 'quantidade'], 'integer'],
+            [['id', 'empresa_fk', 'usuario_fk', 'servico_fk', 'quantidade', 'form_pagamento'], 'integer'],
             [['data'], 'safe'],
             [['total'], 'number'],
         ];
@@ -68,6 +68,7 @@ class VendapjSearch extends Vendapj
             'servico_fk' => $this->servico_fk,
             'quantidade' => $this->quantidade,
             'total' => $this->total,
+            'form_pagamento' => $this->form_pagamento,
         ]);
 
         return $dataProvider;

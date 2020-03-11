@@ -49,11 +49,11 @@ function formatar($model){
                          return "R$".formatar($model->valor);
                         }
                     ],
-                ['attribute' => 'valor_minimo',
-                    'value' => function($model){
-                        return "R$".formatar($model->valor_minimo);
-                    }
-                    ],
+//                ['attribute' => 'valor_minimo',
+//                    'value' => function($model){
+//                        return "R$".formatar($model->valor_minimo);
+//                    }
+//                    ],
                 [
                     'class' => '\kartik\grid\ActionColumn',
                     'template' => '{view}{update}',

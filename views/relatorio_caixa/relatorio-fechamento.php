@@ -275,7 +275,7 @@ $this->params['breadcrumbs'][] = "Relatório";
                         $valor_compra = 0;
                         //venda pf
                         foreach ($models as $model) {
-                            $data = explode(" ",$model->data);
+                            $data = explode(" ", $model->data);
                             if (strtotime($inicio) <= strtotime($model->data) && strtotime($fim) >= strtotime($model->data)) {
                                 $valor_totalpf += $model->total;
                                 ?>
@@ -296,8 +296,8 @@ $this->params['breadcrumbs'][] = "Relatório";
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
                                                 [
-                                                    'label' => 'Código da venda:',
-                                                    'value' => $model->id,
+                                                    'label' => 'Valor Unitário:',
+                                                    'value' => valor($model->servico_fk),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
@@ -312,8 +312,8 @@ $this->params['breadcrumbs'][] = "Relatório";
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
                                                 [
-                                                    'label' => 'Valor Unitário:',
-                                                    'value' => valor($model->servico_fk),
+                                                    'label' => 'Quantidade:',
+                                                    'value' => "$model->quantidade x " . valor($model->servico_fk),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
@@ -329,8 +329,8 @@ $this->params['breadcrumbs'][] = "Relatório";
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
                                                 [
-                                                    'label' => 'Quantidade:',
-                                                    'value' => "$model->quantidade x " . valor($model->servico_fk),
+                                                    'label' => 'Valor Venda:',
+                                                    'value' => formatar($model->tot_sem_desconto),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
@@ -340,12 +340,22 @@ $this->params['breadcrumbs'][] = "Relatório";
                                             'columns' => [
                                                 [
                                                     'label' => 'Atendente:',
-                                                    'value' => responsavel($model),
+                                                    'value' => usuario($model),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
                                                 ],
                                                 [
-                                                    'label' => 'Total:',
+                                                    'label' => 'Desconto:',
+                                                    'value' => "- " . formatar($model->desconto),
+                                                    'labelColOptions' => ['style' => 'width:15%'],
+                                                    'valueColOptions' => ['style' => 'width:35%'],
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'columns' => [
+                                                [
+                                                    'label' => 'Total recebido:',
                                                     'value' => formatar($model->total),
                                                     'labelColOptions' => ['style' => 'width:15%'],
                                                     'valueColOptions' => ['style' => 'width:35%'],
@@ -353,10 +363,9 @@ $this->params['breadcrumbs'][] = "Relatório";
                                             ],
                                         ],
                                     ],
-                                ]) ?>
-                            <?php }
-                        }
-                        ?>
+                                ]);
+                            }
+                        }?>
 
                         <?php
                         if($valor_abertura) {
@@ -542,81 +551,91 @@ $this->params['breadcrumbs'][] = "Relatório";
                             if (strtotime($inicio) <= strtotime($vendapj->data) && strtotime($fim) >= strtotime($vendapj->data)) {
                                 $valor_totalpj += $vendapj->total;
                                 ?>
-                                <?= DetailView::widget([
-                                    'model' => $vendapj,
-                                    'condensed' => true,
-                                    'bordered' => true,
-                                    'striped' => false,
-                                    'enableEditMode' => false,
-                                    'mode' => DetailView::MODE_VIEW,
-                                    'attributes' => [
+                        <?= DetailView::widget([
+                            'model' => $vendapj,
+                            'condensed' => true,
+                            'bordered' => true,
+                            'striped' => false,
+                            'enableEditMode' => false,
+                            'mode' => DetailView::MODE_VIEW,
+                            'attributes' => [
+                                [
+                                    'columns' => [
                                         [
-                                            'columns' => [
-                                                [
-                                                    'label' => 'Empresa:',
-                                                    'value' => empresa($vendapj),
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                                [
-                                                    'label' => 'Código da venda:',
-                                                    'value' => $vendapj->id,
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                            ],
+                                            'label' => 'Empresa:',
+                                            'value' => empresa($vendapj),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
                                         ],
                                         [
-                                            'columns' => [
-                                                [
-                                                    'label' => 'Serviço:',
-                                                    'value' => servico($vendapj),
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                                [
-                                                    'label' => 'Valor Unitário:',
-                                                    'value' => valor($vendapj->servico_fk),
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                            ],
-                                        ],
-                                        [
-                                            'columns' => [
-                                                [
-                                                    'label' => 'Data da Venda:',
-                                                    'value' => $vendapj->data,
-                                                    'format' => ['date', 'php:d/m/Y'],
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                                [
-                                                    'label' => 'Quantidade:',
-                                                    'value' => "$vendapj->quantidade x " . valor($vendapj->servico_fk),
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                            ],
-                                        ],
-                                        [
-                                            'columns' => [
-                                                [
-                                                    'label' => 'Atendente:',
-                                                    'value' => responsavel($vendapj),
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                                [
-                                                    'label' => 'Total:',
-                                                    'value' => formatar($vendapj->total),
-                                                    'labelColOptions' => ['style' => 'width:15%'],
-                                                    'valueColOptions' => ['style' => 'width:35%'],
-                                                ],
-                                            ],
+                                            'label' => 'Valor Unitário:',
+                                            'value' => valor($vendapj->servico_fk),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
                                         ],
                                     ],
-                                ]) ?>
+                                ],
+                                [
+                                    'columns' => [
+                                        [
+                                            'label' => 'Serviço:',
+                                            'value' => servico($vendapj),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                        [
+                                            'label' => 'Quantidade:',
+                                            'value' => "$vendapj->quantidade x ".valor($vendapj->servico_fk),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                    ],
+                                ],
+                                [
+                                    'columns' => [
+                                        [
+                                            'label' => 'Data da Venda:',
+                                            'value' => $vendapj->data,
+                                            'format' => ['date', 'php:d/m/Y'],
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                        [
+                                            'label' => 'Valor Venda:',
+                                            'value' => formatar($vendapj->tot_sem_desconto),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                    ],
+                                ],
+                                [
+                                    'columns' => [
+                                        [
+                                            'label' => 'Atendente:',
+                                            'value' => usuario($vendapj),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                        [
+                                            'label' => 'Desconto:',
+                                            'value' => "- ".formatar($vendapj->desconto),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                    ],
+                                ],
+                                [
+                                    'columns' => [
+                                        [
+                                            'label' => 'Total recebido:',
+                                            'value' => formatar($vendapj->total),
+                                            'labelColOptions' => ['style' => 'width:15%'],
+                                            'valueColOptions' => ['style' => 'width:35%'],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ]); ?>
                             <?php }
                         }
                         ?>

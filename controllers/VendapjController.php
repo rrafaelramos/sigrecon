@@ -3,18 +3,20 @@
 namespace app\controllers;
 
 use app\models\Abrircaixa;
+use app\models\Alertaservicopj;
 use app\models\Servico;
 use app\models\Caixa;
-use Yii;
 use app\models\Vendapj;
 use app\models\VendapjSearch;
+use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * VendaController implements the CRUD actions for Venda model.
+ * VendapjController implements the CRUD actions for Vendapj model.
  */
 class VendapjController extends Controller
 {
@@ -44,7 +46,7 @@ class VendapjController extends Controller
     }
 
     /**
-     * Lists all Venda models.
+     * Lists all Vendapj models.
      * @return mixed
      */
     public function actionIndex()
@@ -59,7 +61,7 @@ class VendapjController extends Controller
     }
 
     /**
-     * Displays a single Venda model.
+     * Displays a single Vendapj model.
      * @param integer $id
      * @return mixed
      */
@@ -71,7 +73,7 @@ class VendapjController extends Controller
     }
 
     /**
-     * Creates a new Venda model.
+     * Creates a new Vendapj model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -88,7 +90,6 @@ class VendapjController extends Controller
             foreach ($servico as $serv){
                 if($serv->id == $model->servico_fk){
                     $model->total = (($model->quantidade *$serv->valor) - $model->desconto);
-                    $model_caixa->total = $model->total;
                     $model->tot_sem_desconto = $model->quantidade *$serv->valor;
                 }
             }
@@ -98,6 +99,11 @@ class VendapjController extends Controller
             $model->save();
 
             $model_caixa->data = $data;
+            if($model->form_pagamento == '0') {
+                $model_caixa->total = $model->total;
+            }else{
+                $model_caixa->total = 0;
+            }
             $model_caixa->save();
 
             return $this->redirect(['update', 'id' => $model->id]);
@@ -106,6 +112,20 @@ class VendapjController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+
+    public function actionPrazopj()
+    {
+        $searchModel = new VendapjSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Vendapj::find()->where(['form_pagamento' => '1'])
+        ]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -140,12 +160,14 @@ class VendapjController extends Controller
                 ]);
             }
 
-            $caixas = Caixa::find()->all();
-            foreach ($caixas as $caixa){
-                if ($caixa->data == $model->data){
-                    $model_caixa = $this->findCaixa($caixa->id);
-                    $model_caixa->total = $model->total;
-                    $model_caixa->save();
+            if($model->form_pagamento == '0'){
+                $caixas = Caixa::find()->all();
+                foreach ($caixas as $caixa){
+                    if ($caixa->data == $model->data){
+                        $model_caixa = $this->findCaixa($caixa->id);
+                        $model_caixa->total = $model->total;
+                        $model_caixa->save();
+                    }
                 }
             }
 
@@ -169,7 +191,7 @@ class VendapjController extends Controller
     }
 
     /**
-     * Deletes an existing Venda model.
+     * Deletes an existing Vendapj model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -199,10 +221,10 @@ class VendapjController extends Controller
     }
 
     /**
-     * Finds the Venda model based on its primary key value.
+     * Finds the Vendapj model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Venda the loaded model
+     * @return Vendapj the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

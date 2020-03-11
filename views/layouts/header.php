@@ -9,6 +9,8 @@ use app\models\Lembrete;
 use app\models\Mensagem;
 use app\models\Rotina;
 use app\models\Usuario;
+use app\models\Venda;
+use app\models\Vendapj;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
@@ -199,6 +201,70 @@ function servicoPendente(){
         return 0;
     }
 }
+
+// retorna os serviços PF à prazo
+function servicoPrazopf(){
+    $vendas = Venda::find()->all();
+    $aux = 0;
+    foreach ($vendas as $venda){
+        if($venda->form_pagamento == '1'){
+            $aux++;
+        }
+    }
+    if($aux>1) {
+        return "$aux serviços PF aguardando pagamento!";
+    }elseif($aux == 1) {
+        return "$aux serviço PF aguardando pagamento!";
+    }
+}
+// retorna os alerta de serviços PF à prazo
+function alertaPrazopf(){
+    $alertas = Alertaservico::find()->all();
+    $aux = 0;
+    foreach ($alertas as $alerta){
+        if($alerta->status_pagamento == '0' && $alerta->status_servico == '2'){
+            $aux++;
+        }
+    }
+    if($aux>1) {
+        return "$aux alerta PF aguardando pagamento!";
+    }elseif($aux == 1) {
+        return "$aux alerta PF aguardando pagamento!";
+    }
+}
+
+// retorna os serviços PJ à prazo
+function servicoPrazopj(){
+    $vendas = Vendapj::find()->all();
+    $aux = 0;
+    foreach ($vendas as $venda){
+        if($venda->form_pagamento == '1'){
+            $aux++;
+        }
+    }
+    if($aux>1) {
+        return "$aux serviços PJ aguardando pagamento!";
+    }elseif($aux == 1) {
+        return "$aux serviço PJ aguardando pagamento!";
+    }
+}
+// retorna os alerta de serviços PF à prazo
+function alertaPrazopj(){
+    $alertas = Alertaservicopj::find()->all();
+    $aux = 0;
+    foreach ($alertas as $alerta){
+        if($alerta->status_pagamento == '0' && $alerta->status_servico == '2'){
+            $aux++;
+        }
+    }
+    if($aux>1) {
+        return "$aux alerta PJ aguardando pagamento!";
+    }elseif($aux == 1) {
+        return "$aux alerta PJ aguardando pagamento!";
+    }
+}
+
+
 // retorna o número de servicos/PJ pendentes
 function servicopjPendente(){
     $cont = 0;
@@ -399,8 +465,62 @@ function rotinaPendente(){
                             '</li>';
                     }?>
 
-                    <li class="dropdown notifications-menu">
 
+                    <!--                    Recebimentos pendentes-->
+                    <li class="dropdown notifications-menu">
+                        <!-- ISSO DEFINE O QUE FICA NO HEADEAR-->
+                        <?php
+                        if(servicoPrazopj() || alertaPrazopj() || servicoPrazopf() || alertaPrazopf()){
+                            echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.
+                                '<i class="fa fa-usd"></i>'.'<span class="label label-warning">'.
+                                '+'.'</span>'.
+                                '</a>';
+                        }
+                        ?>
+                        <ul class="dropdown-menu">
+                            <li class="header">
+                                <?php
+                                echo '<center>'."Recebimentos Pendentes".'</center>';
+                                ?>
+                            </li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <?php
+                                        if(servicoPrazopj()) {
+                                            echo '<a href="/sigrecon/web/?r=vendapj/prazopj"> <i class="fa fa-warning text-yellow"></i>'.servicoPrazopj().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(alertaPrazopj()) {
+                                            echo '<a href="/sigrecon/web/?r=alertaservicopj/prazopj"> <i class="fa fa-warning text-yellow"></i>'.alertaPrazopj().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(servicoPrazopf()) {
+                                            echo '<a href="/sigrecon/web/?r=venda/prazopf"> <i class="fa fa-warning text-yellow"></i>'.servicoPrazopf().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(alertaPrazopf()) {
+                                            echo '<a href="/sigrecon/web/?r=alertaservico/prazopf"> <i class="fa fa-warning text-yellow"></i>'.alertaPrazopf().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown notifications-menu">
                         <!--                        //class warning para nova notificação-->
                         <?php
                         if(certificado() || procuracao() || servicoPronto() || servicoPendente() || servicopjPronto() || servicopjPendente()){
@@ -409,7 +529,6 @@ function rotinaPendente(){
                                 '</a>';
                         }
                         ?>
-
                         <ul class="dropdown-menu">
                             <li class="header">
                                 <?php
@@ -652,14 +771,14 @@ function rotinaPendente(){
                                     <?= Html::a(
                                         'Perfil',
                                         ['/usuario/view', 'id' => Yii::$app->user->identity->id],
-                                        ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
+                                        ['data-method' => 'post', 'class' => 'btn btn-warning    btn-flat']
                                     ) ?>
                                 </div>
                                 <div class="pull-right">
                                     <?= Html::a(
                                         'Sair',
                                         ['/site/logout'],
-                                        ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
+                                        ['data-method' => 'post', 'class' => 'btn btn-danger btn-flat']
                                     ) ?>
                                 </div>
                             </li>
@@ -668,9 +787,9 @@ function rotinaPendente(){
                 <?php }?>
 
                 <!-- User Account: style can be found in dropdown.less -->
-                <li>
-                    <!--                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>-->
-                </li>
+                <!--                <li>-->
+                <!--                                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>-->
+                <!--                </li>-->
             </ul>
         </div>
     </nav>

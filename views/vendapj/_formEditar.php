@@ -2,7 +2,6 @@
 
 use app\models\Empresa;
 use app\models\Servico;
-use kartik\datecontrol\DateControl;
 use kartik\money\MaskMoney;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -15,13 +14,12 @@ use yii\widgets\ActiveForm;
 ?>
 
 <?php
-//$this->registerJs('
-//    $(document).on("blur","#quantidade",function(){
-//        var quantidade = $("#quantidade").val();
-//            var total = quantidade*2;
-//            alert(total);
-//    });
-//');
+function formatar($model){
+    $formatter = Yii::$app->formatter;
+    $formatado = $formatter->asCurrency($model);
+    $dinheiro = str_replace("pt-br", "R$", $formatado);
+    return $dinheiro;
+}
 ?>
 
 <?php
@@ -45,8 +43,7 @@ if(!Yii::$app->user->isGuest){
                             </div>
                             <div class="col-sm-6">
                                 <?= $form->field($model, 'servico_fk')
-                                    ->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'disabled' => 'disabled'])
-                                    ->label('Serviço')?>
+                                    ->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'disabled' => 'disabled'])?>
                             </div>
                             <div class="col-sm-6">
                                 <?= $form->field($model, 'quantidade')->textInput([ 'type' => 'number', 'id' => 'quantidade', 'disabled' => 'disabled']) ?>
@@ -66,7 +63,7 @@ if(!Yii::$app->user->isGuest){
                                     ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $teste = $form->field($model, 'desconto')->widget(MaskMoney::classname(), [
+                                    <?= $form->field($model, 'desconto')->widget(MaskMoney::classname(), [
                                         'pluginOptions' => [
                                             'prefix' => 'R$ ',
                                             'suffix' => '',
@@ -77,6 +74,19 @@ if(!Yii::$app->user->isGuest){
                                     ])->label('Desconto: ');
                                     ?>
                                 </div>
+                                <?php if($model->form_pagamento == '0'){?>
+                                    <div class="col-sm-12">
+                                        <?= $form->field($model, 'form_pagamento')
+                                            ->dropDownList(['0' => 'Pago', '1' => 'À prazo'], ['disabled' => 'true'])
+                                            ->label('Pagamento: '); ?>
+                                    </div>
+                                <?php } else {?>
+                                    <div class="col-sm-12">
+                                        <?= $form->field($model, 'form_pagamento')
+                                            ->dropDownList(['0' => 'Recebido', '1' => 'Aguardando Pagamento'])
+                                            ->label('Pagamento: '); ?>
+                                    </div>
+                                <?php }?>
                             <?php }
                             if(!$model->id){
                                 ?>
@@ -88,13 +98,13 @@ if(!Yii::$app->user->isGuest){
                                 <?php ActiveForm::end(); ?>
                             <?php }else {?>
                                 <?= Html::submitButton('Confirmar', ['class' => 'btn btn-success btn-flat pull-right', 'data' => [
-                                    'confirm' => "Valor Adicionado ao Caixa!",
+                                    'confirm' => "Finalizar venda?",
                                     'method' => 'post',
                                 ]]) ?>
                                 <?= Html::a('Cancelar a venda', ['delete', 'id' => $model->id], [
                                     'class' => 'btn btn-danger btn-flat',
                                     'data' => [
-                                        'confirm' => 'Deseja realmente cancelar a Venda?',
+                                        'confirm' => 'Deseja realmente excluir a venda?',
                                         'method' => 'post',
                                     ],
                                 ]) ?>
@@ -105,7 +115,6 @@ if(!Yii::$app->user->isGuest){
                 </div>
             </div>
         </div>
-
     </div>
 <?php }?>
 

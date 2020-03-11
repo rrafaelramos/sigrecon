@@ -11,6 +11,7 @@ use Yii;
  * @property string $data
  * @property int|null $cliente_fk
  * @property int $usuario_fk
+ * @property int $form_pagamento
  * @property int $servico_fk
  * @property int $quantidade
  * @property float|null $total
@@ -36,9 +37,9 @@ class Venda extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['servico_fk', 'quantidade'], 'required'],
+            [['servico_fk', 'quantidade','form_pagamento'], 'required'],
             [['data'], 'safe'],
-            [['cliente_fk', 'usuario_fk', 'servico_fk', 'quantidade'], 'integer'],
+            [['cliente_fk', 'usuario_fk', 'servico_fk', 'quantidade', 'form_pagamento'], 'integer'],
             [['total','desconto','tot_sem_desconto'], 'number'],
             [['servico_fk'], 'exist', 'skipOnError' => true, 'targetClass' => Servico::className(), 'targetAttribute' => ['servico_fk' => 'id']],
         ];
@@ -59,6 +60,7 @@ class Venda extends \yii\db\ActiveRecord
             'total' => 'Total',
             'desconto' => 'Desconto',
             'tot_sem_desconto' => 'Total Geral',
+            'form_pagamento' => 'Pagamento',
         ];
     }
 

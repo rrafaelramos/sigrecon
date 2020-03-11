@@ -18,7 +18,7 @@ class VendaSearch extends Venda
     public function rules()
     {
         return [
-            [['id', 'cliente_fk', 'usuario_fk', 'servico_fk', 'quantidade'], 'integer'],
+            [['id', 'cliente_fk', 'usuario_fk', 'servico_fk', 'quantidade', 'form_pagamento'], 'integer'],
             [['data'], 'safe'],
             [['total'], 'number'],
         ];

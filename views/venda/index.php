@@ -52,6 +52,13 @@ function formatar($model){
     $dinheiro = str_replace("pt-br", "", $formatado);
     return "R$ $dinheiro";
 }
+
+function statusPag($model){
+    if($model == '0'){
+        return 'Pago!';
+    }
+    return 'Aguardando pagamento!';
+}
 ?>
 <div class="servico-index box box-primary">
     <div class="box-header with-border">
@@ -72,31 +79,41 @@ function formatar($model){
 //                ['attribute' => 'id',
 //                    'label' => 'N° da Venda',
 //                ],
-                ['attribute' => 'data',
-                    'format' => ['date','php:d/m/Y']
-                ],
                 // 'data',
                 ['attribute' =>'cliente_fk',
                     'label' => 'Cliente',
                     'value' => function($model){
                         return cliente($model);
                     }],
-                ['attribute' => 'usuario_fk',
-                    'label' => 'Vendedor',
-                    'value' => function($model){
-                        return usuario($model);
-                    }],
                 ['attribute' => 'servico_fk',
+                    'label' => 'Serviço',
                     'value' => function($model){
                         return servico($model);
-                    }],
+                    }
+                ],
                 // 'quantidade',
                 [
                     'attribute' => 'total',
                     'value' => function($model){
                         return formatar($model->total);
-                    }],
+                    }
+                ],
+                [
+                    'attribute' => 'form_pagamento',
+                    'label' => 'Status do pagamento',
+                    'value' => function($model){
+                        return statusPag($model->form_pagamento);
+                    }
 
+                ],
+                ['attribute' => 'data',
+                    'format' => ['date','php:d/m/Y']
+                ],
+                ['attribute' => 'usuario_fk',
+                    'label' => 'Vendedor',
+                    'value' => function($model){
+                        return usuario($model);
+                    }],
                 [
                     'class' => '\kartik\grid\ActionColumn',
                     'template' => '{view}{delete}',

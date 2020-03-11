@@ -32,7 +32,7 @@ class AlertaservicoController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','update','view','delete','index'],
+                'only' => ['create','update','view','delete','index','prazopf'],
                 'rules' => [
                     [
                         'allow'=>true,
@@ -78,6 +78,19 @@ class AlertaservicoController extends Controller
         $searchModel = new AlertaservicoSearch();
         $dataProvider = new ActiveDataProvider([
             'query' => Alertaservico::find()->where(['status_servico' => '0'])
+        ]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionPrazopf()
+    {
+        $searchModel = new AlertaservicoSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Alertaservico::find()->where(['status_pagamento' => '0']),
         ]);
 
         return $this->render('index', [

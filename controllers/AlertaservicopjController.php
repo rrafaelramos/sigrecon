@@ -32,7 +32,7 @@ class AlertaservicopjController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','update','view','delete','index'],
+                'only' => ['create','update','view','delete','index','prazopj'],
                 'rules' => [
                     [
                         'allow'=>true,
@@ -87,7 +87,18 @@ class AlertaservicopjController extends Controller
         ]);
     }
 
+    public function actionPrazopj()
+    {
+        $searchModel = new AlertaservicopjSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Alertaservicopj::find()->where(['status_pagamento' => '0']),
+        ]);
 
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
 
     /**

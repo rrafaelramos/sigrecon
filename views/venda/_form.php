@@ -29,15 +29,22 @@ if(!Yii::$app->user->isGuest){
     <div class="col-sm-12">
         <div class="venda-form col-sm-12">
             <div class="venda-form box box-primary">
-                <?php $form = ActiveForm::begin(); ?>
+                <?php $form = ActiveForm::begin();
+                ?>
+
                 <div class="box-body table-responsive col-sm-6 col-sm-offset-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Venda Rápida</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-sm-12">
-                                <?= $form->field($model, 'cliente_fk')->dropDownList(ArrayHelper::map(Clienteavulso::find()->all(), 'id', 'nome'), ['prompt' => 'Selecione'], ['readOnly' => 'true'])->label('Nome do Cliente');?>
+                            <div class="col-sm-6">
+                                <?= $form->field($model, 'cliente_fk')->dropDownList(ArrayHelper::map(Clienteavulso::find()->all(), 'id', 'nome'), ['prompt' => 'Selecione'], ['readOnly' => 'true'])->label('Cliente');?>
+                            </div>
+                            <div class="col-sm-6">
+                                <?= $form->field($model, 'form_pagamento')
+                                    ->dropDownList(['0' => 'À vista', '1' => 'À prazo'])
+                                    ->label('Pagamento: '); ?>
                             </div>
                             <div class="col-sm-6">
                                 <?= $form->field($model, 'servico_fk')->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'id' => 'servico'])?>

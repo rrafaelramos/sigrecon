@@ -125,6 +125,7 @@ create table venda(
 	total float,
 	tot_sem_desconto float,
 	desconto float,
+	form_pagamento int,
 	primary key (id),
 	foreign key (servico_fk) references servico (id)
 );
@@ -139,6 +140,7 @@ create table vendapj(
 	total float,
 	tot_sem_desconto float,
     desconto float,
+    form_pagamento int,
 	primary key (id),
 	foreign key (servico_fk) references servico (id)
 );

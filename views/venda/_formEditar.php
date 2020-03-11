@@ -48,21 +48,6 @@ if(!Yii::$app->user->isGuest){
                             <div class="col-sm-6">
                                 <?= $form->field($model, 'quantidade')->textInput([ 'type' => 'number', 'id' => 'quantidade', 'disabled' => 'disabled']) ?>
                             </div>
-                            <!--                            <div class="col-sm-6">-->
-                            <!--                                <h4>-->
-                            <!--                                    Valor:-->
-                            <!--                                    --><?php //$total = $model->total + $model->desconto;
-                            //                                    echo formatar($total);
-                            //                                    ?>
-                            <!--                                </h4>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-sm-6">-->
-                            <!--                                <h4>-->
-                            <!--                                    Desconto:-->
-                            <!--                                    --><?php //echo "- ".formatar($model->desconto);
-                            //                                    ?>
-                            <!--                                </h4>-->
-                            <!--                            </div>-->
                             <?php if($model->id) {?>
                                 <div class="col-sm-6">
                                     <?= $form->field($model, 'tot_sem_desconto')->widget(MaskMoney::classname(), [
@@ -78,7 +63,7 @@ if(!Yii::$app->user->isGuest){
                                     ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $teste = $form->field($model, 'desconto')->widget(MaskMoney::classname(), [
+                                    <?= $form->field($model, 'desconto')->widget(MaskMoney::classname(), [
                                         'pluginOptions' => [
                                             'prefix' => 'R$ ',
                                             'suffix' => '',
@@ -89,6 +74,19 @@ if(!Yii::$app->user->isGuest){
                                     ])->label('Desconto: ');
                                     ?>
                                 </div>
+                                <?php if($model->form_pagamento == '0'){?>
+                                    <div class="col-sm-12">
+                                        <?= $form->field($model, 'form_pagamento')
+                                            ->dropDownList(['0' => 'Pago', '1' => 'À prazo'], ['disabled' => 'true'])
+                                            ->label('Pagamento: '); ?>
+                                    </div>
+                                <?php } else {?>
+                                    <div class="col-sm-12">
+                                        <?= $form->field($model, 'form_pagamento')
+                                            ->dropDownList(['0' => 'Recebido', '1' => 'Aguardando Pagamento'])
+                                            ->label('Pagamento: '); ?>
+                                    </div>
+                                <?php }?>
                             <?php }
                             if(!$model->id){
                                 ?>
@@ -100,13 +98,13 @@ if(!Yii::$app->user->isGuest){
                                 <?php ActiveForm::end(); ?>
                             <?php }else {?>
                                 <?= Html::submitButton('Confirmar', ['class' => 'btn btn-success btn-flat pull-right', 'data' => [
-                                    'confirm' => "Finalizar venda e adicionar ao caixa?",
+                                    'confirm' => "Finalizar venda?",
                                     'method' => 'post',
                                 ]]) ?>
                                 <?= Html::a('Cancelar a venda', ['delete', 'id' => $model->id], [
                                     'class' => 'btn btn-danger btn-flat',
                                     'data' => [
-                                        'confirm' => 'Deseja realmente cancelar a Venda?',
+                                        'confirm' => 'Deseja realmente excluir a venda?',
                                         'method' => 'post',
                                     ],
                                 ]) ?>
