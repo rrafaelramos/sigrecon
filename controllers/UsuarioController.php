@@ -29,7 +29,7 @@ class UsuarioController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['update','view','delete','index'],
+                'only' => ['update','view','delete','index','novo'],
                 'rules' => [
                     [
                         'allow'=>true,

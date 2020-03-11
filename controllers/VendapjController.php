@@ -34,7 +34,7 @@ class VendapjController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','update','view','delete','index'],
+                'only' => ['create','update','view','delete','index','prazopj'],
                 'rules' => [
                     [
                         'allow'=>true,
