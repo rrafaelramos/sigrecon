@@ -728,10 +728,14 @@ function rotinaPendente(){
                 <?php if (Yii::$app->user->isGuest){
                     ?>
                     <li class="dropdown user user-menu">
-                        <?= Html::a('Entrar', ['site/login']) ?>
+                        <?php echo  Html::a(
+                            '<span class="fa fa-user-plus"></span>  Cadastre-se', ['/usuario/create'], ['data-method' => 'post', 'class' => 'btn-flat']
+                        ); ?>
                     </li>
                     <li class="dropdown user user-menu">
-                        <?= Html::a('Cadastrar', ['usuario/create']) ?>
+                        <?php echo  Html::a(
+                            '<span class="fa fa-sign-in"></span>  Login', ['/site/login'], ['data-method' => 'post', 'class' => 'btn-flat']
+                        ); ?>
                     </li>
                 <?php }else{  ?>
                     <li class="dropdown user user-menu">
@@ -753,30 +757,17 @@ function rotinaPendente(){
                                     <small>Seja Bem Vindo!<br> <?php echo $data;?></small>
                                 </p>
                             </li>
-                            <!-- Menu Body -->
-                            <!--                        <li class="user-body">-->
-                            <!--                            <div class="col-xs-4 text-center">-->
-                            <!--                                <a href="#">Followers</a>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-xs-4 text-center">-->
-                            <!--                                <a href="#">Sales</a>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-xs-4 text-center">-->
-                            <!--                                <a href="#">Friends</a>-->
-                            <!--                            </div>-->
-                            <!--                        </li>-->
-                            <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <?= Html::a(
-                                        'Perfil',
+                                    <?php echo Html::a(
+                                        '<span class="fa fa-user"></span>  Perfil',
                                         ['/usuario/view', 'id' => Yii::$app->user->identity->id],
                                         ['data-method' => 'post', 'class' => 'btn btn-warning    btn-flat']
                                     ) ?>
                                 </div>
                                 <div class="pull-right">
-                                    <?= Html::a(
-                                        'Sair',
+                                    <?php echo Html::a(
+                                        '<span class="fa fa-sign-out"></span>  Sair',
                                         ['/site/logout'],
                                         ['data-method' => 'post', 'class' => 'btn btn-danger btn-flat']
                                     ) ?>

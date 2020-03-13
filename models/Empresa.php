@@ -7,7 +7,7 @@ use yii\base\Model;
 use yiibr\brvalidator\CpfValidator;
 use yiibr\brvalidator\CnpjValidator;
 use yiibr\brvalidator\CeiValidator;
-//use app\components\validators\DataValida;
+use PhpOffice\PhpWord\PhpWord;
 
 /**
  * This is the model class for table "empresa".
@@ -183,4 +183,24 @@ class Empresa extends \yii\db\ActiveRecord
         return $this->hasMany(Rotina::className(), ['id' => 'rotina'])
             ->viaTable(Rotina_empresa::tableName(), ['rotina_fk' => 'id']);
     }
+
+    public function geraDataVenc($responsavel){
+//        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
+        $tp = new \PhpOffice\PhpWord\TemplateProcessor(Yii::getAlias('@app') . '/documentos/data_venc/data_venc.docx');
+
+        $dados = Empresa::find()->orderBy('razao_social')->all();
+
+        $tp->setValue('responsavel', "teste");
+
+        ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+//        $i = 0;
+//        foreach($dados as $d){
+//            $tp->setValue('responsavel', $d->responsavel);
+//        }
+
+        $tp->saveAs(Yii::getAlias('@app') . '/documentos/data_venc/data_venc_temp.docx');
+
+    }
+
+
 }
