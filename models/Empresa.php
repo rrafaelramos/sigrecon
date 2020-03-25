@@ -184,23 +184,65 @@ class Empresa extends \yii\db\ActiveRecord
             ->viaTable(Rotina_empresa::tableName(), ['rotina_fk' => 'id']);
     }
 
-    public function geraDataVenc($responsavel){
-//        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
-        $tp = new \PhpOffice\PhpWord\TemplateProcessor(Yii::getAlias('@app') . '/documentos/data_venc/data_venc.docx');
 
-        $dados = Empresa::find()->orderBy('razao_social')->all();
-
-        $tp->setValue('responsavel', "teste");
-
-        ini_set('max_execution_time', 300); //300 seconds = 5 minutes
-//        $i = 0;
-//        foreach($dados as $d){
-//            $tp->setValue('responsavel', $d->responsavel);
-//        }
-
-        $tp->saveAs(Yii::getAlias('@app') . '/documentos/data_venc/data_venc_temp.docx');
-
+    function procurac($model){
+        if(strtotime($model->data_procuracao) > strtotime(date("Y-m-d"))){
+            //retorna a data do model, e transforma em um array
+            $dataprocuracao = explode('-',$model->data_procuracao);
+            $dia = $dataprocuracao[2];
+            $mes = $dataprocuracao[1];
+            $ano = $dataprocuracao[0];
+            return "$dia/$mes/$ano";
+        }elseif(strtotime($model->data_procuracao) == strtotime(date("Y-m-d"))){
+            return 'Hoje!';
+        }else{
+            return 'Expirou!';
+        }
     }
 
+    function certifica($model){
+        if(strtotime($model->data_certificado) > strtotime(date("Y-m-d"))){
+            date_default_timezone_set('America/Sao_Paulo');
+            $datacertificado = explode('-',$model->data_certificado);
+            $diac = $datacertificado[2];
+            $mesc = $datacertificado[1];
+            $anoc = $datacertificado[0];
+            return "$diac/$mesc/$anoc";
+        }elseif(strtotime($model->data_certificado) == strtotime(date("Y-m-d"))){
+            return 'Hoje!';
+        }else{
+            return 'Expirou';
+        }
+    }
 
+    function telefonesocio($model){
+        return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->telefone_socio);
+    }
+
+    public function geraDataVenc($razao_social, $data_procuracao, $data_certificado, $celular, $responsavel){
+//        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
+        $tp = new \PhpOffice\PhpWord\TemplateProcessor(Yii::getAlias('@app') . '/documentos/data_venc/data_venc.docx');
+        $dados = Empresa::find()->orderBy('razao_social')->all();
+//        $tp->setValue('responsavel', "teste");
+
+        $i = 0;
+        $total = 0;
+        $tp->cloneRow('razao_social', count($dados));
+
+        ini_set('max_execution_time', 300); //300 seconds = 5 minute
+        date_default_timezone_set('America/Sao_Paulo');
+        $tp->setValue('contabilidade', "GR Assistência Contábil");
+        $tp->setValue('data',date('d/m/Y'));
+        foreach($dados as $d){
+            if($d->data_certificado || $d->data_procuracao) {
+                $tp->setValue('razao_social#' . ($i + 1), $d->razao_social);
+                $tp->setValue('data_procuracao#' . ($i + 1), Empresa::procurac($d));
+                $tp->setValue('data_certificado#' . ($i + 1), Empresa::certifica($d));
+                $tp->setValue('celular#' . ($i + 1), Empresa::telefonesocio($d));
+                $tp->setValue('responsavel#' . ($i + 1), $d['responsavel']);
+                $i++;
+            }
+        }
+        $tp->saveAs(Yii::getAlias('@app') . '/documentos/data_venc/data_venc_temp.docx');
+    }
 }

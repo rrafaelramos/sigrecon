@@ -46,112 +46,11 @@ function certifica($model){
 }
 ?>
 
-<!-- --><?php
-//$gridColumns = [
-//    'razao_social',
-//    ['attribute' => 'data_procuracao',
-//        'label' => 'Vencimento Procuração',
-//        'value' => function($model){
-//            return procurac($model);
-//        }
-//    ],
-//    ['attribute' => 'data_certificado',
-//        'label' => 'Vencimento Certificado',
-//        'value' => function($model){
-//            return certifica($model);
-//        }
-//    ],
-//    'responsavel',
-//    'telefone_socio'
-//];
-//
-//echo ExportMenu::widget([
-//    'dataProvider' => $dataProvider,
-//    'columns' => $gridColumns,
-//    'exportConfig' => [
-//        ExportMenu::FORMAT_CSV => false,
-//        ExportMenu::FORMAT_HTML => false,
-//        ExportMenu::FORMAT_TEXT => false,
-//    ],
-//]);
-?>
-
 <div class="empresa-index box box-primary">
 
-<!--    --><?php //echo Html::a('Voltar', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
+    <!--    --><?php //echo Html::a('Voltar', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-
-        <!--                --><?php //echo GridView::widget([
-        //            'dataProvider' => $dataProvider,
-        //            'filterModel' => $searchModel,
-        //            'hover' => 'true',
-        //            'resizableColumns'=>'true',
-        //            'responsive' => 'true',
-        //            'layout' => "{items}\n{summary}\n{pager}",
-        //            'columns' => [
-        //               // ['class' => 'yii\grid\SerialColumn'],
-        //                //'id',
-        ////                ['attribute' => 'cnpj',
-        ////                    'format' => 'html',
-        ////                    'value' => function($model) {
-        ////                        return preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '${1}.${2}.${3}/${4}-${5}', $model->cnpj);
-        ////                    },
-        ////                ],
-        //                ['attribute' => 'razao_social',
-        //                    'label' => 'Empresa'],
-        //                //'nome_fantasia',
-        //                //'email:email',
-        ////                ['attribute' => 'telefone',
-        ////                    'format' => 'html',
-        ////                    'value' => function($model) {
-        ////                        return preg_replace('/^(\d{2})(\d{4})(\d{4})$/', '(${1}) ${2}-${3}', $model->telefone);
-        ////                    },
-        ////                ],
-        //                // 'celular',
-        //                // 'numero',
-        //                // 'complemento',
-        //                // 'rua',
-        //                // 'bairro',
-        //                // 'cidade',
-        //                // 'cep',
-        //                // 'uf',
-        //                //'format' => ['date','php:d/m/Y'],
-        //                // 'data_abertura',
-        //                [ 'attribute' => 'data_procuracao',
-        //                    'value' => function($model){
-        //                        return procurac($model);
-        //                    }
-        //                ],
-        //                ['attribute' => 'data_certificado',
-        //                    'value' => function($model){
-        //                        return certifica($model);
-        //                    }
-        //
-        //                ],
-        //                // 'rotina',
-        //                'responsavel',
-        //                // 'cpf_socio',
-        //                // 'datanascimento_socio',
-        //                // 'rg',
-        //                // 'titulo',
-        //                // 'nome_mae_socio',
-        //                ['attribute' => 'telefone_socio',
-        //                    'format' => 'html',
-        //                    'value' => function($model) {
-        //                        return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->celular);
-        //                    },
-        //                ],
-        //                // 'usuario_fk',
-        //
-        //                [
-        //                    'class' => '\kartik\grid\ActionColumn',
-        //                    'template' => '{view}{update}',
-        //                ],
-        //
-        //            ],
-        //        ]); ?>
 
         <?=  GridView::widget([
             'id' => 'kv-grid-demo',
@@ -173,7 +72,7 @@ function certifica($model){
                 ['attribute' => 'telefone_socio',
                     'format' => 'html',
                     'value' => function($model) {
-                        return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->celular);
+                        return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->telefone_socio);
                     },
                 ],
                 'responsavel',
@@ -202,14 +101,11 @@ function certifica($model){
                                     [
                                         'label' => Html::tag('i', '', ['class' => 'text-danger fa fa-file-pdf-o']) . ' ' . 'PDF',
                                         'url' => ['exporta-pdf',
+                                            'razao_social' => (($searchModel->razao_social) ? $searchModel->razao_social : ((!$searchModel->razao_social) ? "" : "")),
+                                            'data_procuracao' => (($searchModel->data_procuracao) ? $searchModel->data_procuracao : ((!$searchModel->data_procuracao) ? "" : "")),
+                                            'data_certificado' => (($searchModel->data_certificado) ? $searchModel->data_certificado : ((!$searchModel->data_certificado) ? "" : "")),
+                                            'celular' => (($searchModel->telefone_socio) ? $searchModel->telefone_socio : ((!$searchModel->telefone_socio) ? "" : "")),
                                             'responsavel' => (($searchModel->responsavel) ? $searchModel->responsavel : ((!$searchModel->responsavel) ? "" : "")),
-//                                            'situacao' => (($searchModel->situacao) ? $searchModel->situacao : ((!$searchModel->situacao) ? "" : "")),
-//                                            'classificacao' => (($searchModel->classificacao) ? $searchModel->classificacao : ((!$searchModel->classificacao) ? "" : "")),
-//                                            'tipoEstagio' => (($searchModel->tipoEstagio) ? $searchModel->tipoEstagio : ((!$searchModel->tipoEstagio) ? "" : "")),
-//                                            'dataI' => (($searchModel->dataI) ? $searchModel->dataI : ((!$searchModel->dataI) ? "" : "")),
-//                                            'dataF' => (($searchModel->dataF) ? $searchModel->dataF : ((!$searchModel->dataF) ? "" : "")),
-//                                            'mes' => (($searchModel->mes) ? $searchModel->mes : ((!$searchModel->mes) ? "" : "")),
-//                                            'ano' => (($searchModel->ano) ? $searchModel->ano : ((!$searchModel->ano) ? "" : "")),
                                         ],
                                         'encode' => false,
                                         'options' => [
@@ -238,12 +134,12 @@ function certifica($model){
             'showPageSummary' => false,
             'panel' => [
                 'type' => GridView::TYPE_DEFAULT,
-                //'heading' => "Listagem de todos os estágios por curso",
+                'heading' => "Listagem de todos os Certificados e Procurações",
             ],
             'persistResize' => false,
             'toggleDataOptions' => ['minCount' => 10],
-            'itemLabelSingle' => 'Curso',
-            'itemLabelPlural' => 'Cursos'
+            'itemLabelSingle' => 'Certificado',
+            'itemLabelPlural' => 'Certificados'
         ]) ?>
     </div>
 </div>

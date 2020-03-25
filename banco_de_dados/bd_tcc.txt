@@ -234,3 +234,18 @@ create table honorario(
     observacao text,
     primary key (id)
 );
+
+create table contabilidade(
+    id int auto_increment,
+    nome varchar(300),
+    responsavel varchar(300),
+    cnpj varchar(25),
+    crc varchar(25),
+    telefone varchar(20),
+    numero INT,
+    rua VARCHAR(200),
+    bairro VARCHAR(200),
+    cidade VARCHAR(200),
+    unique index (cnpj),
+   	primary key (id)
+);

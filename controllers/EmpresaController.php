@@ -196,9 +196,8 @@ class EmpresaController extends Controller
         ]);
     }
 
-    public function actionExportaPdf($responsavel){
-        Empresa::geraDataVenc($responsavel);
-//        SGEHelper::convertToPdf(Yii::getAlias('@app') . '/documentos/curso_estagio/curso_estagio_temp.docx', Yii::getAlias('@app') . '/documentos/curso_estagio/');
+    public function actionExportaPdf($razao_social, $data_procuracao, $data_certificado, $celular, $responsavel){
+        Empresa::geraDataVenc($razao_social, $data_procuracao, $data_certificado, $celular, $responsavel);
         Yii::$app->response->sendFile(Yii::getAlias('@app') . '/documentos/data_venc/data_venc_temp.docx');
     }
 
