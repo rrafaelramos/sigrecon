@@ -12,11 +12,8 @@ date_default_timezone_set('America/Sao_Paulo');
 
     <div class="jumbotron">
         <?php
-        if(!Yii::$app->user->isGuest && Yii::$app->user->identity->tipo==1) {
-            if (Contabilidade::find()->all()) {
-                echo '<h1><b>SIGRE</b>Con</h1>';
-                echo '<p class="lead">Bem vindo! </p>';
-            } else {
+        if(!Yii::$app->user->isGuest) {
+            if (!Contabilidade::find()->all() && Yii::$app->user->identity->tipo==1) {
                 echo '<h2>Bem vindo ao SIGRECon!</h2><br>'.
                     '<h2>Clique no botão abaixo para configurar com os dados da contabilidade<br><h1>';
                 echo
@@ -25,7 +22,12 @@ date_default_timezone_set('America/Sao_Paulo');
                     ['/contabilidade/create'],
                     ['data-method' => 'post', 'class' => 'btn btn-success btn-flat']
                 );
+            } else {
+                echo '<h1><b>SIGRE</b>Con</h1>';
+                echo '<p class="lead">Bem vindo! </p>';
             }
+        }else{
+            echo '<h1><b>SIGRE</b>Con</h1>';
         }
         ?>
 

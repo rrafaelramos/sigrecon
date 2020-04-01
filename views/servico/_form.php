@@ -74,12 +74,20 @@ if(Yii::$app->user->identity->tipo == 1) {
     </div>
 
     <?php
-}else{
+}else {
+    echo '<center><div class="col-sm-4 col-sm-offset-4">';
+
     echo Alert::widget([
         'options' => [
             'class' => 'alert-warning',
         ],
         'body' => 'Somente o usuário Gerente pode cadastrar um serviço!',
     ]);
+
+    echo Html::a(
+        '<span class=""></span> Ir para Serviços',
+        ['index'],
+        ['data-method' => 'post', 'class' => 'btn btn-success btn-flat']
+    );
 }
-?>
+echo '<center></div>';?>

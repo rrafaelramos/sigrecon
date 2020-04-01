@@ -5,10 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Contabilidade */
 
-$this->title = 'Update Contabilidade: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Contabilidades', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Contabilidade';
 ?>
 <div class="contabilidade-update">
 

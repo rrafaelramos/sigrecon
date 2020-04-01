@@ -61,4 +61,8 @@ class Contabilidade extends \yii\db\ActiveRecord
             'cidade' => 'Cidade',
         ];
     }
+
+    public function getNome(){
+        return $nome;
+    }
 }

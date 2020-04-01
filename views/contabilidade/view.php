@@ -6,16 +6,13 @@ use kartik\detail\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Clienteavulso */
 
-$this->title = $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Contabilidade';
 ?>
-
 <div class="clienteavulso-view box box-primary">
     <div class="box-header with-border">
         <div>
             <div class="col-sm-12">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
+                <?= Html::a('Sair', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
                 <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
             </div>
         </div>

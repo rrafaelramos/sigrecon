@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ContabilidadeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Contabilidades';
+$this->title = 'Contabilidade';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="contabilidade-index box box-primary">

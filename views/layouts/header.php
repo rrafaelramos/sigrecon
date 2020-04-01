@@ -691,13 +691,17 @@ function rotinaPendente(){
                                 </div>
                             </li>
                             <li>
-                                <div class="col-sm-12">
-                                    <?php echo Html::a(
+                                <?php
+                                if(Contabilidade::find()->one()) {
+                                    echo '<div class="col-sm-12">';
+                                    echo Html::a(
                                         '<span class="fa fa-gears"></span> Dados da Contabilidade',
                                         ['contabilidade/index'],
                                         ['data-method' => 'post', 'class' => 'btn btn-link']
-                                    ) ?>
-                                </div>
+                                    );
+                                    '</div>';
+                                }
+                                ?>
                             </li>
                         </ul>
                     </li>

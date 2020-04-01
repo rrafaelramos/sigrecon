@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use yii\debug\models\timeline\Search;
 use yiibr\brvalidator\CpfValidator;
 use yiibr\brvalidator\CnpjValidator;
 use yiibr\brvalidator\CeiValidator;
@@ -231,8 +232,9 @@ class Empresa extends \yii\db\ActiveRecord
 
         ini_set('max_execution_time', 300); //300 seconds = 5 minute
         date_default_timezone_set('America/Sao_Paulo');
-        $tp->setValue('contabilidade', "GR Assistência Contábil");
-        $tp->setValue('data',date('d/m/Y'));
+
+        $contabilidade = Contabilidade::find()->one();
+
         foreach($dados as $d){
             if($d->data_certificado || $d->data_procuracao) {
                 $tp->setValue('razao_social#' . ($i + 1), $d->razao_social);
@@ -243,6 +245,14 @@ class Empresa extends \yii\db\ActiveRecord
                 $i++;
             }
         }
+
+        $tp->setValue('contabilidade', "$contabilidade->nome");
+        $tp->setValue('rua', "$contabilidade->rua");
+        $tp->setValue('n', "$contabilidade->numero");
+        $tp->setValue('bairro', "$contabilidade->bairro");
+        $tp->setValue('cidade', "$contabilidade->cidade");
+        $tp->setValue('data',date('d/m/Y'));
+
         $tp->saveAs(Yii::getAlias('@app') . '/documentos/data_venc/data_venc_temp.docx');
     }
 }
