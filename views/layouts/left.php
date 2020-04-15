@@ -132,7 +132,8 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Vendas Realizadas', 'icon' => 'usd', 'url' => ['/relatorio_caixa'],],
+                            ['label' => 'Entradas', 'icon' => 'usd', 'url' => ['/relatorio_caixa'],],
+                            ['label' => 'Venda por Colaborador', 'icon' => 'usd', 'url' => ['/relatorio-venda-funcionario'],],
                         ],
                     ],
                 ],

@@ -11,6 +11,7 @@ use app\models\Servico;
 use app\models\Usuario;
 use app\models\Venda;
 use app\models\Vendapj;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\base\Controller;
@@ -49,6 +50,11 @@ class Relatorio_caixaController extends Controller
     {
         return $this->render('index');
     }
+
+//    public function actionIndexColaborador()
+//    {
+//        return $this->render('index-colaborador');
+//    }
 
     public function actionRelatorio()
     {
@@ -159,4 +165,65 @@ class Relatorio_caixaController extends Controller
         ]);
     }
 
+    // venda por funcionário
+    public function actionIndexColaborador(){
+        $model = new Usuario();
+        return $this->render('index-colaborador',[
+            'model' => $model,
+        ]);
+    }
+
+    public function actionRelatorioColaborador()
+    {
+        $inicio = $_POST['data_inicio'];
+        $fim = $_POST['data_fim'];
+
+        if($inicio > $fim){
+            return $this->render('erro');
+        }
+
+        $abrircaixa = Abrircaixa::find()->all();
+        $valor_abertura = 0;
+
+        if($abrircaixa){
+            $abertura = Abrircaixa::find()->max('id');
+            foreach ($abrircaixa as $a){
+                if($abertura == $a->id){
+                    if($a->valor){
+                        $valor_abertura = $a->valor;
+                    }
+                }
+            }
+        }
+
+        $usuarios = Usuario::find()->all();
+        $servicos = Servico::find()->all();
+        // todos os honorários
+        $honorarios = Honorario::find()->all();
+        // venda pf
+        $vendas = Venda::find()->all();
+        //venda pj
+        $vendaspj = Vendapj::find()->all();
+        //alerta para pf
+        $alerta_servicos = Alertaservico::find()->all();
+        //alerta para pj
+        $alertas_pj = Alertaservicopj::find()->all();
+        $caixas = Caixa::find()->all();
+        $compras = Compra::find()->all();
+
+        return $this->render('relatorio-comum',[
+            'inicio' => $inicio,
+            'fim' => $fim,
+            'usuarios' => $usuarios,
+            'servicos' => $servicos,
+            'models' => $vendas,
+            'vendaspj' => $vendaspj,
+            'valor_abertura' => $valor_abertura,
+            'alerta_servicos' => $alerta_servicos,
+            'alertas_pj' => $alertas_pj,
+            'caixas' => $caixas,
+            'compras' => $compras,
+            'honorarios' => $honorarios,
+        ]);
+    }
 }

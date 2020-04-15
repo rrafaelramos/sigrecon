@@ -224,7 +224,6 @@ class Empresa extends \yii\db\ActiveRecord
 //        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $tp = new \PhpOffice\PhpWord\TemplateProcessor(Yii::getAlias('@app') . '/documentos/data_venc/data_venc.docx');
         $dados = Empresa::find()->orderBy('razao_social')->all();
-//        $tp->setValue('responsavel', "teste");
 
         $i = 0;
         $total = 0;
