@@ -42,7 +42,6 @@ class RelatorioVendaFuncionario extends \yii\base\Model
 
 
     function formatar($model){
-
         if(!$model){
             return "R$ 0,00";
         }
@@ -56,9 +55,12 @@ class RelatorioVendaFuncionario extends \yii\base\Model
     {
         $tp = new \PhpOffice\PhpWord\TemplateProcessor(Yii::getAlias('@app') . '/documentos/relatorio_venda_funcionario/relatorio_venda_funcionario.docx');
         $vendas = Venda::find()->all();
+        $vendaspj = Vendapj::find()->all();
         $data_venda = 0;
+        $data_vendapj = 0;
         $i = 0;
         $cont = 0;
+        $contpj = 0;
 
         foreach ($vendas as $venda) {
             if ($venda->usuario_fk == $colaborador) {
@@ -70,13 +72,21 @@ class RelatorioVendaFuncionario extends \yii\base\Model
             }
         }
 
-        $tp->cloneRow('cliente', $cont);
+        //buscas as vendas para pj
+        foreach ($vendaspj as $venda) {
+            if ($venda->usuario_fk == $colaborador) {
+                $data_aux = explode(" ", $venda->data);
+                $data_vendapj = $data_aux[0];
+                if (strtotime($inicio) <= strtotime($data_vendapj) && strtotime($data_vendapj) <= strtotime($fim)) {
+                    $contpj++;
+                }
+            }
+        }
 
         ini_set('max_execution_time', 300); //300 seconds = 5 minute
         date_default_timezone_set('America/Sao_Paulo');
 
         $servicos = Servico::find()->all();
-
         $contabilidade = Contabilidade::find()->one();
 
         $tp->setValue('contabilidade', "$contabilidade->nome");
@@ -88,6 +98,8 @@ class RelatorioVendaFuncionario extends \yii\base\Model
 
         $nome = 0;
         $tipo = 0;
+
+        $tp->cloneRow('cliente', $cont);
 
         $usuarios = Usuario::find()->all();
         foreach ($usuarios as $usuario){
@@ -134,6 +146,40 @@ class RelatorioVendaFuncionario extends \yii\base\Model
             }
         }
 
+
+
+        $empresas = Empresa::find()->all();
+        $j = 0;
+        $tp->cloneRow('empresa', $contpj);
+
+        foreach ($vendaspj as $vendapj) {
+            if ($vendapj->usuario_fk == $colaborador) {
+                $data_aux = explode(" ", $vendapj->data);
+                $data_vendapj = $data_aux[0];
+                if (strtotime($inicio) <= strtotime($data_vendapj) && strtotime($data_vendapj) <= strtotime($fim)) {
+                    if(!$vendapj->empresa_fk){
+                        $tp->setValue('empresa#' . ($j + 1), "Não cadastrado!");
+                    }else {
+                        foreach ($empresas as $empresa) {
+                            if($empresa->id == $vendapj->empresa_fk){
+                                $tp->setValue('empresa#' . ($j + 1), $empresa->razao_social);
+                            }
+                        }
+                    }
+                    foreach ($servicos as $servico){
+                        if($servico->id == $vendapj->servico_fk){
+                            $tp->setValue('servicoj#' . ($j + 1), $servico->descricao);
+                        }
+                    }
+                    $tp->setValue('quantidadej#' . ($j + 1), $vendapj->quantidade);
+                    $tp->setValue('totalj#' . ($j + 1), RelatorioVendaFuncionario::formatar($vendapj->tot_sem_desconto));
+                    $tp->setValue('descontoj#' . ($j + 1), RelatorioVendaFuncionario::formatar($vendapj->desconto));
+                    $tp->setValue('recebidoj#' . ($j + 1), RelatorioVendaFuncionario::formatar($vendapj->total));
+                    $j++;
+                }
+            }
+        }
+        
         $tp->saveAs(Yii::getAlias('@app') . '/documentos/relatorio_venda_funcionario/relatorio_venda_funcionario_temp.docx');
     }
 }
