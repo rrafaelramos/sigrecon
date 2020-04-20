@@ -7,6 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'SIGRECon';
 date_default_timezone_set('America/Sao_Paulo');
+$mes = date('m');
 ?>
 <div class="site-index">
 
@@ -32,4 +33,18 @@ date_default_timezone_set('America/Sao_Paulo');
         ?>
 
     </div>
+    <center>
+    <div>
+        <?php
+        if($mes == '04' && !Yii::$app->user->isGuest){
+            echo '<h4>Consulte aqui a lista de IRPF para este mês!</h4>';
+            echo Html::a(
+                '<span class="fa fa-usd" ></span>  IRPF',
+                ['/irpf'],
+                ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
+            );
+        }
+        ?>
+    </div>
+    </center>
 </div>

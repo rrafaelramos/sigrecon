@@ -43,7 +43,7 @@ class Clienteavulso extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cpf', 'nome'], 'required'],
+            [['cpf', 'nome','telefone'], 'required'],
             [['numero', 'rotina', 'usuario_fk'], 'integer'],
             [['datanascimento'], 'validarIdade'],
             [['cpf'], 'string',],

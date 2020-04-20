@@ -69,7 +69,7 @@ function statusPag($model){
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
+//            'filterModel' => $searchModel,
             'hover' => 'true',
             'resizableColumns'=>'true',
             'responsive' => 'true',

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box-header with-border">
         <div>
             <div class="col-sm-12">
-                <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
+                <?php echo Html::button('Voltar',array('onclick'=>'js:history.go(-1);returnFalse;', 'class' => 'btn btn-primary btn-flat pull-right'));?>
                 <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-flat']) ?>
                 <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger btn-flat',

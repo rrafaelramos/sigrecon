@@ -130,6 +130,22 @@ create table venda(
 	foreign key (servico_fk) references servico (id)
 );
 
+create table irpf(
+       id int auto_increment,
+       cliente_fk int,
+       data_entrega date,
+       telefone varchar(20),
+       primary key(id)
+);
+
+create table itr(
+       id int auto_increment,
+       cliente_fk int,
+       data_entrega date,
+       telefone varchar(20),
+       primary key(id)
+);
+
 create table vendapj(
 	id int auto_increment,
 	data datetime,

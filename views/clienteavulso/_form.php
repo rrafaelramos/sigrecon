@@ -118,7 +118,11 @@ use yii\helpers\ArrayHelper;
                 </div>
                 <div class="panel-body">
                     <div class="col-sm-6">
-                        <?= $form->field($model, 'rotina')->dropDownList(ArrayHelper::map(Rotina::find()->all(),'id', 'nome'),['prompt' => 'Selecione o Serviço'])?>
+                        <?= $form->field($model, 'rotina')->dropDownList([
+                                // '1' é o id do Simples Nacional
+                                '2' => 'IRPF - Imposto de Renda Pessoa Física',
+                                '3' => 'ITR - Imposto sobre Propriedade Territorial Rural'
+                            ], ['prompt' => 'Selecione'])?>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ use app\models\Avisa_rotina;
 use app\models\Caixa;
 use app\models\Contabilidade;
 use app\models\Empresa;
+use app\models\Irpf;
 use app\models\Lembrete;
 use app\models\Mensagem;
 use app\models\Rotina;
@@ -142,6 +143,15 @@ function simplesNacional()
             }
         }
     }
+}
+
+//essa função verifica se deverá ser gerado protocolo de entrega IRPF
+function irpf(){
+    date_default_timezone_set('America/Sao_Paulo');
+    $data = date('Y');
+    if(Irpf::geraEntrega($data)){
+        return 1;
+    };
 }
 
 // retorna o número de certificados que irão expirar no dia!
