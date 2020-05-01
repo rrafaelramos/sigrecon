@@ -97,6 +97,7 @@ class Itr extends \yii\db\ActiveRecord
         return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $d);
     }
 
+    // add dados ao template
     public function geraItr($cliente_fk, $telefone, $data_entrega){
         $tp = new \PhpOffice\PhpWord\TemplateProcessor(Yii::getAlias('@app') . '/documentos/itr/itr.docx');
         $dados = Itr::find()->orderBy('cliente_fk')->all();
