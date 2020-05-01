@@ -46,5 +46,17 @@ $mes = date('m');
         }
         ?>
     </div>
+        <div>
+            <?php
+            if($mes == '09' && !Yii::$app->user->isGuest){
+                echo '<h4>Consulte aqui a lista de ITR para este mês!</h4>';
+                echo Html::a(
+                    '<span class="fa fa-usd" ></span>  ITR',
+                    ['/itr'],
+                    ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
+                );
+            }
+            ?>
+        </div>
     </center>
 </div>
