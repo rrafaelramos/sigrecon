@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'class' => 'dropdown-header',
                                 ],
                                 [
-                                    'label' => Html::tag('i', '', ['class' => 'text-danger fa fa-file-pdf-o']) . ' ' . 'PDF',
+                                    'label' => Html::tag('i', '', ['class' => 'text-danger fa fa-file-text-o']) . ' ' . 'DOC',
                                     'url' => ['exporta-pdf',
                                         'cliente_fk' => (($searchModel->cliente_fk) ? $searchModel->cliente_fk : ((!$searchModel->cliente_fk) ? "" : "")),
                                         'telefone' => (($searchModel->telefone) ? $searchModel->telefone : ((!$searchModel->telefone) ? "" : "")),
@@ -111,9 +111,4 @@ $this->params['breadcrumbs'][] = $this->title;
         'itemLabelSingle' => 'ITR',
         'itemLabelPlural' => 'ITRs'
     ]) ?>
-
-
-
-
-
 </div>

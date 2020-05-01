@@ -72,5 +72,4 @@ class ItrController extends \yii\web\Controller
         Itr::geraItr($cliente_fk, $telefone, $data_entrega);
         Yii::$app->response->sendFile(Yii::getAlias('@app') . '/documentos/itr/itr_temp.docx');
     }
-
 }

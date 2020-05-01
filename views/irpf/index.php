@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Clienteavulso;
+use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 
@@ -27,15 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-        <?= GridView::widget([
+        <?=  GridView::widget([
+            'id' => 'kv-grid-demo',
             'dataProvider' => $dataProvider,
-//            'filterModel' => $searchModel,
-            'hover' => 'true',
-            'resizableColumns'=>'true',
-            'responsive' => 'true',
-            'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-
                 ['class' => 'yii\grid\SerialColumn'],
 //                'id',
                 ['attribute' => 'cliente_fk',
@@ -54,11 +50,68 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Data de Entrega',
                     'format' => ['date','php:d/m/Y']
                 ],
+            ],
+            'containerOptions' => ['style' => 'overflow: auto'], // only set when $responsive = false
+            'headerRowOptions' => ['class' => 'kartik-sheet-style'],
+            'filterRowOptions' => ['class' => 'kartik-sheet-style'],
+            'pjax' => false, // pjax is set to always true for this demo
+            // set your toolbar
+            'toolbar' => [
                 [
-                    'class' => '\kartik\grid\ActionColumn',
-                    'template' => '{view}',
+                    'content'=>
+                        ButtonDropdown::widget([
+                            'label' => '<i class="fa fa-share-square-o"></i>',
+                            'encodeLabel' => false,
+                            'options' => [
+                                'title' => 'Exportar',
+                                'class' => 'btn btn-default dropdown-toggle',
+                            ],
+                            'dropdown' => [
+                                'items' => [
+                                    [
+                                        'label' => 'Exportar os Registros dessa Página',
+                                        'class' => 'dropdown-header',
+                                    ],
+                                    [
+                                        'label' => Html::tag('i', '', ['class' => 'text-danger fa fa-file-text-o']) . ' ' . 'DOC',
+                                        'url' => ['exporta-pdf',
+                                            'cliente_fk' => (($searchModel->cliente_fk) ? $searchModel->cliente_fk : ((!$searchModel->cliente_fk) ? "" : "")),
+                                            'telefone' => (($searchModel->telefone) ? $searchModel->telefone : ((!$searchModel->telefone) ? "" : "")),
+                                            'data_entrega' => (($searchModel->data_entrega) ? $searchModel->data_entrega : ((!$searchModel->data_entrega) ? "" : "")),
+                                        ],
+                                        'encode' => false,
+                                        'options' => [
+                                            'title' => 'Documento PDF',
+                                        ]
+                                    ],
+                                ],
+                                'options' => [
+                                    'class' => 'dropdown-menu dropdown-menu-right',
+                                ]
+                            ],
+                        ]),
                 ],
             ],
-        ]); ?>
+            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
+            // set export properties
+            'export' => [
+                'fontAwesome' => true
+            ],
+            // parameters from the demo form
+            'bordered' => true,
+            'striped' => true,
+            'condensed' => true,
+            'responsive' => true,
+            'hover' => true,
+            'showPageSummary' => false,
+            'panel' => [
+                'type' => GridView::TYPE_DEFAULT,
+                'heading' => "Listagem de IRPF",
+            ],
+            'persistResize' => false,
+            'toggleDataOptions' => ['minCount' => 10],
+            'itemLabelSingle' => 'IRPF',
+            'itemLabelPlural' => 'IRPFs'
+        ]) ?>
     </div>
 </div>

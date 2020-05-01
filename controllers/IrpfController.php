@@ -65,7 +65,10 @@ class IrpfController extends \yii\web\Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-
     }
 
+    public function actionExportaPdf($cliente_fk, $telefone, $data_entrega){
+        Irpf::geraItr($cliente_fk, $telefone, $data_entrega);
+        Yii::$app->response->sendFile(Yii::getAlias('@app') . '/documentos/irpf/irpf_temp.docx');
+    }
 }
