@@ -146,8 +146,6 @@ class Avisa_rotinaController extends Controller
         date_default_timezone_set('America/Sao_Paulo');
         $model = $this->findModel($id);
 
-
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if($model->status_chegada == 1){
                 $model->data_chegada = date('Y-m-d');
@@ -201,5 +199,10 @@ class Avisa_rotinaController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionExportaPdf($empresa_fk,$rotina_fk,$data_entrega,$status_chegada,$status_entrega,$data_entregue){
+        Avisa_rotina::geraRotina($empresa_fk,$rotina_fk,$data_entrega,$status_chegada,$status_entrega,$data_entregue);
+        Yii::$app->response->sendFile(Yii::getAlias('@app') . '/documentos/avisarotina/avisarotina_temp.docx');
     }
 }

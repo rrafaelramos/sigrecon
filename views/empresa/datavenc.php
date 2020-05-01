@@ -99,7 +99,7 @@ function certifica($model){
                                         'class' => 'dropdown-header',
                                     ],
                                     [
-                                        'label' => Html::tag('i', '', ['class' => 'text-danger fa fa-file-pdf-o']) . ' ' . 'PDF',
+                                        'label' => Html::tag('i', '', ['class' => 'text-danger fa fa-file-text-o']) . ' ' . 'DOC',
                                         'url' => ['exporta-pdf',
                                             'razao_social' => (($searchModel->razao_social) ? $searchModel->razao_social : ((!$searchModel->razao_social) ? "" : "")),
                                             'data_procuracao' => (($searchModel->data_procuracao) ? $searchModel->data_procuracao : ((!$searchModel->data_procuracao) ? "" : "")),

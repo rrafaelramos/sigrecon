@@ -4,7 +4,8 @@ use app\models\Avisa_rotina;
 use app\models\Empresa;
 use app\models\Rotina;
 use kartik\grid\GridView;
-use kartik\export\ExportMenu;
+use yii\bootstrap\ButtonDropdown;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Avisa_rotinaSearch */
@@ -55,55 +56,6 @@ function entrega($model){
         return "Entregue";
     }
 }
-
-echo '<div style="height: 50px">';
-$gridColumns = [
-    'id',
-    [
-        'label' => 'Empresa',
-        'value' => function($model){
-            return empresa($model);
-        }
-    ],
-    ['label' => 'Rotina',
-        'value' => function($model) {
-            return rotina($model);
-        }
-    ],
-    [   'attribute' => 'data_entrega',
-        'label' => 'Data Limite',
-        'format' => ['date', 'php:d/m/Y']
-    ],
-    ['label' => 'Status Chegada',
-        'value' => function($model) {
-            return chegada($model);
-        }
-    ],
-    ['label' => 'Status do serviço',
-        'value' => function($model) {
-            return entrega($model);
-        }
-    ],
-    ['label' => 'Data da entrega',
-        'value' => function($model) {
-            if(!$model->data_entregue){
-                return "Ainda não foi entregue";
-            }else{
-                return "$model->data_entregue";
-            }
-        }
-    ],
-];
-echo ExportMenu::widget([
-    'dataProvider' => $dataProvider,
-    'columns' => $gridColumns,
-    'exportConfig' => [
-        ExportMenu::FORMAT_CSV => false,
-        ExportMenu::FORMAT_HTML => false,
-        ExportMenu::FORMAT_TEXT => false,
-    ],
-]);
-echo '</div>';
 ?>
 
 <div class="avisa-rotina-index box box-primary">
@@ -111,16 +63,12 @@ echo '</div>';
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        <?= GridView::widget([
+
+        <?=  GridView::widget([
+            'id' => 'kv-grid-demo',
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'hover' => 'true',
-            'resizableColumns'=>'true',
-            'responsive' => 'true',
-            'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
-                //['class' => 'yii\grid\SerialColumn'],
-                //'id',
+                ['class' => 'yii\grid\SerialColumn'],
                 ['attribute' => 'empresa_fk',
                     'label' => 'Empresa',
                     'value' => function($model){
@@ -159,6 +107,70 @@ echo '</div>';
                     'template' => '{view}{update}',
                 ],
             ],
-        ]); ?>
+            'containerOptions' => ['style' => 'overflow: auto'], // only set when $responsive = false
+            'headerRowOptions' => ['class' => 'kartik-sheet-style'],
+            'filterRowOptions' => ['class' => 'kartik-sheet-style'],
+            'pjax' => false, // pjax is set to always true for this demo
+            // set your toolbar
+            'toolbar' => [
+                [
+                    'content'=>
+                        ButtonDropdown::widget([
+                            'label' => '<i class="fa fa-share-square-o"></i>',
+                            'encodeLabel' => false,
+                            'options' => [
+                                'title' => 'Exportar',
+                                'class' => 'btn btn-default dropdown-toggle',
+                            ],
+                            'dropdown' => [
+                                'items' => [
+                                    [
+                                        'label' => 'Exportar os Registros dessa Página',
+                                        'class' => 'dropdown-header',
+                                    ],
+                                    [
+                                        'label' => Html::tag('i', '', ['class' => 'text-danger fa fa-file-text-o']) . ' ' . 'DOC',
+                                        'url' => ['exporta-pdf',
+                                            'empresa_fk' => (($searchModel->empresa_fk) ? $searchModel->empresa_fk : ((!$searchModel->empresa_fk) ? "" : "")),
+                                            'rotina_fk' => (($searchModel->rotina_fk) ? $searchModel->rotina_fk : ((!$searchModel->rotina_fk) ? "" : "")),
+                                            'data_entrega' => (($searchModel->data_entrega) ? $searchModel->data_entrega : ((!$searchModel->data_entrega) ? "" : "")),
+                                            'status_chegada' => (($searchModel->status_chegada) ? $searchModel->status_chegada : ((!$searchModel->status_chegada) ? "" : "")),
+                                            'status_entrega' => (($searchModel->status_entrega) ? $searchModel->status_entrega : ((!$searchModel->status_entrega) ? "" : "")),
+                                            'data_entregue' => (($searchModel->data_entregue) ? $searchModel->data_entregue : ((!$searchModel->data_entregue) ? "" : "")),
+                                        ],
+                                        'encode' => false,
+                                        'options' => [
+                                            'title' => 'Documento PDF',
+                                        ]
+                                    ],
+                                ],
+                                'options' => [
+                                    'class' => 'dropdown-menu dropdown-menu-right',
+                                ]
+                            ],
+                        ]),
+                ],
+            ],
+            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
+            // set export properties
+            'export' => [
+                'fontAwesome' => true
+            ],
+            // parameters from the demo form
+            'bordered' => true,
+            'striped' => true,
+            'condensed' => true,
+            'responsive' => true,
+            'hover' => true,
+            'showPageSummary' => false,
+            'panel' => [
+                'type' => GridView::TYPE_DEFAULT,
+                'heading' => "Controle de Rotina",
+            ],
+            'persistResize' => false,
+            'toggleDataOptions' => ['minCount' => 10],
+            'itemLabelSingle' => 'Documento',
+            'itemLabelPlural' => 'Documentos'
+        ]) ?>
     </div>
 </div>

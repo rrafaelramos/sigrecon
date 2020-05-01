@@ -32,3 +32,6 @@ tests/_support/_generated
 #vagrant folder
 /.vagrant
 /views/fcaixa/_formAbrir.php
+/documentos/data_venc/data_venc_temp.docx
+/documentos/itr/itr_temp.docx
+/documentos/irpf/irpf_temp.docx
