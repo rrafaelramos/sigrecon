@@ -4,11 +4,17 @@ use app\models\Clienteavulso;
 use app\models\Empresa;
 use app\models\Servico;
 use app\models\Usuario;
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $models app\controllers\Relatorio_caixaController */
+
+$this->title = 'Relatório Comum';
+$this->params['breadcrumbs'][] = $this->title;
+
+if(Yii::$app->user->identity->tipo == '1'){
 
 function cliente($model){
     $cliente = Clienteavulso::find()->all();
@@ -808,8 +814,19 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-
-
-
-
-
+<?php } else{
+    echo '<center><div class="col-sm-4 col-sm-offset-4">';
+    echo Alert::widget([
+        'options' => [
+            'class' => 'alert-warning',
+        ],
+        'body' => 'Acesso negado! <br>Contate o Gerente',
+    ]);
+    echo Html::a(
+        '<span class=""></span> Sair',
+        ['/site/index'],
+        ['data-method' => 'post', 'class' => 'btn btn-success btn-flat']
+    );
+    echo '<center></div>';
+}
+?>

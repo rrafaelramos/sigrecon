@@ -455,16 +455,11 @@ function rotinaPendente(){
 
                     <?php
                     if (caixa()){
-                        echo
-                            '<li class="dropdown notifications-menu">'.
-                            '<a href="/sigrecon/web/?r=abrircaixa/create">'.'Abrir Caixa'.
-                            '<i class="fa fa-usd">'.
-                            '</i>'.
-                            '<span class="label label-warning">';
-                        echo
-                            '</a>'.
-                            '</li>';
-                    }?>
+                        ?><li class="dropdown user user-menu">
+                        <?php echo  Html::a(
+                            '<span class="fa fa-usd"></span>  Abrir Caixa', ['abrircaixa/create'], ['data-method' => 'post', 'class' => 'btn-flat']
+                        ); }?>
+                        </li>
 
                     <?php if(novoUsuario() && Yii::$app->user->identity->tipo == 1){
                         echo

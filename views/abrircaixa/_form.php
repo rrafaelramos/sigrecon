@@ -1,6 +1,7 @@
 <?php
 
 use kartik\money\MaskMoney;
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -47,4 +48,19 @@ use yii\widgets\ActiveForm;
 
 <?php ActiveForm::end(); ?>
 
-<?php } ?>
+<?php } else{
+    echo '<center><div class="col-sm-4 col-sm-offset-4">';
+    echo Alert::widget([
+        'options' => [
+            'class' => 'alert-warning',
+        ],
+        'body' => 'Acesso negado! <br>Contate o Gerente',
+    ]);
+    echo Html::a(
+        '<span class=""></span> Sair',
+        ['/site/index'],
+        ['data-method' => 'post', 'class' => 'btn btn-success btn-flat']
+    );
+    echo '<center></div>';
+}
+?>

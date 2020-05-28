@@ -2,12 +2,15 @@
 
 use app\models\Fcaixa;
 use kartik\datecontrol\DateControl;
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Fcaixa */
 /* @var $form yii\widgets\ActiveForm */
+?>
+<?php if(!Yii::$app->user->isGuest && Yii::$app->user->identity->tipo == '1'){
 $data = 0;
 function verificaFechamento(){
     $todos = Fcaixa::find()->all();
@@ -31,8 +34,8 @@ function verificaFechamento(){
     }else
     return "<center>Primeiro fechamento do Caixa</center>";
 }
-
 ?>
+
 <div class="venda-form col-sm-12">
     <div class="venda-form box box-primary">
         <?php $form = ActiveForm::begin(); ?>
@@ -70,6 +73,22 @@ function verificaFechamento(){
     </div>
 </div>
 
-
 <?php ActiveForm::end(); ?>
 </div>
+
+<?php } else{
+    echo '<center><div class="col-sm-4 col-sm-offset-4">';
+    echo Alert::widget([
+        'options' => [
+            'class' => 'alert-warning',
+        ],
+        'body' => 'Acesso negado! <br>Contate o Gerente',
+    ]);
+    echo Html::a(
+        '<span class=""></span> Voltar',
+        ['/site/index'],
+        ['data-method' => 'post', 'class' => 'btn btn-success btn-flat']
+    );
+    echo '<center></div>';
+}
+?>
