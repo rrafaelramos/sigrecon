@@ -42,6 +42,7 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa/create'],],
+                            ['label' => 'Associação', 'icon' => 'university', 'url' => ['/associacao/create'],],
                             ['label' => 'Cliente PF', 'icon' => 'user-plus', 'url' => ['/clienteavulso/create'],],
 //                            ['label' => 'Rotina', 'icon' => 'retweet', 'url' => ['/rotina'],],
                             ['label' => 'Serviço', 'icon' => 'usd', 'url' => ['/servico/create'],],
@@ -97,6 +98,16 @@
                                     ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/empresa']],
                                     ['label' => 'Docs. de Rotina', 'icon' => 'folder-open', 'url' => ['/avisa_rotina',]],
                                     ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/empresa/datavenc',]],
+
+                                ],
+                            ],
+                            [
+                                'label' => 'Associações',
+                                'icon' => 'university',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/associacao']],
+                                    ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/associacao/datavenc',]],
 
                                 ],
                             ],

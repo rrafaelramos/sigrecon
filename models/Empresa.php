@@ -227,6 +227,9 @@ class Empresa extends \yii\db\ActiveRecord
 
         $i = 0;
         $total = 0;
+
+        $tp->setValue('tipo', 'Empresas');
+
         $tp->cloneRow('razao_social', count($dados));
 
         ini_set('max_execution_time', 300); //300 seconds = 5 minute

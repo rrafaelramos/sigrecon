@@ -459,7 +459,7 @@ function rotinaPendente(){
                         <?php echo  Html::a(
                             '<span class="fa fa-usd"></span>  Abrir Caixa', ['abrircaixa/create'], ['data-method' => 'post', 'class' => 'btn-flat']
                         ); }?>
-                        </li>
+                    </li>
 
                     <?php if(novoUsuario() && Yii::$app->user->identity->tipo == 1){
                         echo

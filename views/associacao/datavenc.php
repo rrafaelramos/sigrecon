@@ -6,10 +6,10 @@ use kartik\export\ExportMenu;
 use yii\bootstrap\ButtonDropdown;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EmpresaSearch */
+/* @var $searchModel app\models\AssociacaoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Empresas';
+$this->title = 'Associações';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -46,7 +46,7 @@ function certifica($model){
 }
 ?>
 
-<div class="empresa-index box box-primary">
+<div class="associacao-index box box-primary">
 
     <!--    --><?php //echo Html::a('Voltar', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
     <div class="box-body table-responsive no-padding">
@@ -67,7 +67,6 @@ function certifica($model){
                     'value' => function($model){
                         return certifica($model);
                     }
-
                 ],
                 ['attribute' => 'telefone_socio',
                     'format' => 'html',
@@ -104,7 +103,7 @@ function certifica($model){
                                             'razao_social' => (($searchModel->razao_social) ? $searchModel->razao_social : ((!$searchModel->razao_social) ? "" : "")),
                                             'data_procuracao' => (($searchModel->data_procuracao) ? $searchModel->data_procuracao : ((!$searchModel->data_procuracao) ? "" : "")),
                                             'data_certificado' => (($searchModel->data_certificado) ? $searchModel->data_certificado : ((!$searchModel->data_certificado) ? "" : "")),
-                                            'celular' => (($searchModel->telefone_socio) ? $searchModel->telefone_socio : ((!$searchModel->telefone_socio) ? "" : "")),
+                                            'telefone_socio' => (($searchModel->telefone_socio) ? $searchModel->telefone_socio : ((!$searchModel->telefone_socio) ? "" : "")),
                                             'responsavel' => (($searchModel->responsavel) ? $searchModel->responsavel : ((!$searchModel->responsavel) ? "" : "")),
                                         ],
                                         'encode' => false,
@@ -134,7 +133,7 @@ function certifica($model){
             'showPageSummary' => false,
             'panel' => [
                 'type' => GridView::TYPE_DEFAULT,
-                'heading' => "Empresas: Certificados e Procurações",
+                'heading' => "Associações: Certificados e Procurações",
             ],
             'persistResize' => false,
             'toggleDataOptions' => ['minCount' => 10],

@@ -265,3 +265,39 @@ create table contabilidade(
     unique index (cnpj),
    	primary key (id)
 );
+
+create TABLE associacao(
+	id INT AUTO_INCREMENT,
+	cnpj varchar(14) not null,
+	razao_social varchar(200) not null,
+	email varchar(100),
+	telefone varchar(20),
+	rua VARCHAR(120),
+	numero varchar(10),
+	bairro VARCHAR(120),
+	cidade VARCHAR(120),
+    complemento varchar(50),
+	cep varchar(8),
+	uf varchar(2),
+	data_procuracao DATE,
+	data_certificado DATE,
+	responsavel varchar(120),
+	cpf_socio varchar(11) not null,
+	datanascimento_socio DATE,
+	rg varchar(25),
+	titulo varchar(12),
+	nome_mae_socio varchar(120),
+	telefone_socio varchar(20),
+	unique index (cnpj),
+	primary key (id)
+);
+
+create table rais(
+       id int auto_increment,
+       associacao int,
+       data_entrega date,
+       telefone_socio varchar(20),
+       feito varchar(3),
+       pago varchar(3),
+       primary key(id)
+);

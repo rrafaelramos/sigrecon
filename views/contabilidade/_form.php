@@ -13,7 +13,6 @@ use yii\widgets\ActiveForm;
 if(Yii::$app->user->identity->tipo == 1){
     ?>
 
-
     <div class="clienteavulso-form">
         <div class="clienteavulso-form box box-primary">
             <?php $form = ActiveForm::begin(); ?>

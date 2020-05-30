@@ -1,21 +1,17 @@
 <?php
 
-use app\models\Rotina;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
-use kartik\icons\Icon;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Empresa */
-/* @var $rotina_empresa app\models\Rotina_empresa */
-
+/* @var $model app\models\Associacao */
 
 $this->title = $model->razao_social;
-$this->params['breadcrumbs'][] = ['label' => 'Empresas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Associações', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="empresa-view box box-primary">
+<div class="associacao-view box box-primary">
     <div class="box-header with-border">
         <div>
             <div class="col-sm-12">
@@ -30,17 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
         </div>
-        <?php
-        //Busca todas as rotinas cadastradas e guarda para $rotina,
-        $rotina = Rotina::find()->all();
-        foreach ($rotina as $r){
-            if($model->rotina == $r->id){
-                $rotina = $r->nome;
-            }
-        }
-
-        date_default_timezone_set('America/Sao_Paulo');
-        ?>
     </div>
 
     <div class="panel-body">
@@ -53,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
                 <div class="box-body table-responsive">
-                    <?= DetailView::widget([
+                    <?= \kartik\detail\DetailView::widget([
                         'model' => $model,
                         'condensed' => true,
                         'bordered' => true,
@@ -74,16 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'columns' => [
                                     [
-                                        'label' => 'Nome Fantasia',
-                                        'value' => $model->nome_fantasia,
-                                        'labelColOptions' => ['style' => 'width:15%'],
-                                        'valueColOptions' => ['style' => 'width:85%'],
-                                    ],
-                                ],
-                            ],
-                            [
-                                'columns' => [
-                                    [
                                         'attribute' => 'cnpj',
                                         'value' => preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '${1}.${2}.${3}/${4}-${5}', $model->cnpj),
                                         'labelColOptions' => ['style' => 'width:15%'],
@@ -91,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                     ],
                                     [
-                                        'label' => 'Email',
+                                        'label' => 'e-Mail',
                                         'value' => $model->email,
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:85%'],
@@ -107,12 +82,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'valueColOptions' => ['style' => 'width:35%'],
 
                                     ],
-                                    [
-                                        'attribute' => 'celular',
-                                        'value' => preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->celular),
-                                        'labelColOptions' => ['style' => 'width:15%'],
-                                        'valueColOptions' => ['style' => 'width:35%'],
-                                    ],
+//                                    [
+//                                        'attribute' => 'celular',
+//                                        'value' => preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->celular),
+//                                        'labelColOptions' => ['style' => 'width:15%'],
+//                                        'valueColOptions' => ['style' => 'width:35%'],
+//                                    ],
                                 ],
                             ],
                         ],
@@ -202,7 +177,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel panel-default">
                 <div class="panel-heading with-border col-sm-12">
                     <div class="col-sm-10">
-                        <h4>Dados do Sócio Administrador</h4>
+                        <h4>Dados do Presidente</h4>
                     </div>
                 </div>
 
@@ -278,12 +253,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'labelColOptions' => ['style' => 'width:15%'],
                                         'valueColOptions' => ['style' => 'width:35%'],
                                     ],
-                                    [
-                                        'label' => 'Rotina',
-                                        'value' => $rotina,
-                                        'labelColOptions' => ['style' => 'width:15%'],
-                                        'valueColOptions' => ['style' => 'width:35%'],
-                                    ],
                                 ],
                             ],
                         ],
@@ -314,13 +283,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attributes' => [
                             [
                                 'columns' => [
-                                    [
-                                        'label' => 'Data de Abertura',
-                                        'value' => $model->data_abertura,
-                                        'format' => ['date', 'php:d/m/Y'],
-                                        'labelColOptions' => ['style' => 'width:10%'],
-                                        'valueColOptions' => ['style' => 'width:15%'],
-                                    ],
                                     [
                                         'label' => 'Vencimento da Procuração',
                                         'value' => $model->data_procuracao,
