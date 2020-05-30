@@ -169,7 +169,41 @@ class Associacao extends \yii\db\ActiveRecord
         $tp->saveAs(Yii::getAlias('@app') . '/documentos/data_venc/data_venc_temp.docx');
     }
 
+    // retorna o número de certificados que irão expirar no dia!
+    function certificado(){
+        $data = date('Y-m-d');
+        $ass = Associacao::find()->all();
+        $arrayass = array();
+        $cont = 0;
+        foreach ($ass as $emp){
+            if($emp->data_certificado == $data){
+                $cont++;
+            }
+        }
+        if($cont>1){
+            return "   $cont Certificados de Associação!";
+        }elseif ($cont==1){
+            return "   $cont certificado de Associação";
+        }else{
+            return 0;
+        }
+    }
 
-
-
+//retorna o número de procuracao que irão expirar no dia!
+    function procuracao(){
+        $data = date('Y-m-d');
+        $ass = Associacao::find()->all();$cont = 0;
+        foreach ($ass as $emp){
+            if($emp->data_procuracao == $data){
+                $cont++;
+            }
+        }
+        if($cont>1){
+            return "   $cont procuracao de Associações!";
+        }elseif ($cont==1){
+            return "   $cont procuração Associação!";
+        }else{
+            return 0;
+        }
+    }
 }

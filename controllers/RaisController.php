@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Associacao;
-use app\models\AssociacaoSearch;
-use yii\filters\AccessControl;
+use app\models\Rais;
+use app\models\RaisSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AssociacaoController implements the CRUD actions for Associacao model.
+ * RaisController implements the CRUD actions for Rais model.
  */
-class AssociacaoController extends Controller
+class RaisController extends Controller
 {
     /**
      * @inheritdoc
@@ -27,26 +26,16 @@ class AssociacaoController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['create','update','view','delete','index','datavenc'],
-                'rules' => [
-                    [
-                        'allow'=>true,
-                        'roles'=>['@']
-                    ]
-                ],
-            ],
         ];
     }
 
     /**
-     * Lists all Associacao models.
+     * Lists all Rais models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AssociacaoSearch();
+        $searchModel = new RaisSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +45,7 @@ class AssociacaoController extends Controller
     }
 
     /**
-     * Displays a single Associacao model.
+     * Displays a single Rais model.
      * @param integer $id
      * @return mixed
      */
@@ -68,13 +57,13 @@ class AssociacaoController extends Controller
     }
 
     /**
-     * Creates a new Associacao model.
+     * Creates a new Rais model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Associacao();
+        $model = new Rais();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -86,7 +75,7 @@ class AssociacaoController extends Controller
     }
 
     /**
-     * Updates an existing Associacao model.
+     * Updates an existing Rais model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -105,7 +94,7 @@ class AssociacaoController extends Controller
     }
 
     /**
-     * Deletes an existing Associacao model.
+     * Deletes an existing Rais model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,34 +107,18 @@ class AssociacaoController extends Controller
     }
 
     /**
-     * Finds the Associacao model based on its primary key value.
+     * Finds the Rais model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Associacao the loaded model
+     * @return Rais the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Associacao::findOne($id)) !== null) {
+        if (($model = Rais::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionDatavenc()
-    {
-        $searchModel = new AssociacaoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('datavenc', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionExportaPdf($razao_social, $data_procuracao, $data_certificado, $telefone_socio, $responsavel){
-        Associacao::geraDataVenc($razao_social, $data_procuracao, $data_certificado, $telefone_socio, $responsavel);
-        Yii::$app->response->sendFile(Yii::getAlias('@app') . '/documentos/data_venc/data_venc_temp.docx');
     }
 }

@@ -2,6 +2,7 @@
 
 use app\models\Alertaservico;
 use app\models\Alertaservicopj;
+use app\models\Associacao;
 use app\models\Avisa_rotina;
 use app\models\Caixa;
 use app\models\Contabilidade;
@@ -13,7 +14,6 @@ use app\models\Rotina;
 use app\models\Usuario;
 use app\models\Venda;
 use app\models\Vendapj;
-use Codeception\Lib\Connector\Yii2;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
@@ -473,7 +473,6 @@ function rotinaPendente(){
                             '</li>';
                     }?>
 
-
                     <!--                    Recebimentos pendentes-->
                     <li class="dropdown notifications-menu">
                         <!-- ISSO DEFINE O QUE FICA NO HEADEAR-->
@@ -527,11 +526,10 @@ function rotinaPendente(){
                         </ul>
                     </li>
 
-
                     <li class="dropdown notifications-menu">
                         <!--                        //class warning para nova notificação-->
                         <?php
-                        if(certificado() || procuracao() || servicoPronto() || servicoPendente() || servicopjPronto() || servicopjPendente()){
+                        if(Associacao::certificado() || Associacao::procuracao() || certificado() || procuracao() || servicoPronto() || servicoPendente() || servicopjPronto() || servicopjPendente()){
                             echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.'<i class="fa fa-bell"></i>'.'<span class="label label-warning">'.'!'.
                                 '</span>'.
                                 '</a>';
@@ -574,6 +572,22 @@ function rotinaPendente(){
                                         }
                                         ?>
                                     </li>
+
+                                    <li>
+                                        <?php
+                                        if(Associacao::certificado()) {
+                                            echo '<a href="/sigrecon/web/?r=associacao/datavenc"> <i class="fa fa-warning text-yellow"></i>'.Associacao::certificado().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        if(Associacao::procuracao()) {
+                                            echo '<a href="/sigrecon/web/?r=associacao/datavenc"> <i class="fa fa-warning text-yellow"></i>'.Associacao::procuracao().'</a>';
+                                        }
+                                        ?>
+                                    </li>
+
                                     <li>
                                         <?php
                                         if(servicoPendente()) {

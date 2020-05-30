@@ -294,10 +294,11 @@ create TABLE associacao(
 
 create table rais(
        id int auto_increment,
-       associacao int,
-       data_entrega date,
-       telefone_socio varchar(20),
+       associacao_id int,
+       associacao_nome varchar(200),
+       data_limite date,
+       presidente varchar(200),
+       fone_presidente varchar(20),
        feito varchar(3),
-       pago varchar(3),
        primary key(id)
 );
