@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Rais */
+/* @var $model app\models\Dctf */
 
-$this->title = 'Cadastrar RAIS';
-$this->params['breadcrumbs'][] = ['label' => 'Rais', 'url' => ['index']];
+$this->title = 'Create Dctf';
+$this->params['breadcrumbs'][] = ['label' => 'Dctfs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="rais-create">
+<div class="dctf-create">
 
     <?= $this->render('_form', [
     'model' => $model,

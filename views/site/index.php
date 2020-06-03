@@ -34,18 +34,18 @@ $mes = date('m');
 
     </div>
     <center>
-    <div>
-        <?php
-        if($mes == '04' && !Yii::$app->user->isGuest){
-            echo '<h4>Consulte aqui a lista de IRPF para este mês!</h4>';
-            echo Html::a(
-                '<span class="fa fa-usd" ></span>  IRPF',
-                ['/irpf'],
-                ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
-            );
-        }
-        ?>
-    </div>
+        <div>
+            <?php
+            if($mes == '04' && !Yii::$app->user->isGuest){
+                echo '<h4>Consulte aqui a lista de IRPF para este mês!</h4>';
+                echo Html::a(
+                    '<span class="fa fa-usd" ></span>  IRPF',
+                    ['/irpf'],
+                    ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
+                );
+            }
+            ?>
+        </div>
         <div>
             <?php
             if($mes == '09' && !Yii::$app->user->isGuest){
@@ -53,6 +53,45 @@ $mes = date('m');
                 echo Html::a(
                     '<span class="fa fa-usd" ></span>  ITR',
                     ['/itr'],
+                    ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
+                );
+            }
+            ?>
+        </div>
+
+        <div>
+            <?php
+            if($mes == '02' && !Yii::$app->user->isGuest){
+                echo '<h4>Consulte aqui a lista de associações para a RAIS deste mês!</h4>';
+                echo Html::a(
+                    '<span class="fa fa-usd" ></span>  RAIS',
+                    ['/rais'],
+                    ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
+                );
+            }
+            ?>
+        </div>
+
+        <div>
+            <?php
+            if($mes == '03' && !Yii::$app->user->isGuest){
+                echo '<h4>Consulte aqui a lista de associações para a DCTF deste mês!</h4>';
+                echo Html::a(
+                    '<span class="fa fa-usd" ></span>  DCTF',
+                    ['/dctf'],
+                    ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
+                );
+            }
+            ?>
+        </div>
+
+        <div>
+            <?php
+            if($mes == '07' && !Yii::$app->user->isGuest){
+                echo '<h4>Consulte aqui a lista de associações para a ECF deste mês!</h4>';
+                echo Html::a(
+                    '<span class="fa fa-usd" ></span>  ECF',
+                    ['/ecf'],
                     ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
                 );
             }

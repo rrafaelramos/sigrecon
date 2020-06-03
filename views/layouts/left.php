@@ -98,7 +98,6 @@
                                     ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/empresa']],
                                     ['label' => 'Docs. de Rotina', 'icon' => 'folder-open', 'url' => ['/avisa_rotina',]],
                                     ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/empresa/datavenc',]],
-
                                 ],
                             ],
                             [
@@ -108,6 +107,7 @@
                                 'items' => [
                                     ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/associacao']],
                                     ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/associacao/datavenc',]],
+                                    ['label' => 'RAIS', 'icon' => 'pencil-square-o', 'url' => ['/rais',]],
 
                                 ],
                             ],

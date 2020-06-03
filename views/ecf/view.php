@@ -6,10 +6,10 @@ use yii\helpers\Html;
 use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Rais */
+/* @var $model app\models\Ecf */
 
-$this->title = 'RAIS';
-$this->params['breadcrumbs'][] = ['label' => 'Rais', 'url' => ['index']];
+$this->title = 'ECF';
+$this->params['breadcrumbs'][] = ['label' => 'ECF', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 function buscacnpj($associacao_id){

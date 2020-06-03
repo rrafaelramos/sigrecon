@@ -2,14 +2,13 @@
 
 use app\models\Associacao;
 use yii\helpers\Html;
-//use yii\widgets\DetailView;
 use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Rais */
 
-$this->title = 'RAIS';
-$this->params['breadcrumbs'][] = ['label' => 'Rais', 'url' => ['index']];
+$this->title = 'DCTF';
+$this->params['breadcrumbs'][] = ['label' => 'DCTF', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 function buscacnpj($associacao_id){

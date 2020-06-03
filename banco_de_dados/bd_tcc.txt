@@ -302,3 +302,25 @@ create table rais(
        feito varchar(3),
        primary key(id)
 );
+
+create table dctf(
+       id int auto_increment,
+       associacao_id int,
+       associacao_nome varchar(200),
+       data_limite date,
+       presidente varchar(200),
+       fone_presidente varchar(20),
+       feito varchar(3),
+       primary key(id)
+);
+
+create table ecf(
+       id int auto_increment,
+       associacao_id int,
+       associacao_nome varchar(200),
+       data_limite date,
+       presidente varchar(200),
+       fone_presidente varchar(20),
+       feito varchar(3),
+       primary key(id)
+);

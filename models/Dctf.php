@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "rais".
+ * This is the model class for table "dctf".
  *
  * @property int $id
  * @property int|null $associacao_id
@@ -15,14 +15,14 @@ use Yii;
  * @property string|null $fone_presidente
  * @property string|null $feito
  */
-class Rais extends \yii\db\ActiveRecord
+class Dctf extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'rais';
+        return 'dctf';
     }
 
     /**
@@ -47,30 +47,30 @@ class Rais extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'associacao_id' => 'Associacao ID',
-            'associacao_nome' => 'Nome',
-            'data_limite' => 'Data limite',
+            'associacao_nome' => 'Associacao Nome',
+            'data_limite' => 'Data Limite',
             'presidente' => 'Presidente',
-            'fone_presidente' => 'Tel. do Presidente',
+            'fone_presidente' => 'Fone Presidente',
             'feito' => 'Feito',
         ];
     }
 
     public function geraEntrega($data){
         date_default_timezone_set('America/Sao_Paulo');
-        $data_tabela = Rais::find()->max('data_limite');
+        $data_tabela = Dctf::find()->max('data_limite');
 
         $data_explode = explode('-',$data_tabela);
         $ano = $data_explode[0];
 
-        $rais = Rais::find()->all();
+        $dctf = Dctf::find()->all();
         $associacoes = Associacao::find()->all();
 
         if($data > $ano){
             foreach ($associacoes as $associacao){
-                $model = new Rais();
+                $model = new Dctf();
                 $model->associacao_id = $associacao->id;
                 $model->associacao_nome = $associacao->razao_social;
-                $model->data_limite = "$data-02-28";
+                $model->data_limite = "$data-03-31";
                 $model->presidente = $associacao->responsavel;
                 $model->fone_presidente = $associacao->telefone_socio;
                 $model->feito = 'Não';

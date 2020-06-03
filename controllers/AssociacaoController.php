@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Dctf;
+use app\models\Ecf;
+use app\models\Rais;
 use Yii;
 use app\models\Associacao;
 use app\models\AssociacaoSearch;
@@ -77,6 +80,36 @@ class AssociacaoController extends Controller
         $model = new Associacao();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            date_default_timezone_set('America/Sao_Paulo');
+            $data = date('Y');
+
+            $rais = new Rais();
+            $rais->associacao_id = $model->id;
+            $rais->associacao_nome = $model->razao_social;
+            $rais->data_limite = "$data-02-28";
+            $rais->presidente = $model->responsavel;
+            $rais->fone_presidente = $model->telefone_socio;
+            $rais->feito = 'Não';
+            $rais->save();
+
+            $dctf = new Dctf();
+            $dctf->associacao_id = $model->id;
+            $dctf->associacao_nome = $model->razao_social;
+            $dctf->data_limite = "$data-03-31";
+            $dctf->presidente = $model->responsavel;
+            $dctf->fone_presidente = $model->telefone_socio;
+            $dctf->feito = 'Não';
+            $dctf->save();
+
+            $ecf = new Ecf();
+            $ecf->associacao_id = $model->id;
+            $ecf->associacao_nome = $model->razao_social;
+            $ecf->data_limite = "$data-07-31";
+            $ecf->presidente = $model->responsavel;
+            $ecf->fone_presidente = $model->telefone_socio;
+            $ecf->feito = 'Não';
+            $dctf->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

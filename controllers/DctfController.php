@@ -3,17 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Rais;
-use app\models\RaisSearch;
+use app\models\Dctf;
+use app\models\DctfSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * RaisController implements the CRUD actions for Rais model.
+ * DctfController implements the CRUD actions for Dctf model.
  */
-class RaisController extends Controller
+class DctfController extends Controller
 {
     /**
      * @inheritdoc
@@ -41,12 +41,12 @@ class RaisController extends Controller
     }
 
     /**
-     * Lists all Rais models.
+     * Lists all Dctf models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new RaisSearch();
+        $searchModel = new DctfSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +56,7 @@ class RaisController extends Controller
     }
 
     /**
-     * Displays a single Rais model.
+     * Displays a single Dctf model.
      * @param integer $id
      * @return mixed
      */
@@ -68,13 +68,13 @@ class RaisController extends Controller
     }
 
     /**
-     * Creates a new Rais model.
+     * Creates a new Dctf model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Rais();
+        $model = new Dctf();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -86,7 +86,7 @@ class RaisController extends Controller
     }
 
     /**
-     * Updates an existing Rais model.
+     * Updates an existing Dctf model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -105,7 +105,7 @@ class RaisController extends Controller
     }
 
     /**
-     * Deletes an existing Rais model.
+     * Deletes an existing Dctf model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,15 +118,15 @@ class RaisController extends Controller
     }
 
     /**
-     * Finds the Rais model based on its primary key value.
+     * Finds the Dctf model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Rais the loaded model
+     * @return Dctf the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Rais::findOne($id)) !== null) {
+        if (($model = Dctf::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -6,10 +6,14 @@ use app\models\Associacao;
 use app\models\Avisa_rotina;
 use app\models\Caixa;
 use app\models\Contabilidade;
+use app\models\Dctf;
+use app\models\Ecf;
 use app\models\Empresa;
 use app\models\Irpf;
+use app\models\Itr;
 use app\models\Lembrete;
 use app\models\Mensagem;
+use app\models\Rais;
 use app\models\Rotina;
 use app\models\Usuario;
 use app\models\Venda;
@@ -153,6 +157,44 @@ function irpf(){
         return 1;
     };
 }
+irpf();
+//essa função verifica se deverá ser gerado protocolo de entrega ITR
+function itr(){
+    date_default_timezone_set('America/Sao_Paulo');
+    $data = date('Y');
+    if(Itr::geraEntrega($data)){
+        return 1;
+    };
+}
+itr();
+
+//essa função verifica se deverá ser gerado protocolo de entrega RAIS
+function rais(){
+    date_default_timezone_set('America/Sao_Paulo');
+    $data = date('Y');
+    if(Rais::geraEntrega($data)){
+        return 1;
+    }
+}
+rais();
+//essa função verifica se deverá ser gerado protocolo de entrega DCTF
+function dctf(){
+    date_default_timezone_set('America/Sao_Paulo');
+    $data = date('Y');
+    if(Dctf::geraEntrega($data)){
+        return 1;
+    }
+}
+dctf();
+//essa função verifica se deverá ser gerado protocolo de entrega ECF
+function ecf(){
+    date_default_timezone_set('America/Sao_Paulo');
+    $data = date('Y');
+    if(Ecf::geraEntrega($data)){
+        return 1;
+    }
+}
+ecf();
 
 // retorna o número de certificados que irão expirar no dia!
 function certificado(){
