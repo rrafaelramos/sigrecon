@@ -80,7 +80,7 @@ if(!Yii::$app->user->isGuest && Yii::$app->user->identity->tipo == '1'){
                             return formatar($model->saldo);
                         }
                     ],
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+                    ['class' => 'yii\grid\ActionColumn', 'template' => ''],
                 ],
             ]); ?>
         </div>

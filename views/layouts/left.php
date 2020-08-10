@@ -116,7 +116,8 @@
                                 'icon' => 'tasks',
                                 'url' => '#',
                                 'items' => [
-                                    ['label' => 'Vendas', 'icon' => 'usd', 'url' => ['/venda'],],
+                                    ['label' => 'Vendas PF', 'icon' => 'usd', 'url' => ['/venda'],],
+                                    ['label' => 'Vendas PJ', 'icon' => 'usd', 'url' => ['/vendapj'],],
                                     ['label' => 'Compras', 'icon' => 'usd', 'url' => ['/compra'],],
                                     ['label' => 'Fechamentos', 'icon' => 'pencil-square-o', 'url' => ['/fcaixa']],
                                     ['label' => 'Honorários recebidos', 'icon' => '', 'url' => ['/honorario']],
