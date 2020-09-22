@@ -9,7 +9,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
  */
@@ -29,11 +28,11 @@ class UsuarioController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['update','view','delete','index','novo'],
+                'only' => ['update', 'view', 'delete', 'index', 'novo'],
                 'rules' => [
                     [
-                        'allow'=>true,
-                        'roles'=>['@']
+                        'allow' => true,
+                        'roles' => ['@']
                     ]
                 ],
             ],
@@ -143,5 +142,47 @@ class UsuarioController extends Controller
         ]);
     }
 
+    public function actionEsqueci()
+    {
+        $model = new Usuario();
+        return $this->render('esqueci', [
+            'model' => $model,
+        ]);
+    }
 
+    public function actionRecuperar()
+    {
+        $model = new Usuario();
+        if ($model->load(Yii::$app->request->post())) {
+
+            $usuarios = Usuario::find()->all();
+
+            foreach ($usuarios as $usuario) {
+                if ($usuario->email == $model->email) {
+                    $model = $usuario;
+                    $chave = $this->geraChave($model);
+
+                    Yii::$app->mailer->compose() //dá para enviar a tela
+                        ->setFrom('sigrecon.if@gmail.com')
+                        ->setTo($model->email)
+                        ->setSubject('Recuperação de Senha: SIGRECon') //assunto
+//                        ->setHtmlBody()
+                        ->setHtmlBody("Olá $model->nome! Para recuperar a sua conta clique no link abaixo".'<br>'.'<a href='."http://localhost/sigrecon/web/index.php?r=$chave".'>'.'Clique aqui'.'</a>')
+                        ->send();
+
+                    return $this->render('recuperar', [
+                        'model' => $model,
+                    ]);
+                } else {
+                    return $this->render('nao-encontrado');
+                }
+            }
+        }
+    }
+
+    protected function geraChave($model)
+    {
+        $chave = sha1($model->id.$model->password);
+        return $chave;
+    }
 }

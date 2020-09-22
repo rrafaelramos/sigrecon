@@ -45,7 +45,7 @@ $fieldOptions2 = [
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'recuperar-button']) ?>
             </div>
             <!-- /.col -->
         </div>
@@ -53,17 +53,8 @@ $fieldOptions2 = [
 
         <?php ActiveForm::end(); ?>
 
-<!--        <div class="social-auth-links text-center">-->
-<!--            <p>- OR -</p>-->
-<!--            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in-->
-<!--                using Facebook</a>-->
-<!--            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign-->
-<!--                in using Google+</a>-->
-<!--        </div>-->
-        <!-- /.social-auth-links -->
-
-        <a href="#">Esqueci a minha senha</a><br>
-        <a href="index.php?r=usuario/create" class="text-center">Registrar um novo membro</a>
+        <a href="index.php?r=usuario/create" class="text-center">Registrar um novo membro</a><br>
+        <a href="index.php?r=usuario/esqueci" class="text-center">Esqueci a minha senha</a>
 
     </div>
     <!-- /.login-box-body -->

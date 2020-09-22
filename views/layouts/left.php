@@ -5,26 +5,19 @@
         <?php if(!Yii::$app->user->isGuest){ ?>
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                    <img src="<?= $directoryAsset ?>/img/user1.png" class="img-circle" alt="User Image"/>
                 </div>
                 <div class="pull-left info">
-                    <p>Bem Vindo</p>
+                    <p><?php
+                        $aux = explode(" ", Yii::$app->user->identity->nome);
+                        $nome = $aux[0];
+                        echo $nome;
+                        ?>
+                    </p>
 
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
-
-            <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Buscar..."/>
-                    <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-                </div>
-            </form>
-            <!-- /.search form -->
         <?php } ?>
 
         <?= dmstr\widgets\Menu::widget(
@@ -38,7 +31,7 @@
                     [
                         'label' => 'Cadastrar',
                         //'icon' => 'share',
-                        'icon' => 'share',
+                        'icon' => 'plus',
                         'url' => '#',
                         'items' => [
                             ['label' => 'Empresa', 'icon' => 'home', 'url' => ['/empresa/create'],],
@@ -87,7 +80,7 @@
 
                     [
                         'label' => 'Consultar',
-                        'icon' => 'share',
+                        'icon' => 'share-square',
                         'url' => '#',
                         'items' => [
                             [
@@ -129,7 +122,7 @@
                     ],
                     [
                         'label' => 'Caixa',
-                        'icon' => 'share',
+                        'icon' => 'share-square',
                         'url' => '#',
                         'items' => [
                             ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra/create'],],
@@ -141,7 +134,7 @@
                     ],
                     [
                         'label' => 'Relatórios',
-                        'icon' => 'share',
+                        'icon' => 'file',
                         'url' => '#',
                         'items' => [
                             ['label' => 'Entradas', 'icon' => 'usd', 'url' => ['/relatorio_caixa'],],
