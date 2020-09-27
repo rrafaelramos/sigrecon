@@ -324,3 +324,17 @@ create table ecf(
        feito varchar(3),
        primary key(id)
 );
+
+INSERT INTO `usuario`(
+    `id`,
+    `username`,
+    `nome`,
+    `password`,
+   `tipo`
+    )VALUES(
+    1,
+    'adm@sigrecon',
+    'Admin',
+    'ff2f29ddda7c86cd398fd2db4c8e1754',
+    '1'
+);
