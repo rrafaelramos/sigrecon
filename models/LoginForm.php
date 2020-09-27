@@ -45,7 +45,7 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user || !$user->validatePassword(md5($this->password))) {
                 $this->addError($attribute, 'Combinação Inválida');
             }elseif($user->tipo == 0){
                 $this->addError($attribute, 'Sua solicitação de acesso ainda não foi analizada, por favor contate o gerente!');

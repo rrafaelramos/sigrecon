@@ -28,7 +28,7 @@ class UsuarioController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['update', 'view', 'delete', 'index', 'novo'],
+                'only' => ['update', 'view', 'delete', 'index'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -77,6 +77,9 @@ class UsuarioController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->tipo = 0;
+            $senha = $model->password;
+            $hash = md5($senha);
+            $model->password = $hash;
             $model->save();
 
             return $this->redirect(['novo', 'id' => $model->id]);
@@ -158,31 +161,71 @@ class UsuarioController extends Controller
             $usuarios = Usuario::find()->all();
 
             foreach ($usuarios as $usuario) {
-                if ($usuario->email == $model->email) {
-                    $model = $usuario;
-                    $chave = $this->geraChave($model);
-
-                    Yii::$app->mailer->compose() //dá para enviar a tela
-                        ->setFrom('sigrecon.if@gmail.com')
-                        ->setTo($model->email)
-                        ->setSubject('Recuperação de Senha: SIGRECon') //assunto
-//                        ->setHtmlBody()
-                        ->setHtmlBody("Olá $model->nome! Para recuperar a sua conta clique no link abaixo".'<br>'.'<a href='."http://localhost/sigrecon/web/index.php?r=$chave".'>'.'Clique aqui'.'</a>')
-                        ->send();
-
-                    return $this->render('recuperar', [
-                        'model' => $model,
-                    ]);
-                } else {
-                    return $this->render('nao-encontrado');
+                if ($model->email == $usuario->email) {
+                    $pessoa = $usuario;
                 }
+            }
+
+            if($pessoa){
+                $chave = $this->geraChave($pessoa);
+                $pessoa->authKey = $chave;
+                $pessoa->save();
+
+                Yii::$app->mailer->compose() //dá para enviar a tela
+                ->setFrom('sigrecon.if@gmail.com')
+                    ->setTo($pessoa->email)
+                    ->setSubject('Recuperação de Senha: SIGRECon') //assunto
+//                        ->setHtmlBody()
+                    ->setHtmlBody("Olá $pessoa->nome! Para recuperar a sua conta clique no link abaixo".'<br>'.'<a href='."http://localhost/sigrecon/web/index.php?r=usuario%2Fchave&chave=".$chave.'>'.'Clique aqui'.'</a>')
+                    ->send();
+
+                return $this->render('recuperar', [
+                    'model' => $pessoa,
+                ]);
+            }else {
+                return $this->render('nao-encontrado');
             }
         }
     }
+
 
     protected function geraChave($model)
     {
         $chave = sha1($model->id.$model->password);
         return $chave;
+    }
+
+    public function actionChave($chave){
+
+        if($_GET["chave"]){
+
+            //compara a chave da url com o authKey
+            $usuarios = Usuario::find()->all();
+            foreach ($usuarios as $usuario){
+                if ($usuario->authKey == $chave){
+                    $model = $this->findModel($usuario->id);
+
+                    return $this->render('alterar-senha',[
+                        'model' => $model,
+                    ]);
+                }
+            }
+
+            return $this->render('chave-invalida');
+
+        }
+
+    }
+
+    public function actionSalvaSenha($id){
+
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->password = md5($model->password);
+            $model->authKey = md5($model->password.$model->id);
+            $model->save();
+            return $this->render('senha-alterada');
+        }
     }
 }
