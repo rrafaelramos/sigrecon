@@ -160,6 +160,8 @@ class UsuarioController extends Controller
 
             $usuarios = Usuario::find()->all();
 
+            $pessoa = 0;
+
             foreach ($usuarios as $usuario) {
                 if ($model->email == $usuario->email) {
                     $pessoa = $usuario;
