@@ -123,22 +123,22 @@ class AlertaservicopjController extends Controller
         date_default_timezone_set('America/Sao_Paulo');
         $data = date('Y-m-d H:i:s');
         $model = new Alertaservicopj();
-        $caixa = new Caixa();
         $model->scenario = "criar";
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $model->usuario_fk = Yii::$app->user->identity->id;
             $servico = Servico::find()->all();
+            $model->status_servico = 0;
             foreach ($servico as $s){
                 if(($s->id == $model->servico_fk) && $model->status_pagamento==1){
+                    $caixa = new Caixa();
                     $caixa->total = ($s->valor*$model->quantidade);
                     $caixa->data = $data;
                     $model->data_pago = $data;
+                    $caixa->save();
                 }
             }
-            $model->status_servico = 0;
-            $caixa->save();
             $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -160,7 +160,25 @@ class AlertaservicopjController extends Controller
         $model = $this->findModel($id);
         $model->scenario = "atualiza";
 
+        date_default_timezone_set('America/Sao_Paulo');
+        $data = date('Y-m-d H:i:s');
+        $servico = Servico::find()->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            if($model->status_pagamento == 1 && !$model->data_pago) {
+                $caixa = new Caixa();
+                $caixa->data = $data;
+                foreach ($servico as $s){
+                    if($s->id == $model->servico_fk){
+                        $caixa->total = ($s->valor * $model->quantidade);
+                        $caixa->save();
+                        $model->data_pago = $data;
+                        $model->save();
+                    }
+                }
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
