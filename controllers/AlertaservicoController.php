@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Abrircaixa;
 use app\models\Caixa;
 use app\models\Servico;
 use Yii;
@@ -137,6 +138,15 @@ class AlertaservicoController extends Controller
                     $caixa->save();
                 }
             }
+
+            $verifica_abrircaixa = Abrircaixa::find()->all();
+
+            if(!$verifica_abrircaixa) {
+                $abrir_caixa = new Abrircaixa();
+                $abrir_caixa->data = $data;
+                $abrir_caixa->save();
+            }
+
             $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
