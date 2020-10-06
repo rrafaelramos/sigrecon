@@ -61,7 +61,7 @@ $mes = date('m');
 
         <div>
             <?php
-            if($mes == '02' && !Yii::$app->user->isGuest){
+            if($mes == '04' && !Yii::$app->user->isGuest){
                 echo '<h4>Consulte aqui a lista de associações para a RAIS deste mês!</h4>';
                 echo Html::a(
                     '<span class="fa fa-usd" ></span>  RAIS',

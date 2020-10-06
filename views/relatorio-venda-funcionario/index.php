@@ -4,6 +4,7 @@ use kartik\datecontrol\DateControl;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Usuario;
+use app\models\Contabilidade;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
@@ -19,6 +20,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin(); ?>
     <div class="box-body table-responsive col-sm-6 col-sm-offset-3">
         <div>
+
+            <?php
+            if (!Contabilidade::find()->all() && Yii::$app->user->identity->tipo==1) {
+                echo '<center><h2>É necessário primeiramente configurar os dados da contabilidade<br><h1>';
+                echo
+                Html::a(
+                    '<span class="fa fa-gear"></span> Configurar',
+                    ['/contabilidade/create'],
+                    ['data-method' => 'post', 'class' => 'btn btn-success btn-flat']
+                );
+            } else {
+
+            ?>
+
             <?php $form = ActiveForm::begin([
                 'action' => ['exporta-pdf'],
                 'method' => 'post',
@@ -56,5 +71,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="box-footer">
     </div>
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
+<?php } ?>
 </div>
