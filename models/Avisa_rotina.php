@@ -126,8 +126,6 @@ class Avisa_rotina extends \yii\db\ActiveRecord
     public function geraRotina($empresa_fk,$rotina_fk,$data_entrega,$status_chegada,$status_entrega,$data_entregue){
         $tp = new \PhpOffice\PhpWord\TemplateProcessor(Yii::getAlias('@app') . '/documentos/avisarotina/avisarotina.docx');
         $dados = Avisa_rotina::find()->orderBy(['id'=>'SORT_DESC'])->all();
-        var_dump($dados);
-        die;
 
         $i = 0;
         $tp->cloneRow('empresa_fk', count($dados));
