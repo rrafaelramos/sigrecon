@@ -720,18 +720,18 @@ function rotinaPendente(){
                 <?php }else{  ?>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-<!--                            <i class="fa fa-envelope"></i >'.'<span class="label label-warning">'-->
-                            <img src="<?= $directoryAsset ?>/img/user1.png" class="user-image" alt="User Image"/>
+                            <?php  echo yii\helpers\Html::img(Yii::$app->request->baseUrl.'/img/user1.png', ['class' => 'user-image', 'alt' => 'USUÁRIO']); ?>
                             <?php
-                                $aux = explode(" ",Yii::$app->user->identity->nome);
-                                $nome = $aux[0];
+                            $aux = explode(" ",Yii::$app->user->identity->nome);
+                            $nome = $aux[0];
                             ?>
                             <span class="hidden-xs"><?= $nome?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="<?= $directoryAsset ?>/img/user1.png" class="img-circle" alt="User Image"/>
+                                <?php  echo yii\helpers\Html::img(Yii::$app->request->baseUrl.'/img/user1.png', ['class' => 'img-circle', 'alt' => 'USUÁRIO']); ?>
+
                                 <p>
                                     <?= Yii::$app->user->identity->email;
                                     date_default_timezone_set('America/Sao_Paulo');

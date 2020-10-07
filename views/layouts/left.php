@@ -5,10 +5,11 @@
         <?php if(!Yii::$app->user->isGuest){ ?>
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="<?= $directoryAsset ?>/img/user1.png" class="img-circle" alt="User Image"/>
+                    <?php  echo yii\helpers\Html::img(Yii::$app->request->baseUrl.'/img/user1.png', ['class' => 'img-circle', 'alt' => 'USUÁRIO']); ?>
                 </div>
                 <div class="pull-left info">
-                    <p><?php
+                    <p>
+                        <?php
                         $aux = explode(" ", Yii::$app->user->identity->nome);
                         $nome = $aux[0];
                         echo $nome;
