@@ -10,7 +10,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\CompraSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Compras';
+$this->title = 'Compras/Saídas';
 $this->params['breadcrumbs'][] = $this->title;
 
 function formatar($model){

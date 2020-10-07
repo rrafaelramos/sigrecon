@@ -7,7 +7,7 @@ use yii\bootstrap\Modal;
 /* @var $searchModel app\models\LembreteSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Lembretes';
+$this->title = 'Compromissos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
@@ -39,7 +39,7 @@ $this->registerJs('
         <div class="col-sm-12">
             <?php
             Modal::begin([
-                'header'=>'<h4>Novo Lembrete</h4>',
+                'header'=>'<h4>Novo Compromisso</h4>',
                 'id'=>'modal',
                 'size'=> 'modal-lg',
             ]);

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Lembrete */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Lembretes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Compromissos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lembrete-view box box-primary">

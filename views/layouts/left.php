@@ -28,7 +28,7 @@
                     ['label' => 'MENU', 'options' => ['class' => 'header']],
 //                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
 //                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
-                    ['label' => 'Meus Lembretes', 'icon' => 'calendar', 'url' => ['/lembrete'],],
+                    ['label' => 'Compromissos', 'icon' => 'calendar', 'url' => ['/lembrete'],],
                     [
                         'label' => 'Cadastrar',
                         //'icon' => 'share',
@@ -102,7 +102,8 @@
                                     ['label' => 'Dados Cadastrais', 'icon' => 'file', 'url' => ['/associacao']],
                                     ['label' => 'Certificados/Procurações', 'icon' => 'calendar', 'url' => ['/associacao/datavenc',]],
                                     ['label' => 'RAIS', 'icon' => 'pencil-square-o', 'url' => ['/rais',]],
-
+                                    ['label' => 'DCTF', 'icon' => 'pencil-square-o', 'url' => ['/dctf',]],
+                                    ['label' => 'ECF', 'icon' => 'pencil-square-o', 'url' => ['/ecf',]],
                                 ],
                             ],
                             [
@@ -112,7 +113,7 @@
                                 'items' => [
                                     ['label' => 'Vendas PF', 'icon' => 'usd', 'url' => ['/venda'],],
                                     ['label' => 'Vendas PJ', 'icon' => 'usd', 'url' => ['/vendapj'],],
-                                    ['label' => 'Compras', 'icon' => 'usd', 'url' => ['/compra'],],
+                                    ['label' => 'Compras/Saída', 'icon' => 'usd', 'url' => ['/compra'],],
                                     ['label' => 'Fechamentos', 'icon' => 'pencil-square-o', 'url' => ['/fcaixa']],
                                     ['label' => 'Honorários recebidos', 'icon' => '', 'url' => ['/honorario']],
                                 ],
