@@ -21,7 +21,7 @@ $config = [
             'decimalSeparator' => ',',
             'thousandSeparator' => '.',
             'currencyCode' => 'pt-br',
-            'class' => 'yii\i18n\formatter',
+            'class' => 'yii\i18n\Formatter',
         ],
     //'components' => [
         /*'view' => [
