@@ -14,10 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 
-    function formatar($teste){
+    function formatar($model){
         $formatter = Yii::$app->formatter;
-        if($teste) {
-            $formatado = $formatter->asCurrency($teste);
+        if($model) {
+            $formatado = $formatter->asCurrency($model);
             //$remove = array("pt-br");
             $dinheiro = str_replace("pt-br", "", $formatado);
             return $dinheiro;
