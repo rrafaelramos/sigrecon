@@ -20,7 +20,8 @@ $config = [
             'dateFormat' => 'dd/mm/yyyy',
             'decimalSeparator' => ',',
             'thousandSeparator' => '.',
-            'currencyCode' => 'pt-br',
+            'currencyCode' => 'R$',
+            'locale' => 'pt_br',
             'class' => 'yii\i18n\Formatter',
         ],
     //'components' => [

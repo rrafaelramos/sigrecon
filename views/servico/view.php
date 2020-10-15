@@ -14,10 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 
-    function formatar($model){
+    function formatar($teste){
         $formatter = Yii::$app->formatter;
-        if($model->valor) {
-            $formatado = $formatter->asCurrency($model->valor);
+        if($teste) {
+            $formatado = "";
+            $formatado = $formatter->asCurrency($teste);
             //$remove = array("pt-br");
             $dinheiro = str_replace("pt-br", "", $formatado);
             return $dinheiro;
@@ -68,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'columns' => [
                                                 [
                                                     'attribute' => 'valor',
-                                                    'value' => formatar($model),
+                                                    'value' => formatar($model->valor),
                                                     'labelColOptions' => ['style' => 'width:17%'],
                                                     'valueColOptions' => ['style' => 'width:33%'],
                                                 ],
