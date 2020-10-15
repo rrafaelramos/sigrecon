@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $formatter = Yii::$app->formatter;
         if($teste) {
             $formatado = "";
-            $formatado = $formatter->asCurrency($teste);
+            $formatado = $formatter->asBoolean($teste);
             //$remove = array("pt-br");
             $dinheiro = str_replace("pt-br", "", $formatado);
             return $dinheiro;
