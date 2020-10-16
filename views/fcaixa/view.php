@@ -17,13 +17,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Fechar'];
 if(!Yii::$app->user->isGuest && Yii::$app->user->identity->tipo == '1'){
 
     function formatar($model){
-        if (!$model){
-            return "R$ 0,00";
-        }
         $formatter = Yii::$app->formatter;
-        $formatado = $formatter->asCurrency($model);
-        $dinheiro = str_replace("pt-br", "R$", $formatado);
-        return $dinheiro;
+        if($model) {
+            $formatado = $formatter->asDecimal($model);
+            $valor = "R$ ".$formatado;
+            return $valor;
+        }else
+            return 'R$ 0,00';
     }
 
     function formatarData($model){

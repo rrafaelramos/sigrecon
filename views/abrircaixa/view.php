@@ -12,15 +12,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Abrir Caixas'];
 ?>
 
 <?php
-function formatar($model){
-    if(!$model){
-        return "R$ 0,00";
+    function formatar($model){
+        $formatter = Yii::$app->formatter;
+        if($model) {
+            $formatado = $formatter->asDecimal($model);
+            $valor = "R$ ".$formatado;
+            return $valor;
+        }else
+        return 'R$ 0,00';
     }
-    $formatter = Yii::$app->formatter;
-    $formatado = $formatter->asCurrency($model);
-    $dinheiro = str_replace("pt-br", "", $formatado);
-    return "R$ $dinheiro";
-}
 ?>
 
 <div class="abrircaixa-view box box-primary">

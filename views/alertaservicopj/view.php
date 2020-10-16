@@ -46,12 +46,15 @@ function valor($model){
     }
 }
 
-function formatar($model){
-    $formatter = Yii::$app->formatter;
-    $formatado = $formatter->asCurrency($model);
-    $dinheiro = str_replace("pt-br", "R$", $formatado);
-    return $dinheiro;
-}
+    function formatar($model){
+        $formatter = Yii::$app->formatter;
+        if($model) {
+            $formatado = $formatter->asDecimal($model);
+            $valor = "R$ ".$formatado;
+            return $valor;
+        }else
+        return 'R$ 0,00';
+    }
 
 function total($model){
     $s =0;

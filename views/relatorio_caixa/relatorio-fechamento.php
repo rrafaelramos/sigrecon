@@ -65,12 +65,12 @@ if(Yii::$app->user->identity->tipo == '1'){
 
     function formatar($model){
         $formatter = Yii::$app->formatter;
-        if(!$model){
+        if($model) {
+            $formatado = $formatter->asDecimal($model);
+            $valor = "R$ ".$formatado;
+            return $valor;
+        }else
             return 'R$ 0,00';
-        }
-        $formatado = $formatter->asCurrency($model);
-        $dinheiro = str_replace("pt-br", "R$", $formatado);
-        return $dinheiro;
     }
 
     function total($model){

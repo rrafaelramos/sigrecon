@@ -15,13 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 function formatar($model){
     $formatter = Yii::$app->formatter;
-
-    $formatado = $formatter->asCurrency($model);
-
-    //$remove = array("pt-br");
-
-    $dinheiro = str_replace("pt-br", "", $formatado);
-    return $dinheiro;
+    if($model) {
+        $formatado = $formatter->asDecimal($model);
+        $valor = "R$ ".$formatado;
+        return $valor;
+    }else
+        return 'R$ 0,00';
 }
 ?>
 
@@ -42,13 +41,13 @@ function formatar($model){
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
                 //['class' => 'yii\grid\SerialColumn'],
-               // 'id',
+                // 'id',
                 'descricao',
                 ['attribute' => 'valor',
                     'value' => function($model) {
-                         return "R$".formatar($model->valor);
-                        }
-                    ],
+                        return formatar($model->valor);
+                    }
+                ],
 //                ['attribute' => 'valor_minimo',
 //                    'value' => function($model){
 //                        return "R$".formatar($model->valor_minimo);

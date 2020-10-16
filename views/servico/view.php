@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php
-
     function formatar($model){
         $formatter = Yii::$app->formatter;
         if($model) {

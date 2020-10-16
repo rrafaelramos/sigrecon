@@ -10,14 +10,14 @@ $this->title = "Saldo";
 ?>
 
 <?php
-function formatar($valor){
-    if (!$valor){
-        return "R$ 0,00";
-    }
+function formatar($model){
     $formatter = Yii::$app->formatter;
-    $formatado = $formatter->asCurrency($valor);
-    $dinheiro = str_replace("pt-br", "R$", $formatado);
-    return $dinheiro;
+    if($model) {
+        $formatado = $formatter->asDecimal($model);
+        $valor = "R$ ".$formatado;
+        return $valor;
+    }else
+        return 'R$ 0,00';
 }
 ?>
 

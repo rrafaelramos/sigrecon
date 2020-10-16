@@ -12,14 +12,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
 function formatar($model){
-
-    if(!$model){
-        return "R$ 0,00";
-    }
     $formatter = Yii::$app->formatter;
-    $formatado = $formatter->asCurrency($model);
-    $dinheiro = str_replace("pt-br", "", $formatado);
-    return "R$ $dinheiro";
+    if($model) {
+        $formatado = $formatter->asDecimal($model);
+        $valor = "R$ ".$formatado;
+        return $valor;
+    }else
+        return 'R$ 0,00';
 }
 
 function usuario($model){
