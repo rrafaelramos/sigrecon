@@ -1,6 +1,6 @@
-create database bd_tcc;
+create database sigrecon;
 
-use bd_tcc;
+use sigrecon;
 
 create table usuario(
     id int AUTO_INCREMENT,
