@@ -14,16 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 
-    function formatar($teste){
+    function formatar($model){
         $formatter = Yii::$app->formatter;
-        if($teste) {
-            $formatado = "";
-            $formatado = $formatter->asBoolean($teste);
-            //$remove = array("pt-br");
-            $dinheiro = str_replace("pt-br", "", $formatado);
-            return $dinheiro;
+        if($model) {
+            $formatado = $formatter->asDecimal($model);
+            $valor = "R$ ".$formatado;
+            return $valor;
         }else
-        return 'Não definido';
+        return 'R$ 0,00';
     }
 ?>
 
