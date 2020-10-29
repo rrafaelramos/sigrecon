@@ -70,7 +70,7 @@ class CompraController extends Controller
 
     public function actionViewsaida($id)
     {
-        return $this->render('viewSaida', [
+        return $this->render('viewsaida', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -89,13 +89,10 @@ class CompraController extends Controller
         $model = new Compra();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
             $model->data = $data;
-
             $model->usuario_fk = Yii::$app->user->identity->id;
             $caixa->data = $data;
             $caixa->total -= $model->valor;
-
             $model->save();
             $caixa->save();
 
