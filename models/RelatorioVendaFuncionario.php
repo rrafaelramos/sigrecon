@@ -42,13 +42,13 @@ class RelatorioVendaFuncionario extends \yii\base\Model
 
 
     function formatar($model){
-        if(!$model){
-            return "R$ 0,00";
-        }
         $formatter = Yii::$app->formatter;
-        $formatado = $formatter->asCurrency($model);
-        $dinheiro = str_replace("pt-br", "", $formatado);
-        return "R$$dinheiro";
+        if($model) {
+            $formatado = $formatter->asDecimal($model);
+            $valor = "R$ ".$formatado;
+            return $valor;
+        }else
+            return 'R$ 0,00';
     }
 
     public function geraRelatorio($inicio, $fim, $colaborador)
