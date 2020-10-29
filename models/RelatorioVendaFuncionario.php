@@ -40,7 +40,6 @@ class RelatorioVendaFuncionario extends \yii\base\Model
         ];
     }
 
-
     function formatar($model){
         $formatter = Yii::$app->formatter;
         if($model) {
