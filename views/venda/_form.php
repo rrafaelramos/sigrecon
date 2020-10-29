@@ -39,7 +39,7 @@ if(!Yii::$app->user->isGuest){
                         </div>
                         <div class="panel-body">
                             <div class="col-sm-6">
-                                <?= $form->field($model, 'cliente_fk')->dropDownList(ArrayHelper::map(Clienteavulso::find()->all(), 'id', 'nome'), ['prompt' => 'Selecione'], ['readOnly' => 'true'])->label('Cliente');?>
+                                <?= $form->field($model, 'cliente_fk')->dropDownList(ArrayHelper::map(Clienteavulso::find()->all(), 'id', 'nome'), ['prompt' => 'Não informado'], ['readOnly' => 'true'])->label('Cliente');?>
                             </div>
                             <div class="col-sm-6">
                                 <?= $form->field($model, 'form_pagamento')
@@ -47,7 +47,7 @@ if(!Yii::$app->user->isGuest){
                                     ->label('Pagamento: '); ?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($model, 'servico_fk')->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'id' => 'servico'])?>
+                                <?= $form->field($model, 'servico_fk')->dropDownList(ArrayHelper::map(Servico::find()->all(),'id', 'descricao'),['prompt' => 'Selecione', 'id' => 'servico'])->label('Serviço')?>
                             </div>
                             <div class="col-sm-6">
                                 <?= $form->field($model, 'quantidade')->textInput([ 'type' => 'number', 'id' => 'quantidade', 'default' => '1', 'value' => '1', 'min' => '1']) ?>
