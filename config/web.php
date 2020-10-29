@@ -22,7 +22,7 @@ $config = [
             'thousandSeparator' => '.',
             'currencyDecimalSeparator' => ',',
             'currencyCode' => 'R$',
-            'locale' => 'pt_br',
+            'locale' => 'pt-BR',
             'class' => 'yii\i18n\Formatter',
         ],
     //'components' => [

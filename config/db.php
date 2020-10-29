@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=sigrecon',
-    'username' => 'rootifnmg',
-    'password' => 'ifnmg2020',
+    'dsn' => 'mysql:host=localhost;dbname=bd_tcc',
+    'username' => 'root',
+    'password' => '',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
