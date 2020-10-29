@@ -66,7 +66,7 @@ if(Yii::$app->user->identity->tipo == '1'){
     function formatar($model){
         $formatter = Yii::$app->formatter;
         if($model) {
-            $formatado = $formatter->asDecimal($model);
+            $formatado = $formatter->asDecimal($model, 2);
             $valor = "R$ ".$formatado;
             return $valor;
         }else

@@ -13,7 +13,7 @@ $this->title = "Saldo";
 function formatar($model){
     $formatter = Yii::$app->formatter;
     if($model) {
-        $formatado = $formatter->asDecimal($model);
+        $formatado = $formatter->asDecimal($model, 2);
         $valor = "R$ ".$formatado;
         return $valor;
     }else

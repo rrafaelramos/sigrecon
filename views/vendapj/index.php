@@ -43,14 +43,13 @@ function servico($model){
 }
 
 function formatar($model){
-
-    if(!$model){
-        return "R$ 0,00";
-    }
     $formatter = Yii::$app->formatter;
-    $formatado = $formatter->asCurrency($model);
-    $dinheiro = str_replace("pt-br", "", $formatado);
-    return "R$ $dinheiro";
+    if($model) {
+        $formatado = $formatter->asDecimal($model,2);
+        $valor = "R$ ".$formatado;
+        return $valor;
+    }else
+        return 'R$ 0,00';
 }
 
 function statusPag($model){
