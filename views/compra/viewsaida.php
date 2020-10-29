@@ -110,3 +110,6 @@ function usuario($model){
                     ]) ?>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
