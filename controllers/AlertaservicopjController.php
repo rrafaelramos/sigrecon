@@ -216,6 +216,7 @@ class AlertaservicopjController extends Controller
                 $data = $a->data_pago;
             }
         }
+
         //compara a data do caixa com do alerta e pega o id do caixa para apagar
         foreach ($caixa as $c){
             if($c->data == $data){
@@ -223,10 +224,17 @@ class AlertaservicopjController extends Controller
             }
         }
 
-        $this->findCaixa($idc)->delete();
-        $this->findModel($id)->delete();
+        if($idc) {
+            $this->findCaixa($idc)->delete();
+        }
 
-        return $this->redirect(['index']);
+        //pega a data no model do alerta
+        foreach ($alerta as $a){
+            if($a->id == $id){
+                $this->findModel($id)->delete();
+                return $this->redirect(['index']);
+            }
+        }
     }
 
     /**
@@ -250,6 +258,40 @@ class AlertaservicopjController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('Dados não encontrados');
+        }
+    }
+
+
+    public function actionApaga($id){
+        $alerta = Alertaservicopj::find()->all();
+        $caixa = Caixa::find()->all();
+        $data = 0;
+        $idc = 0;
+
+        //pega a data no model do alerta
+        foreach ($alerta as $a){
+            if($a->id == $id){
+                $data = $a->data_pago;
+            }
+        }
+
+        //compara a data do caixa com do alerta e pega o id do caixa para apagar
+        foreach ($caixa as $c){
+            if($c->data == $data){
+                $idc = $c->id;
+            }
+        }
+
+        if($idc) {
+            $this->findCaixa($idc)->delete();
+        }
+
+        //pega a data no model do alerta
+        foreach ($alerta as $a){
+            if($a->id == $id){
+                $this->findModel($id)->delete();
+                return $this->redirect(['vendapj/index']);
+            }
         }
     }
 }
