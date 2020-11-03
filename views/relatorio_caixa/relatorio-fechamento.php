@@ -163,13 +163,10 @@ if(Yii::$app->user->identity->tipo == '1'){
                             <?php
                             $valor_honorario = 0;
                             foreach ($honorarios as $honorario) {
-
 //                            $aux = explode(" ", $honorario->data_pagamento);
 //                            $data = $aux[0];
-
-                                if (strtotime($inicio) <= strtotime($honorario->data_pagamento) && strtotime($fim) >= strtotime($honorario->data_pagamento)) {
+                                if (strtotime($inicio) <= strtotime($honorario->data_caixa) && strtotime($fim) >= strtotime($honorario->data_caixa)) {
                                     $valor_honorario += $honorario->valor;
-
                                     echo DetailView::widget([
                                         'model' => $honorario,
                                         'condensed' => true,
@@ -553,7 +550,7 @@ if(Yii::$app->user->identity->tipo == '1'){
                             <?php
                             //venda pj
                             foreach ($vendaspj as $vendapj) {
-                                $data = explode(" ",$model->data);
+                                $data = explode(" ",$vendapj->data);
                                 if (strtotime($inicio) <= strtotime($vendapj->data) && strtotime($fim) >= strtotime($vendapj->data)) {
                                     $valor_totalpj += $vendapj->total;
                                     ?>
