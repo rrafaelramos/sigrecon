@@ -57,6 +57,9 @@ class LembreteController extends Controller
                 $event->id = $lembrete->id;
                 $event->title = $lembrete->titulo;
                 $event->start = $lembrete->data;
+                if($lembrete->alerta_pf || $lembrete->alerta_pj){
+                    $event->color = '#8B0000';
+                }
                 $events[] = $event;
             }
         }

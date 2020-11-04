@@ -236,6 +236,8 @@ create table lembrete(
     data date not null,
     titulo varchar(250),
     usuario_fk int,
+    alerta_pf int,
+    alerta_pj int,
     primary key (id)
 );
 

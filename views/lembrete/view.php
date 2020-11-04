@@ -37,5 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]) ?>
+        <?php
+        if($model->alerta_pf){
+            echo Html::a('Visualizar Serviços', ['alertaservico/index'], ['class' => 'btn btn-primary btn-flat pull-right']);
+        }elseif ($model->alerta_pj){
+            echo Html::a('Visualizar Serviços', ['alertaservicopj/index'], ['class' => 'btn btn-primary btn-flat pull-right']);
+        }
+        ?>
     </div>
 </div>

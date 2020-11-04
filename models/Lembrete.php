@@ -11,6 +11,8 @@ use Yii;
  * @property string $data
  * @property string|null $titulo
  * @property int|null $usuario_fk
+ * @property int|null $alerta_pf
+ * @property int|null $alerta_pj
  */
 class Lembrete extends \yii\db\ActiveRecord
 {
@@ -30,7 +32,7 @@ class Lembrete extends \yii\db\ActiveRecord
         return [
             [['data', 'titulo'], 'required'],
             [['data'], 'safe'],
-            [['usuario_fk'], 'integer'],
+            [['usuario_fk','alerta_pf','alerta_pj'], 'integer'],
             [['titulo'], 'string', 'max' => 100],
         ];
     }
@@ -45,6 +47,7 @@ class Lembrete extends \yii\db\ActiveRecord
             'data' => 'Data',
             'titulo' => 'Lembrete',
             'usuario_fk' => 'Usuário',
+            'alerta_id' => 'Alerta_id',
         ];
     }
 }

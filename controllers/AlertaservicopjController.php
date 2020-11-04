@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Abrircaixa;
 use app\models\Caixa;
+use app\models\Lembrete;
 use app\models\Servico;
 use Yii;
 use app\models\Alertaservicopj;
@@ -151,6 +152,21 @@ class AlertaservicopjController extends Controller
 
             $model->save();
 
+            //Add lembrete no calendário
+            $nomeservico = 0;
+            foreach ($servico as $s){
+                if($s->id == $model->servico_fk){
+                    $nomeservico = $s->descricao;
+                }
+            }
+
+            $lembrete = new Lembrete();
+            $lembrete->data = $model->data_entrega;
+            $lembrete->usuario_fk = $model->usuario_fk;
+            $lembrete->titulo = "PJ: $nomeservico";
+            $lembrete->alerta_pj = $model->id;
+            $lembrete->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -228,12 +244,29 @@ class AlertaservicopjController extends Controller
             $this->findCaixa($idc)->delete();
         }
 
+        // apaga o lembrete do calendário
+        $lembretes = Lembrete::find()->all();
+        foreach ($lembretes as $lembrete) {
+            if($lembrete->alerta_pj == $id){
+                $this->findLembrete($lembrete->id)->delete();
+            }
+        }
+
         //pega a data no model do alerta
         foreach ($alerta as $a){
             if($a->id == $id){
                 $this->findModel($id)->delete();
                 return $this->redirect(['index']);
             }
+        }
+    }
+
+    // encontra o model lembrete
+    protected function findLembrete($id){
+        if (($model = Lembrete::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Dados não encontrados');
         }
     }
 
