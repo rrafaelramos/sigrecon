@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
 
             <?php $form = ActiveForm::begin([
-                'action' => ['exporta-pdf'],
+                'action' => ['relatorio'],
                 'method' => 'post',
             ]); ?>
 
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'language' => 'pt-BR'
             ]); ?>
         </div>
-        <?= $form->field($model, 'colaborador')->dropDownList(ArrayHelper::map(Usuario::find()->all(),'id','nome')) ?>
+        <?= $form->field($model, 'colaborador')->dropDownList(ArrayHelper::map(Usuario::find()->all(),'id','nome'),['prompt' => 'Todos']) ?>
 
         <?= Html::submitButton('Gerar', ['class' => 'btn btn-success btn-flat pull-right']) ?>
 

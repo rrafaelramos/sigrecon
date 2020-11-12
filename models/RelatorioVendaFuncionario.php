@@ -22,7 +22,7 @@ class RelatorioVendaFuncionario extends \yii\base\Model
     public function rules()
     {
         return [
-            [['inicio','fim'], 'safe'],
+            [['inicio', 'fim'], 'safe'],
             [['colaborador'], 'number'],
         ];
     }
@@ -40,14 +40,27 @@ class RelatorioVendaFuncionario extends \yii\base\Model
         ];
     }
 
-    function formatar($model){
+    function formatar($model)
+    {
         $formatter = Yii::$app->formatter;
-        if($model) {
+        if ($model) {
             $formatado = $formatter->asDecimal($model, 2);
-            $valor = "R$ ".$formatado;
+            $valor = "R$ " . $formatado;
             return $valor;
-        }else
+        } else
             return 'R$ 0,00';
+    }
+
+    function formatData($data)
+    {
+        $data_inicio = explode(" ", $data);
+        $retorno = $data_inicio[0];
+
+        $br = explode("-",$retorno);
+
+        $data_br = "$br[2]/$br[1]/$br[0]";
+
+        return $data_br;
     }
 
     public function geraRelatorio($inicio, $fim, $colaborador)
@@ -93,7 +106,7 @@ class RelatorioVendaFuncionario extends \yii\base\Model
         $tp->setValue('n', "$contabilidade->numero");
         $tp->setValue('bairro', "$contabilidade->bairro");
         $tp->setValue('cidade', "$contabilidade->cidade");
-        $tp->setValue('data',date('d/m/Y'));
+        $tp->setValue('data', date('d/m/Y'));
 
         $nome = 0;
         $tipo = 0;
@@ -101,13 +114,13 @@ class RelatorioVendaFuncionario extends \yii\base\Model
         $tp->cloneRow('cliente', $cont);
 
         $usuarios = Usuario::find()->all();
-        foreach ($usuarios as $usuario){
-            if($usuario->id == $colaborador){
+        foreach ($usuarios as $usuario) {
+            if ($usuario->id == $colaborador) {
                 $nome = $usuario->nome;
             }
-            if($usuario->tipo == '1'){
+            if ($usuario->tipo == '1') {
                 $tipo = 'Gerente';
-            }else{
+            } else {
                 $tipo = 'Colaborador';
             }
         }
@@ -117,22 +130,25 @@ class RelatorioVendaFuncionario extends \yii\base\Model
         $clientes = Clienteavulso::find()->all();
         $cliente_nome = "Não cadastrado";
 
+        $total =0;
+
         foreach ($vendas as $venda) {
             if ($venda->usuario_fk == $colaborador) {
                 $data_aux = explode(" ", $venda->data);
                 $data_venda = $data_aux[0];
                 if (strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
-                    if(!$venda->cliente_fk){
+                    $total+=$venda->total;
+                    if (!$venda->cliente_fk) {
                         $tp->setValue('cliente#' . ($i + 1), "Não cadastrado!");
-                    }else {
+                    } else {
                         foreach ($clientes as $cliente) {
-                            if($cliente->id == $venda->cliente_fk){
+                            if ($cliente->id == $venda->cliente_fk) {
                                 $tp->setValue('cliente#' . ($i + 1), $cliente->nome);
                             }
                         }
                     }
-                    foreach ($servicos as $servico){
-                        if($servico->id == $venda->servico_fk){
+                    foreach ($servicos as $servico) {
+                        if ($servico->id == $venda->servico_fk) {
                             $tp->setValue('servico#' . ($i + 1), $servico->descricao);
                         }
                     }
@@ -145,8 +161,6 @@ class RelatorioVendaFuncionario extends \yii\base\Model
             }
         }
 
-
-
         $empresas = Empresa::find()->all();
         $j = 0;
         $tp->cloneRow('empresa', $contpj);
@@ -156,17 +170,18 @@ class RelatorioVendaFuncionario extends \yii\base\Model
                 $data_aux = explode(" ", $vendapj->data);
                 $data_vendapj = $data_aux[0];
                 if (strtotime($inicio) <= strtotime($data_vendapj) && strtotime($data_vendapj) <= strtotime($fim)) {
-                    if(!$vendapj->empresa_fk){
+                    $total+=$vendapj->total;
+                    if (!$vendapj->empresa_fk) {
                         $tp->setValue('empresa#' . ($j + 1), "Não cadastrado!");
-                    }else {
+                    } else {
                         foreach ($empresas as $empresa) {
-                            if($empresa->id == $vendapj->empresa_fk){
+                            if ($empresa->id == $vendapj->empresa_fk) {
                                 $tp->setValue('empresa#' . ($j + 1), $empresa->razao_social);
                             }
                         }
                     }
-                    foreach ($servicos as $servico){
-                        if($servico->id == $vendapj->servico_fk){
+                    foreach ($servicos as $servico) {
+                        if ($servico->id == $vendapj->servico_fk) {
                             $tp->setValue('servicoj#' . ($j + 1), $servico->descricao);
                         }
                     }
@@ -178,7 +193,191 @@ class RelatorioVendaFuncionario extends \yii\base\Model
                 }
             }
         }
-        
+
+        $tp->setValue('retorno', RelatorioVendaFuncionario::formatar($total));
+        $tp->setValue('inicio', RelatorioVendaFuncionario::formatData($inicio));
+        $tp->setValue('fim', RelatorioVendaFuncionario::formatData($fim));
+
+
+
         $tp->saveAs(Yii::getAlias('@app') . '/documentos/relatorio_venda_funcionario/relatorio_venda_funcionario_temp.docx');
     }
+
+
+
+    public function geraGeral($inicio, $fim)
+    {
+        $tp = new \PhpOffice\PhpWord\TemplateProcessor(Yii::getAlias('@app') . '/documentos/relatorio_venda/relatorio_venda.docx');
+        ini_set('max_execution_time', 300); //300 seconds = 5 minute
+        date_default_timezone_set('America/Sao_Paulo');
+
+        $contabilidade = Contabilidade::find()->one();
+        $tp->setValue('contabilidade', "$contabilidade->nome");
+        $tp->setValue('rua', "$contabilidade->rua");
+        $tp->setValue('n', "$contabilidade->numero");
+        $tp->setValue('bairro', "$contabilidade->bairro");
+        $tp->setValue('cidade', "$contabilidade->cidade");
+        $tp->setValue('data', date('d/m/Y'));
+
+        $vendas = Venda::find()->all();
+        $cont = 0;
+
+        foreach ($vendas as $venda){
+            $data_aux = explode(" ", $venda->data);
+            $data_venda = $data_aux[0];
+            if(strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
+                $cont++;
+            }
+        }
+
+        $tp->cloneRow('colaborador', $cont);
+
+        $servicos = Servico::find()->all();
+        $usuarios = Usuario::find()->all();
+        $i = 0;
+
+        foreach ($vendas as $venda) {
+            $data_aux = explode(" ", $venda->data);
+            $data_venda = $data_aux[0];
+            if (strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
+                foreach ($usuarios as $usuario){
+                    if($usuario->id == $venda->usuario_fk){
+                        $tp->setValue('colaborador#' . ($i + 1), $usuario->nome);
+                    }
+                }
+
+                foreach ($servicos as $servico) {
+                    if ($servico->id == $venda->servico_fk) {
+                        $tp->setValue('servico#' . ($i + 1), $servico->descricao);
+                    }
+                }
+
+                $tp->setValue('quantidade#' . ($i + 1), $venda->quantidade);
+                $tp->setValue('total#' . ($i + 1), RelatorioVendaFuncionario::formatar($venda->tot_sem_desconto));
+                $tp->setValue('desconto#' . ($i + 1), RelatorioVendaFuncionario::formatar($venda->desconto));
+                $tp->setValue('recebido#' . ($i + 1), RelatorioVendaFuncionario::formatar($venda->total));
+                $i++;
+            }
+        }
+
+        // vendas para PJ
+        $vendaspj = Vendapj::find()->all();
+        $contj = 0;
+
+        foreach ($vendaspj as $venda){
+            $data_aux = explode(" ", $venda->data);
+            $data_venda = $data_aux[0];
+            if(strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
+                $contj++;
+            }
+        }
+
+        $tp->cloneRow('colaboradorj', $contj);
+
+        $servicos = Servico::find()->all();
+        $usuarios = Usuario::find()->all();
+        $i = 0;
+
+        foreach ($vendaspj as $venda) {
+            $data_aux = explode(" ", $venda->data);
+            $data_venda = $data_aux[0];
+            if (strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
+                foreach ($usuarios as $usuario){
+                    if($usuario->id == $venda->usuario_fk){
+                        $tp->setValue('colaboradorj#' . ($i + 1), $usuario->nome);
+                    }
+                }
+
+                foreach ($servicos as $servico) {
+                    if ($servico->id == $venda->servico_fk) {
+                        $tp->setValue('servicoj#' . ($i + 1), $servico->descricao);
+                    }
+                }
+
+                $tp->setValue('quantidadej#' . ($i + 1), $venda->quantidade);
+                $tp->setValue('totalj#' . ($i + 1), RelatorioVendaFuncionario::formatar($venda->tot_sem_desconto));
+                $tp->setValue('descontoj#' . ($i + 1), RelatorioVendaFuncionario::formatar($venda->desconto));
+                $tp->setValue('recebidoj#' . ($i + 1), RelatorioVendaFuncionario::formatar($venda->total));
+                $i++;
+            }
+        }
+
+
+        // Relatório total por funcionário---------------------------------------------------------------------
+        $qtde_usuarios = count($usuarios);
+        $tp->cloneRow('usuario', $qtde_usuarios);
+        $aux=0;
+        $maior_retorno = array();
+        $nome_max =0;
+        $nome_min =0;
+        $valor_max=0;
+        $valor_min = "1000000000";
+
+        for($i=0; $i<$qtde_usuarios; $i++){
+            $usuarios[$i];
+
+            $num_venda = 0;
+            $tot = 0;
+            $totrece = 0;
+            $destot = 0;
+
+            $tp->setValue('usuario#' . ($aux + 1), $usuarios[$aux]->nome);
+
+            for($j=0; $j<count($vendas); $j++){
+                $data_aux = explode(" ", $vendas[$j]->data);
+                $data_venda = $data_aux[0];
+                if($usuarios[$i]->id == $vendas[$j]->usuario_fk && strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)){
+                    $num_venda++;
+                    $tot += $vendas[$j]->tot_sem_desconto;
+                    $destot += $vendas[$j]->desconto;
+                    $totrece += $vendas[$j]->total;
+                }
+            }
+
+            // soma vendas PJ
+            for($j=0; $j<count($vendaspj); $j++){
+                $data_aux = explode(" ", $vendaspj[$j]->data);
+                $data_venda = $data_aux[0];
+                if($usuarios[$i]->id == $vendaspj[$j]->usuario_fk && strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)){
+                    $num_venda++;
+                    $tot += $vendaspj[$j]->tot_sem_desconto;
+                    $destot += $vendaspj[$j]->desconto;
+                    $totrece += $vendaspj[$j]->total;
+                }
+            }
+
+            $nome[$i] = $usuarios[$i]->nome;
+            $maior_retorno[$i] = $totrece;
+
+            $tp->setValue('num_venda#' . ($aux + 1), $num_venda);
+            $tp->setValue('tot#' . ($aux + 1), RelatorioVendaFuncionario::formatar($tot));
+            $tp->setValue('destot#' . ($aux + 1), RelatorioVendaFuncionario::formatar($destot));
+            $tp->setValue('totrece#' . ($aux + 1), RelatorioVendaFuncionario::formatar($totrece));
+
+            $aux++;
+        }
+
+        for ($k=0; $k<count($usuarios); $k++){
+            if($maior_retorno[$k]>$valor_max){
+                $valor_max = $maior_retorno[$k];
+                $nome_max = $nome[$k];
+            }
+
+            if($valor_min>$maior_retorno[$k]){
+                $valor_min = $maior_retorno[$k];
+                $nome_min = $nome[$k];
+            }
+        }
+
+        $tp->setValue('usermore', $nome_max);
+        $tp->setValue('allmax', RelatorioVendaFuncionario::formatar($valor_max));
+        $tp->setValue('userless', $nome_min);
+        $tp->setValue('allmin', RelatorioVendaFuncionario::formatar($valor_min));
+
+        $tp->setValue('inicio', RelatorioVendaFuncionario::formatData($inicio));
+        $tp->setValue('fim', RelatorioVendaFuncionario::formatData($fim));
+
+        $tp->saveAs(Yii::getAlias('@app') . '/documentos/relatorio_venda/relatorio_venda_temp.docx');
+    }
 }
+
