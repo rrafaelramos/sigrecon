@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Alertaservico;
+use app\models\Alertaservicopj;
 use Yii;
 use app\models\Lembrete;
 use app\models\LembreteSearch;
@@ -98,7 +100,19 @@ class LembreteController extends Controller
         $model->data = $date;
         $model->usuario_fk = Yii::$app->user->identity->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            date_default_timezone_set('America/Sao_Paulo');
+            $dat = date('Y-m-d');
+
+            if(strtotime($model->data) < strtotime($dat)){
+                return $this->render('_erro', [
+                    'model' => $model,
+                ]);
+            }
+
+            $model->save();
+
             return $this->redirect(['index']);
         } else {
             return $this->renderAjax('create', [
@@ -117,7 +131,31 @@ class LembreteController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            date_default_timezone_set('America/Sao_Paulo');
+            $dat = date('Y-m-d');
+
+            if(strtotime($model->data) < strtotime($dat)){
+                return $this->render('_erro', [
+                    'model' => $model,
+                ]);
+            }
+
+            $model->save();
+
+            if($model->alerta_pf){
+                $modelpf = $this->findPf($model->alerta_pf);
+                $modelpf->data_entrega = $model->data;
+                $modelpf->save();
+            }
+
+            if($model->alerta_pj){
+                $modelpj = $this->findPj($model->alerta_pj);
+                $modelpj->data_entrega = $model->data;
+                $modelpj->save();
+            }
+
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
@@ -149,6 +187,24 @@ class LembreteController extends Controller
     protected function findModel($id)
     {
         if (($model = Lembrete::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findPf($id)
+    {
+        if (($model = Alertaservico::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findPj($id)
+    {
+        if (($model = Alertaservicopj::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

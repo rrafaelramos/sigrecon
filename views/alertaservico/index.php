@@ -79,10 +79,10 @@ function status($model){
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
                 //['class' => 'kartik\grid\SerialColumn'],
-//                [
-//                    'attribute' => 'id',
-//                    'label' => 'N° do Alerta',
-//                ],
+                [
+                    'attribute' => 'id',
+                    'label' => 'N° do Alerta',
+                ],
                 [
                     'attribute' => 'cliente_fk',
                     'label' => 'Cliente',

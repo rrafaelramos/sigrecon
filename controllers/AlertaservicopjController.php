@@ -163,7 +163,7 @@ class AlertaservicopjController extends Controller
             $lembrete = new Lembrete();
             $lembrete->data = $model->data_entrega;
             $lembrete->usuario_fk = $model->usuario_fk;
-            $lembrete->titulo = "PJ: $nomeservico";
+            $lembrete->titulo = "Alerta PJ n° $model->id: $nomeservico";
             $lembrete->alerta_pj = $model->id;
             $lembrete->save();
 

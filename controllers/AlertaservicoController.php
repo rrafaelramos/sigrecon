@@ -162,7 +162,7 @@ class AlertaservicoController extends Controller
             $lembrete = new Lembrete();
             $lembrete->data = $model->data_entrega;
             $lembrete->usuario_fk = $model->usuario_fk;
-            $lembrete->titulo = "PF: $nomeservico";
+            $lembrete->titulo = "Alerta PF n° $model->id: $nomeservico";
             $lembrete->alerta_pf = $model->id;
             $lembrete->save();
 
