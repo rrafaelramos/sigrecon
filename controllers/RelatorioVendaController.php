@@ -6,9 +6,8 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
-class RelatorioVendaFuncionarioController extends \yii\web\Controller
+class RelatorioVendaController extends \yii\web\Controller
 {
-
     public function behaviors()
     {
         return [
@@ -20,7 +19,7 @@ class RelatorioVendaFuncionarioController extends \yii\web\Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','exporta-pdf','view','delete','index'],
+                'only' => ['create','individual','view','delete','index','relatorio','geral'],
                 'rules' => [
                     [
                         'allow'=>true,
@@ -42,6 +41,11 @@ class RelatorioVendaFuncionarioController extends \yii\web\Controller
     public function actionRelatorio(){
         $model = new RelatorioVendaFuncionario();
         $model->load(Yii::$app->request->post());
+
+        if(strtotime($model->inicio) > strtotime($model->fim)){
+            return $this->render('erro',['model' => $model]);
+        }
+
         if($model->colaborador){
             $this->actionIndividual();
         }else{
@@ -63,5 +67,4 @@ class RelatorioVendaFuncionarioController extends \yii\web\Controller
         RelatorioVendaFuncionario::geraGeral($model->inicio, $model->fim);
         Yii::$app->response->sendFile(Yii::getAlias('@app') . '/documentos/relatorio_venda/relatorio_venda_temp.docx');
     }
-
 }
