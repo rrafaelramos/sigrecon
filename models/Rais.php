@@ -70,11 +70,26 @@ class Rais extends \yii\db\ActiveRecord
                 $model = new Rais();
                 $model->associacao_id = $associacao->id;
                 $model->associacao_nome = $associacao->razao_social;
-                $model->data_limite = "$data-02-28";
+                $model->data_limite = "$data-09-08";
                 $model->presidente = $associacao->responsavel;
                 $model->fone_presidente = $associacao->telefone_socio;
                 $model->feito = 'Não';
                 $model->save();
+            }
+
+            $cont = 0;
+            $lembretes = Lembrete::find()->all();
+            foreach ($lembretes as $lembrete){
+                if($lembrete->titulo == "Prazo Final: RAIS $data"){
+                    $cont++;
+                }
+            }
+            if(!$cont) {
+                $lembrete = new Lembrete();
+                $lembrete->titulo = "Prazo Final: RAIS $data";
+                $lembrete->alerta_geral = 1;
+                $lembrete->data = "$data-09-08";
+                $lembrete->save();
             }
             return 1;
         }

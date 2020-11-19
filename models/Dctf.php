@@ -76,6 +76,22 @@ class Dctf extends \yii\db\ActiveRecord
                 $model->feito = 'Não';
                 $model->save();
             }
+
+            $cont = 0;
+            $lembretes = Lembrete::find()->all();
+            foreach ($lembretes as $lembrete){
+                if($lembrete->titulo == "Prazo Final: DCTF $data"){
+                    $cont++;
+                }
+            }
+            if(!$cont) {
+                $lembrete = new Lembrete();
+                $lembrete->titulo = "Prazo Final: DCTF $data";
+                $lembrete->alerta_geral = 1;
+                $lembrete->data = "$data-03-31";
+                $lembrete->save();
+            }
+
             return 1;
         }
     }

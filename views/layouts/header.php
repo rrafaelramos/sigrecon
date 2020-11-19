@@ -405,6 +405,11 @@ function lembrete(){
             if ($lembrete->usuario_fk == Yii::$app->user->identity->id && $lembrete->data == date('Y-m-d')){
                 $cont++;
             }
+            if($lembrete->data == date('Y-m-d')){
+                if($lembrete->alerta_pj || $lembrete->alerta_pf || $lembrete->alerta_certificado || $lembrete->alerta_procuracao || $lembrete->alerta_geral){
+                    $cont++;
+                }
+            }
         }
         if($cont){
             return $cont;
