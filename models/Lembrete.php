@@ -14,6 +14,8 @@ use Yii;
  * @property int|null $alerta_pf
  * @property int|null $alerta_pj
  * @property int|null $alerta_geral
+ * @property int|null $alerta_certificado
+ * @property int|null $alerta_procuracao
  */
 class Lembrete extends \yii\db\ActiveRecord
 {
@@ -33,7 +35,7 @@ class Lembrete extends \yii\db\ActiveRecord
         return [
             [['data', 'titulo'], 'required'],
             [['data'], 'safe'],
-            [['usuario_fk','alerta_pf','alerta_pj', 'alerta_geral'], 'integer'],
+            [['usuario_fk','alerta_pf','alerta_pj', 'alerta_geral', 'alerta_certificado', 'alerta_procuracao'], 'integer'],
             [['titulo'], 'string', 'max' => 100],
         ];
     }

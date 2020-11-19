@@ -54,7 +54,7 @@ class LembreteController extends Controller
 
         $events = [];
         foreach ($lembretes as $lembrete) {
-            if(($lembrete->usuario_fk == Yii::$app->user->identity->id) || $lembrete->alerta_geral ) {
+            if(($lembrete->usuario_fk == Yii::$app->user->identity->id) || $lembrete->alerta_geral || $lembrete->alerta_procuracao || $lembrete->alerta_certificado) {
                 $event = new \yii2fullcalendar\models\Event();
                 $event->id = $lembrete->id;
                 $event->title = $lembrete->titulo;
@@ -66,6 +66,9 @@ class LembreteController extends Controller
                     $event->color = '#3CB371';
                 }
 
+                if($lembrete->alerta_procuracao || $lembrete->alerta_certificado){
+                    $event->color = '#8B0000';
+                }
                 $events[] = $event;
             }
         }
@@ -135,7 +138,7 @@ class LembreteController extends Controller
     {
         $model = $this->findModel($id);
 
-        if($model->alerta_geral){
+        if($model->alerta_geral || $model->alerta_procuracao || $model->alerta_certificado){
             return $this->render('_erroAlertaGeral', [
                 'model' => $model
             ]);
@@ -184,7 +187,7 @@ class LembreteController extends Controller
     {
         $model = $this->findModel($id);
 
-        if($model->alerta_geral){
+        if($model->alerta_geral || $model->alerta_procuracao || $model->alerta_certificado){
             return $this->render('_erroAlertaGeral', [
                 'model' => $model
             ]);

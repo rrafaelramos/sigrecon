@@ -90,6 +90,23 @@ class EmpresaController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
+            //adicionando lembretes -> prazos vencimento procuração
+            if($model->data_certificado){
+                $lembrete = new Lembrete();
+                $lembrete->data = $model->data_certificado;
+                $lembrete->titulo = "Venc. Certificado: $model->razao_social";
+                $lembrete->alerta_certificado = 1;
+                $lembrete->save();
+            }
+
+            if($model->data_procuracao){
+                $lembrete = new Lembrete();
+                $lembrete->data = $model->data_procuracao;
+                $lembrete->titulo = "Venc. Procuracao: $model->razao_social";
+                $lembrete->alerta_procuracao = 1;
+                $lembrete->save();
+            }
+
             $lembretes = Lembrete::find()->all();
             foreach ($lembretes as $lembrete){
                 if($lembrete->titulo == 'Prazo Final: DAS' && $lembrete->data == "$anoatual-$mesatual-20"){
@@ -146,6 +163,8 @@ class EmpresaController extends Controller
                 $model_avisa->save();
             }
 
+
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -164,7 +183,81 @@ class EmpresaController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $procuracao_titulo = '';
+        $certificado_titulo = '';
+
+        if($model->data_procuracao){
+            $procuracao_titulo = "Venc. Procuracao: $model->razao_social";
+        }
+
+        if($model->data_certificado){
+            $certificado_titulo = "Venc. Certificado: $model->razao_social";
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            // altera ou cria data da procuracao na tela de compromissos
+            if($model->data_procuracao) {
+                $lembretes = Lembrete::find()->all();
+                foreach ($lembretes as $lembrete) {
+                    if ($lembrete->titulo == $procuracao_titulo) {
+                        $id_lembrete = $this->findLembrete($lembrete->id);
+                        $id_lembrete->titulo = "Venc. Procuracao: $model->razao_social";
+                        $id_lembrete->data = $model->data_procuracao;
+                        $id_lembrete->save();
+                    }
+                }
+                if (!$procuracao_titulo) {
+                    $lembrete_new = new Lembrete();
+                    $lembrete_new->titulo = "Venc. Procuracao: $model->razao_social";
+                    $lembrete_new->data = $model->data_procuracao;
+                    $lembrete_new->alerta_procuracao = 1;
+                    $lembrete_new->save();
+                }
+            }
+
+            // altera ou cria data do certificado na tela de compromissos
+            if($model->data_certificado) {
+                $lembretes = Lembrete::find()->all();
+                foreach ($lembretes as $lembrete) {
+                    if ($lembrete->titulo == $certificado_titulo) {
+                        $id_lembrete = $this->findLembrete($lembrete->id);
+                        $id_lembrete->titulo = "Venc. Certificado: $model->razao_social";
+                        $id_lembrete->data = $model->data_certificado;
+                        $id_lembrete->save();
+                    }
+                }
+                if(!$certificado_titulo){
+                    $lembrete_new = new Lembrete();
+                    $lembrete_new->titulo = "Venc. Certificado: $model->razao_social";
+                    $lembrete_new->data = $model->data_certificado;
+                    $lembrete_new->alerta_certificado = 1;
+                    $lembrete_new->save();
+                }
+            }
+
+            // apaga a data da procuracao na tela de compromissos
+            if(!$model->data_procuracao){
+                $lembretes = Lembrete::find()->all();
+                foreach ($lembretes as $lembrete){
+                    if($lembrete->titulo == "Venc. Procuracao: $model->razao_social"){
+                        $this->findLembrete($lembrete->id)->delete();
+                    }
+                }
+            }
+
+            // apaga a data do certificado na tela de compromissos
+            if(!$model->data_certificado) {
+                $lembretes = Lembrete::find()->all();
+                foreach ($lembretes as $lembrete) {
+                    if ($lembrete->titulo == "Venc. Certificado: $model->razao_social") {
+                        $this->findLembrete($lembrete->id)->delete();
+                    }
+                }
+            }
+
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }else{
             return $this->render('update', [
@@ -181,6 +274,29 @@ class EmpresaController extends Controller
      */
     public function actionDelete($id)
     {
+
+        $model = $this->findModel($id);
+
+        // apaga a data da procuracao na tela de compromissos
+        if($model->data_procuracao){
+            $lembretes = Lembrete::find()->all();
+            foreach ($lembretes as $lembrete){
+                if($lembrete->titulo == "Venc. Procuracao: $model->razao_social"){
+                    $this->findLembrete($lembrete->id)->delete();
+                }
+            }
+        }
+
+        // apaga a data do certificado na tela de compromissos
+        if($model->data_certificado) {
+            $lembretes = Lembrete::find()->all();
+            foreach ($lembretes as $lembrete) {
+                if ($lembrete->titulo == "Venc. Certificado: $model->razao_social") {
+                    $this->findLembrete($lembrete->id)->delete();
+                }
+            }
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -196,6 +312,15 @@ class EmpresaController extends Controller
     protected function findModel($id)
     {
         if (($model = Empresa::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findLembrete($id)
+    {
+        if (($model = Lembrete::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
