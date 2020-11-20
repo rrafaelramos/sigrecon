@@ -302,6 +302,99 @@ class RelatorioVendaFuncionario extends \yii\base\Model
             }
         }
 
+        //alerta venda pf--------------------------------------------------------------------------------------
+        $alertas = Alertaservico::find()->all();
+        $cont_alert = 0;
+
+        foreach ($alertas as $alerta){
+            $data_aux = explode(" ", $alerta->data_pago);
+            $data_venda = $data_aux[0];
+            if(strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
+                $cont_alert++;
+            }
+        }
+
+        $tp->cloneRow('colaborador_alert', $cont_alert);
+
+        $servicos = Servico::find()->all();
+        $usuarios = Usuario::find()->all();
+        $i = 0;
+
+        $valor_servico = 0;
+
+        foreach ($alertas as $alerta) {
+            $data_aux = explode(" ", $alerta->data_pago);
+            $data_venda = $data_aux[0];
+            if (strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
+                foreach ($usuarios as $usuario){
+                    if($usuario->id == $alerta->usuario_fk){
+                        $tp->setValue('colaborador_alert#' . ($i + 1), $usuario->nome);
+                    }
+                }
+
+                foreach ($servicos as $servico) {
+                    if ($servico->id == $alerta->servico_fk) {
+                        $tp->setValue('servico_alert#' . ($i + 1), $servico->descricao);
+                        $valor_servico = ($servico->valor * $alerta->quantidade);
+                    }
+                }
+
+                $tp->setValue('quantidade_alert#' . ($i + 1), $alerta->quantidade);
+
+                $tp->setValue('total_alert#' . ($i + 1), RelatorioVendaFuncionario::formatar($valor_servico));
+
+                $tp->setValue('desconto_alert#' . ($i + 1), RelatorioVendaFuncionario::formatar(0));
+                $tp->setValue('recebido_alert#' . ($i + 1), RelatorioVendaFuncionario::formatar($valor_servico));
+                $i++;
+            }
+        }
+
+        //alerta venda pJ--------------------------------------------------------------------------------------
+        $alertasj = Alertaservicopj::find()->all();
+        $cont_alertj = 0;
+
+        foreach ($alertasj as $alertaj){
+            $data_aux = explode(" ", $alertaj->data_pago);
+            $data_venda = $data_aux[0];
+            if(strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
+                $cont_alertj++;
+            }
+        }
+
+        $tp->cloneRow('colaborador_alertj', $cont_alertj);
+
+        $servicos = Servico::find()->all();
+        $usuarios = Usuario::find()->all();
+        $i = 0;
+
+        $valor_servico = 0;
+
+        foreach ($alertasj as $alertaj) {
+            $data_aux = explode(" ", $alertaj->data_pago);
+            $data_venda = $data_aux[0];
+            if (strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)) {
+                foreach ($usuarios as $usuario){
+                    if($usuario->id == $alertaj->usuario_fk){
+                        $tp->setValue('colaborador_alertj#' . ($i + 1), $usuario->nome);
+                    }
+                }
+
+                foreach ($servicos as $servico) {
+                    if ($servico->id == $alertaj->servico_fk) {
+                        $tp->setValue('servico_alertj#' . ($i + 1), $servico->descricao);
+                        $valor_servico = ($servico->valor * $alertaj->quantidade);
+                    }
+                }
+
+                $tp->setValue('quantidade_alertj#' . ($i + 1), $alertaj->quantidade);
+
+                $tp->setValue('total_alertj#' . ($i + 1), RelatorioVendaFuncionario::formatar($valor_servico));
+
+                $tp->setValue('desconto_alertj#' . ($i + 1), RelatorioVendaFuncionario::formatar(0));
+                $tp->setValue('recebido_alertj#' . ($i + 1), RelatorioVendaFuncionario::formatar($valor_servico));
+                $i++;
+            }
+        }
 
         // Relatório total por funcionário---------------------------------------------------------------------
         $qtde_usuarios = count($usuarios);
@@ -334,6 +427,26 @@ class RelatorioVendaFuncionario extends \yii\base\Model
                 }
             }
 
+            // somas os alertas pf
+            $valor_servico_alerta =0;
+            for($j=0; $j<count($alertas); $j++){
+                $data_aux = explode(" ", $alertas[$j]->data_pago);
+                $data_venda = $data_aux[0];
+                if($usuarios[$i]->id == $alertas[$j]->usuario_fk && strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)){
+                    $num_venda++;
+
+                    // pegar o valor do servico
+                    foreach ($servicos as $servico){
+                        if($servico->id == $alertas[$j]->servico_fk && strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)){
+                            $valor_servico_alerta = ($servico->valor * $alertas[$j]->quantidade);
+                        }
+                    }
+
+                    $tot+= $valor_servico_alerta;
+                    $totrece += $valor_servico_alerta;
+                }
+            }
+
             // soma vendas PJ
             for($j=0; $j<count($vendaspj); $j++){
                 $data_aux = explode(" ", $vendaspj[$j]->data);
@@ -346,6 +459,25 @@ class RelatorioVendaFuncionario extends \yii\base\Model
                 }
             }
 
+            // somas os alertas pf
+            $valor_servico_alertaj =0;
+            for($j=0; $j<count($alertasj); $j++){
+                $data_aux = explode(" ", $alertasj[$j]->data_pago);
+                $data_venda = $data_aux[0];
+                if($usuarios[$i]->id == $alertasj[$j]->usuario_fk && strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)){
+                    $num_venda++;
+
+                    // pegar o valor do servico
+                    foreach ($servicos as $servico){
+                        if($servico->id == $alertasj[$j]->servico_fk && strtotime($inicio) <= strtotime($data_venda) && strtotime($data_venda) <= strtotime($fim)){
+                            $valor_servico_alertaj = ($servico->valor * $alertasj[$j]->quantidade);
+                        }
+                    }
+
+                    $tot+= $valor_servico_alertaj;
+                    $totrece += $valor_servico_alertaj;
+                }
+            }
             $nome[$i] = $usuarios[$i]->nome;
             $maior_retorno[$i] = $totrece;
 
@@ -353,7 +485,6 @@ class RelatorioVendaFuncionario extends \yii\base\Model
             $tp->setValue('tot#' . ($aux + 1), RelatorioVendaFuncionario::formatar($tot));
             $tp->setValue('destot#' . ($aux + 1), RelatorioVendaFuncionario::formatar($destot));
             $tp->setValue('totrece#' . ($aux + 1), RelatorioVendaFuncionario::formatar($totrece));
-
             $aux++;
         }
 
@@ -373,7 +504,6 @@ class RelatorioVendaFuncionario extends \yii\base\Model
         $tp->setValue('allmax', RelatorioVendaFuncionario::formatar($valor_max));
         $tp->setValue('userless', $nome_min);
         $tp->setValue('allmin', RelatorioVendaFuncionario::formatar($valor_min));
-
         $tp->setValue('inicio', RelatorioVendaFuncionario::formatData($inicio));
         $tp->setValue('fim', RelatorioVendaFuncionario::formatData($fim));
 
