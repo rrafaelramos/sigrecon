@@ -40,13 +40,13 @@ function receptor($model){
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
         <?= \kartik\grid\GridView::widget([
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
+            //'filterModel' => $searchModel,
             'hover' => 'true',
             'resizableColumns'=>'true',
             'responsive' => 'true',
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
- //               ['class' => 'yii\grid\SerialColumn'],
+                //               ['class' => 'yii\grid\SerialColumn'],
 
                 //'id',
                 ['attribute' => 'emissor',
@@ -65,7 +65,16 @@ function receptor($model){
                 // 'conteudo:ntext',
                 // 'empresa_fk',
                 // 'servico_fk',
-                // 'lido',
+                ['attribute' => 'lido',
+                    'value' => function($model){
+                        if($model->lido=='1'){
+                            return 'Sim';
+                        }else{
+                            return 'Não';
+                        }
+                    },
+                    'label' => 'Lido',
+                ],
 
                 [
                     'class' => '\kartik\grid\ActionColumn',
