@@ -11,7 +11,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\VendaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vendas PJ';
+$this->title = 'Serviços PJ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

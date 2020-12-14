@@ -1,6 +1,6 @@
 <?php
 
-$this->title = 'Relatório de entradas';
+$this->title = 'Relatório de Receitas';
 $this->params['breadcrumbs'][] = $this->title;
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -12,7 +12,7 @@ date_default_timezone_set('America/Sao_Paulo');
             <div class="col-sm-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Relatório de Entradas</h3>
+                        <h3 class="panel-title">Relatório de Receitas</h3>
                     </div>
                     <div class="panel-body">
                         <form action="/sigrecon/web/index.php?r=relatorio_caixa/relatorio" method="post">

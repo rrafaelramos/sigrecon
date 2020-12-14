@@ -60,20 +60,20 @@
                     ],
                 ],
                 [
-                    'label' => 'Venda PF',
+                    'label' => 'Serviço PF',
                     'icon' => 'usd',
                     'url' => '#',
                     'items' => [
-                        ['label' => 'Venda Rápida','icon' => 'circle-o', 'url' => ['/venda/create']],
+                        ['label' => 'Serviço Avulso','icon' => 'circle-o', 'url' => ['/venda/create']],
                         ['label' => 'Alerta de Serviço','icon' => 'circle-o', 'url' => ['/alertaservico/create']],
                     ],
                 ],
                 [
-                    'label' => 'Venda PJ',
+                    'label' => 'Serviço PJ',
                     'icon' => 'usd',
                     'url' => '#',
                     'items' => [
-                        ['label' => 'Venda Rápida','icon' => 'circle-o', 'url' => ['/vendapj/create']],
+                        ['label' => 'Serviço Avulso','icon' => 'circle-o', 'url' => ['/vendapj/create']],
                         ['label' => 'Alerta de Serviço','icon' => 'circle-o', 'url' => ['/alertaservicopj/create']],
                     ],
                 ],
@@ -110,9 +110,9 @@
                             'icon' => 'tasks',
                             'url' => '#',
                             'items' => [
-                                ['label' => 'Vendas PF', 'icon' => 'usd', 'url' => ['/venda'],],
-                                ['label' => 'Vendas PJ', 'icon' => 'usd', 'url' => ['/vendapj'],],
-                                ['label' => 'Compras/Saída', 'icon' => 'usd', 'url' => ['/compra'],],
+                                ['label' => 'Serviços PF', 'icon' => 'usd', 'url' => ['/venda'],],
+                                ['label' => 'Serviços PJ', 'icon' => 'usd', 'url' => ['/vendapj'],],
+                                ['label' => 'Despesas', 'icon' => 'usd', 'url' => ['/compra'],],
                                 ['label' => 'Fechamentos', 'icon' => 'pencil-square-o', 'url' => ['/fcaixa']],
                                 ['label' => 'Honorários recebidos', 'icon' => '', 'url' => ['/honorario']],
                             ],
@@ -138,7 +138,7 @@
                     'icon' => 'file',
                     'url' => '#',
                     'items' => [
-                        ['label' => 'Entradas', 'icon' => 'usd', 'url' => ['/relatorio_caixa'],],
+                        ['label' => 'Receitas', 'icon' => 'usd', 'url' => ['/relatorio_caixa'],],
                         ['label' => 'Produtividade', 'icon' => 'usd', 'url' => ['/relatorio-venda'],],
                     ],
                 ],

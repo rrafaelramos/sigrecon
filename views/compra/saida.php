@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Compra */
 
-$this->title = 'Lançar Saída';
+$this->title = 'Registrar Despesa';
 $this->params['breadcrumbs'][] = ['label' => 'Caixa', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

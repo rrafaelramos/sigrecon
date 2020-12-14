@@ -10,7 +10,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\VendaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vendas PF';
+$this->title = 'Serviços PF';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -102,7 +102,7 @@ function statusAlerta($alerta){
     <div class="box-body table-responsive">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Vendas de Serviço</h3>
+                <h3 class="panel-title">Serviços PF</h3>
             </div>
             <div class="box-header with-border">
                 <?= Html::a('Novo +', ['create'], ['class' => 'btn btn-success btn-flat'])?>

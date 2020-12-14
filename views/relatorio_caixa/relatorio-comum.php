@@ -122,7 +122,7 @@ if(Yii::$app->user->identity->tipo == '1'){
         return "$model unidade";
     }
 
-    $this->title = "Relatório de Vendas";
+    $this->title = "Relatório de Receitas";
     $this->params['breadcrumbs'][] = ['label' => 'Vendas', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
     ?>

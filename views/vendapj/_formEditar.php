@@ -35,7 +35,7 @@ if(!Yii::$app->user->isGuest){
                 <div class="box-body table-responsive col-sm-6 col-sm-offset-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Venda Rápida</h3>
+                            <h3 class="panel-title">Serviço Avulso</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-sm-12">
