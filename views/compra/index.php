@@ -43,7 +43,8 @@ function unidade($model){
 
 <div class="servico-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('Novo +', ['create'], ['class' => 'btn btn-success btn-flat pull-left']) ?>
+        <?= Html::a('Compra +', ['create'], ['class' => 'btn btn-warning btn-flat']); ?>
+        <?= Html::a('Despesa +', ['compra/saida'], ['class' => 'btn btn-info btn-flat']) ?>
         <?= Html::a('Início', ['site/index'], ['class' => 'btn btn-primary btn-flat pull-right']) ?>
     </div>
     <div class="box-body table-responsive no-padding">

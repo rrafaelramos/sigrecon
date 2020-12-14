@@ -127,7 +127,7 @@
                     'url' => '#',
                     'items' => [
                         ['label' => 'Registrar Compra', 'icon' => 'pencil', 'url' => ['/compra/create'],],
-                        ['label' => 'Lançar Saída', 'icon' => 'pencil', 'url' => ['compra/saida'],],
+                        ['label' => 'Lançar Despesa', 'icon' => 'pencil', 'url' => ['compra/saida'],],
                         ['label' => 'Lançar Honorário', 'icon' => 'usd', 'url' => ['/honorario/create'],],
                         ['label' => 'Fechar Caixa', 'icon' => 'lock', 'url' => ['/fcaixa/create'],],
                         ['label' => 'Consultar Saldo', 'icon' => 'usd', 'url' => ['fcaixa/consulta']]
