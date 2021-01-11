@@ -25,4 +25,3 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 <h1 align="center">
     <img alt="usecase" title="Diagrama de Casos de Uso - 1º Nível" src="https://github.com/rrafaelramos/sigrecon/blob/master/documentos/UC%201.0.PNG" />
 </h1>
-
