@@ -204,6 +204,17 @@ class AlertaservicoController extends Controller
                 }
             }
 
+            // Se o serviço já foi entregue apaga do calendário de compromissos
+            if($model->status_servico == '2') {
+                // apaga o lembrete do calendário
+                $lembretes = Lembrete::find()->all();
+                foreach ($lembretes as $lembrete) {
+                    if ($lembrete->alerta_pf == $id) {
+                        $this->findLembrete($lembrete->id)->delete();
+                    }
+                }
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

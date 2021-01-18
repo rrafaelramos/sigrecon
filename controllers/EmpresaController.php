@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Avisa_rotina;
+use app\models\Lembrete;
 use app\models\Rotina;
 use Yii;
 use app\models\Empresa;
@@ -85,8 +86,24 @@ class EmpresaController extends Controller
         $dataaux = explode("-",$data);
         $anoatual = $dataaux[0];
         $mesatual = $dataaux[1];
+        $cont = 0;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $lembretes = Lembrete::find()->all();
+            foreach ($lembretes as $lembrete){
+                if($lembrete->titulo == 'Prazo Final: DAS' && $lembrete->data == "$anoatual-$mesatual-20"){
+                    $cont = 1;
+                }
+            }
+            if(!$cont){
+                $lembrete = new Lembrete();
+                $lembrete->data = "$anoatual-$mesatual-20";
+                $lembrete->titulo = "Prazo Final: DAS";
+                $lembrete->alerta_geral = 1;
+                $lembrete->save();
+            }
+
             //1 é o id do simples nacional
             if($model->rotina == 1) {
                 // insere na tabela os DAS

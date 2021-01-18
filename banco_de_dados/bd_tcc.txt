@@ -239,6 +239,7 @@ create table lembrete(
     usuario_fk int,
     alerta_pf int,
     alerta_pj int,
+    alerta_geral int,
     primary key (id)
 );
 

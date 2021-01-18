@@ -54,7 +54,7 @@ class LembreteController extends Controller
 
         $events = [];
         foreach ($lembretes as $lembrete) {
-            if($lembrete->usuario_fk == Yii::$app->user->identity->id) {
+            if(($lembrete->usuario_fk == Yii::$app->user->identity->id) || $lembrete->alerta_geral ) {
                 $event = new \yii2fullcalendar\models\Event();
                 $event->id = $lembrete->id;
                 $event->title = $lembrete->titulo;
@@ -62,6 +62,10 @@ class LembreteController extends Controller
                 if($lembrete->alerta_pf || $lembrete->alerta_pj){
                     $event->color = '#8B0000';
                 }
+                if($lembrete->alerta_geral){
+                    $event->color = '#3CB371';
+                }
+
                 $events[] = $event;
             }
         }
@@ -131,6 +135,12 @@ class LembreteController extends Controller
     {
         $model = $this->findModel($id);
 
+        if($model->alerta_geral){
+            return $this->render('_erroAlertaGeral', [
+                'model' => $model
+            ]);
+        }
+
         if ($model->load(Yii::$app->request->post())) {
 
             date_default_timezone_set('America/Sao_Paulo');
@@ -172,6 +182,14 @@ class LembreteController extends Controller
      */
     public function actionDelete($id)
     {
+        $model = $this->findModel($id);
+
+        if($model->alerta_geral){
+            return $this->render('_erroAlertaGeral', [
+                'model' => $model
+            ]);
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

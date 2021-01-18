@@ -104,6 +104,12 @@ function simplesNacional()
         $ano = $dataaux[0];
         //salva as empresas no model
         if ($arrayempresa) {
+            // insere nos lembretes o aviso do DAS
+            $lembrete = new Lembrete();
+            $lembrete->data = "$anoatual-$mesatual-20";
+            $lembrete->titulo = "Prazo Final: DAS";
+            $lembrete->alerta_geral = 1;
+            $lembrete->save();
             // insere na tabela os DAS
             do {
                 $model_avisa = new Avisa_rotina();
@@ -317,7 +323,6 @@ function alertaPrazopj(){
         return "$aux alerta PJ aguardando pagamento!";
     }
 }
-
 
 // retorna o número de servicos/PJ pendentes
 function servicopjPendente(){
