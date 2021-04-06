@@ -80,22 +80,22 @@ class ClienteavulsoController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            //verifica se é um cliente do IRPF
-            if($model->rotina == '2'){
+            if($model->irpf == 1){
                 $irpf = new Irpf();
                 $irpf->cliente_fk = $model->id;
                 $irpf->data_entrega = '2020-04-30';
                 $irpf->telefone = $model->telefone;
                 $irpf->save();
             }
-            //verifica se é um cliente do ITR
-            if($model->rotina == '3'){
+
+            if($model->itr == 1){
                 $itr = new Itr();
                 $itr->cliente_fk = $model->id;
                 $itr->data_entrega = '2020-09-30';
                 $itr->telefone = $model->telefone;
                 $itr->save();
             }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -110,57 +110,63 @@ class ClienteavulsoController extends Controller
      * @param integer $id
      * @return mixed
      */
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        $rotina = $model->rotina;
+        $irpfs = Irpf::find()->all();
+        $itrs = Itr::find()->all();
 
-        $irpf = Irpf::find()->all();
-        $itr = Itr::find()->all();
+        $get_irpf = $model->irpf;
+        $get_itr = $model->irpf;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            if($rotina){
-                if($model->rotina != $rotina && $model->rotina == 2){
-                    // se a nova rotina é irpf, deleta do ITR
-                    foreach ($itr as $it){
-                        if($it->cliente_fk == $model->id){
-                            $this->findItr($it->id)->delete();
-                        }
+            //deletar
+            if($model->irpf == 0){
+                foreach ($irpfs as $item) {
+                    if($item->cliente_fk == $model->id){
+                        $this->findIrpf($item->id)->delete();
                     }
-                    //apos apagar de itr insere em IRPF
-                    $model_irpf = new Irpf();
-                    $model_irpf->cliente_fk = $model->id;
-                    $model_irpf->data_entrega = '2020-04-30';
-                    $model_irpf->telefone = $model->telefone;
-                    $model_irpf->save();
-                }elseif($model->rotina != $rotina && $model->rotina == 3){
-                    // se a nova rotina é irpf, deleta do ITR
-                    foreach ($irpf as $ir){
-                        if($ir->cliente_fk == $model->id){
-                            $this->findIrpf($ir->id)->delete();
-                        }
-                    }
-                    //apos apagar de irpf insere em itr
-                    $model_itr = new Itr();
-                    $model_itr->cliente_fk = $model->id;
-                    $model_itr->data_entrega = '2020-09-30';
-                    $model_itr->telefone = $model->telefone;
-                    $model_itr->save();
                 }
-            }elseif(!$rotina && $model->rotina == 2){
-                $model_irpf = new Irpf();
-                $model_irpf->cliente_fk = $model->id;
-                $model_irpf->data_entrega = '2020-04-30';
-                $model_irpf->telefone = $model->telefone;
-                $model_irpf->save();
-            }elseif(!$rotina && $model->rotina == 3){
-                $model_itr = new Itr();
-                $model_itr->cliente_fk = $model->id;
-                $model_itr->data_entrega = '2020-09-30';
-                $model_itr->telefone = $model->telefone;
-                $model_itr->save();
+            }elseif ($model->irpf == 1){
+                $aux = 0;
+                foreach ($irpfs as $item) {
+                    if($item->cliente_fk == $model->id){
+                        $aux++;
+                    }
+                }
+                if($aux == 0) {
+                    $irpf = new Irpf();
+                    $irpf->cliente_fk = $model->id;
+                    $irpf->data_entrega = '2020-04-30';
+                    $irpf->telefone = $model->telefone;
+                    $irpf->save();
+                }
+            }
+
+            //deletar
+            if($model->itr == 0){
+                foreach ($itrs as $item) {
+                    if($item->cliente_fk == $model->id){
+                        $this->findItr($item->id)->delete();
+                    }
+                }
+            }elseif ($model->itr == 1){
+                $aux1 = 0;
+                foreach ($itrs as $item) {
+                    if($item->cliente_fk == $model->id){
+                        $aux1++;
+                    }
+                }
+                if($aux1 == 0) {
+                    $itr = new Itr();
+                    $itr->cliente_fk = $model->id;
+                    $itr->data_entrega = '2020-04-30';
+                    $itr->telefone = $model->telefone;
+                    $itr->save();
+                }
             }
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -179,25 +185,25 @@ class ClienteavulsoController extends Controller
      */
     public function actionDelete($id)
     {
+        $itrs = Itr::find()->all();
+        $irpfs = Irpf::find()->all();
+
         $model = $this->findModel($id);
+
+        foreach ($itrs as $item) {
+            if($item->cliente_fk == $model->id){
+                $this->findItr($item->id)->delete();
+            }
+        }
+
+        foreach ($irpfs as $item) {
+            if($item->cliente_fk == $model->id){
+                $this->findIrpf($item->id)->delete();
+            }
+        }
 
         $this->findModel($id)->delete();
 
-        if($model->rotina == 2){
-            $irpf = Irpf::find()->all();
-            foreach ($irpf as $i){
-                if($i->cliente_fk == $model->id){
-                    $this->findIrpf($i->id)->delete();
-                }
-            }
-        }elseif ($model->rotina == 3){
-            $itr = Itr::find()->all();
-            foreach ($itr as $i){
-                if($i->cliente_fk == $model->id){
-                    $this->findItr($i->id)->delete();
-                }
-            }
-        }
         return $this->redirect(['index']);
     }
 

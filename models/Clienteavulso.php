@@ -20,7 +20,8 @@ use Yii;
  * @property string $cidade
  * @property string $cep
  * @property string $uf
- * @property int $rotina
+ * @property int $irpf
+ * @property int $itr
  * @property string $datanascimento
  * @property int $usuario_fk
  * @property string $complemento
@@ -44,7 +45,7 @@ class Clienteavulso extends \yii\db\ActiveRecord
     {
         return [
             [['cpf', 'nome','telefone'], 'required'],
-            [['numero', 'rotina', 'usuario_fk'], 'integer'],
+            [['numero', 'usuario_fk','irpf','itr'], 'integer'],
             [['datanascimento'], 'validarIdade'],
             [['cpf'], 'string',],
             [['nome'], 'string', 'max' => 120],
@@ -75,10 +76,11 @@ class Clienteavulso extends \yii\db\ActiveRecord
             'cidade' => 'Cidade',
             'cep' => 'CEP',
             'uf' => 'Estado',
-            'rotina' => 'Rotina',
             'datanascimento' => 'Data de nascimento',
             'usuario_fk' => 'Usuario Fk',
             'complemento' => 'Complemento',
+            'irpf' => 'IRPF - Imposto de Renda Pessoa Física',
+            'itr' => 'ITR - Imposto sobre Propriedade Territorial Rural'
         ];
     }
 

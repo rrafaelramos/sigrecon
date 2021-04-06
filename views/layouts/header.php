@@ -158,7 +158,7 @@ function irpf(){
     };
 }
 irpf();
-//essa função verifica se deverá ser gerado protocolo de entrega ITR
+////essa função verifica se deverá ser gerado protocolo de entrega ITR
 function itr(){
     date_default_timezone_set('America/Sao_Paulo');
     $data = date('Y');

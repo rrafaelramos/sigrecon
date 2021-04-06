@@ -80,33 +80,33 @@ use yii\helpers\ArrayHelper;
                         <?= $form->field($model, 'complemento')->textInput() ?>
                     </div>
                     <div class="col-sm-2">
-                       <?php $list = ['AC' => 'AC',
-                           'AL' => 'AL',
-                           'AM' => 'AM',
-                           'AP' => 'AP',
-                           'BA' => 'BA',
-                           'CE' => 'CE',
-                           'DF' => 'DF',
-                           'ES' => 'ES',
-                           'GO' => 'GO',
-                           'MA' => 'MA',
-                           'MG' => 'MG',
-                           'MS' => 'MS',
-                           'MT' => 'MT',
-                           'PA' => 'PA',
-                           'PB' => 'PB',
-                           'PE' => 'PE',
-                           'PI' => 'PI',
-                           'PR' => 'PR',
-                           'RJ' => 'RJ',
-                           'RN' => 'RN',
-                           'RO' => 'RO',
-                           'RR' => 'RR',
-                           'RS' => 'RS',
-                           'SC' => 'SC',
-                           'SE' => 'SE',
-                           'SP' => 'SP',
-                           'TO' => 'TO']; ?>
+                        <?php $list = ['AC' => 'AC',
+                            'AL' => 'AL',
+                            'AM' => 'AM',
+                            'AP' => 'AP',
+                            'BA' => 'BA',
+                            'CE' => 'CE',
+                            'DF' => 'DF',
+                            'ES' => 'ES',
+                            'GO' => 'GO',
+                            'MA' => 'MA',
+                            'MG' => 'MG',
+                            'MS' => 'MS',
+                            'MT' => 'MT',
+                            'PA' => 'PA',
+                            'PB' => 'PB',
+                            'PE' => 'PE',
+                            'PI' => 'PI',
+                            'PR' => 'PR',
+                            'RJ' => 'RJ',
+                            'RN' => 'RN',
+                            'RO' => 'RO',
+                            'RR' => 'RR',
+                            'RS' => 'RS',
+                            'SC' => 'SC',
+                            'SE' => 'SE',
+                            'SP' => 'SP',
+                            'TO' => 'TO']; ?>
                         <?= $form->field($model, 'uf')->dropDownList($list,['prompt' => 'Selecione']); ?>
                     </div>
                 </div>
@@ -118,11 +118,8 @@ use yii\helpers\ArrayHelper;
                 </div>
                 <div class="panel-body">
                     <div class="col-sm-6">
-                        <?= $form->field($model, 'rotina')->dropDownList([
-                                // '1' é o id do Simples Nacional
-                                '2' => 'IRPF - Imposto de Renda Pessoa Física',
-                                '3' => 'ITR - Imposto sobre Propriedade Territorial Rural'
-                            ], ['prompt' => 'Selecione'])?>
+                        <?= $form->field($model, 'irpf')->checkbox()?>
+                        <?= $form->field($model, 'itr')->checkbox()?>
                     </div>
                 </div>
             </div>
@@ -130,12 +127,12 @@ use yii\helpers\ArrayHelper;
                 <?= Html::submitButton('Salvar', ['class' => 'btn btn-success btn-flat pull-right']) ?>
                 <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
                 <?php
-                    if($model->id){
-                        echo Html::a('Apagar',['delete', 'id' => $model->id], ['class' => 'btn btn-danger btn-flat', 'data' => [
-                            'confirm' => 'Deseja realmente apagar?',
-                            'method' => 'post',
-                        ],]);
-                    }
+                if($model->id){
+                    echo Html::a('Apagar',['delete', 'id' => $model->id], ['class' => 'btn btn-danger btn-flat', 'data' => [
+                        'confirm' => 'Deseja realmente apagar?',
+                        'method' => 'post',
+                    ],]);
+                }
                 ?>
             </div>
         </div>

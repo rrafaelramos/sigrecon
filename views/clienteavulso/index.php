@@ -43,16 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         return preg_replace('/^(\d{2})(\d{1})(\d{4})(\d{4})$/', '(${1}) ${2} ${3}-${4}', $model->telefone);
                     },
                 ],
-                ['attribute' => 'rotina',
-                    'value' => function($model){
-                        //retorna todos as rotinas cadastradas para $rotina
-                        $rotina = Rotina::find()->all();
-                        foreach ($rotina as $a){
-                            if($a->id == $model->rotina){
-                                return "$a->nome";
-                            }
-                        }
-                    }],
                 //'numero',
                 // 'rua',
                 // 'bairro',

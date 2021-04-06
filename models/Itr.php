@@ -63,7 +63,7 @@ class Itr extends \yii\db\ActiveRecord
                 $itr->delete($itr->id);
             }
             foreach ($clientes as $cliente){
-                if($cliente->rotina == 3){
+                if($cliente->itr == 1){
                     $model = new Itr();
                     $model->cliente_fk = $cliente->id;
                     $data_entrega = "$data-09-30";

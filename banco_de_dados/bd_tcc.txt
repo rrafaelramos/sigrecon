@@ -25,9 +25,10 @@ create TABLE clienteavulso(
 	cep varchar(8),
 	uf varchar(2),
 	complemento varchar(255),
-	rotina int,
 	datanascimento DATE,
 	usuario_fk int,
+	irpf int,
+	itr int,
 	foreign key (usuario_fk) references usuario (id),
 	unique index (cpf),
 	primary key (id)

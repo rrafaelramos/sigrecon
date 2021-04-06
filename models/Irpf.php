@@ -62,7 +62,7 @@ class Irpf extends \yii\db\ActiveRecord
                 $irpf->delete($irpf->id);
             }
             foreach ($clientes as $cliente){
-                if($cliente->rotina == 2){
+                if($cliente->irpf == 1){
                     $model = new Irpf();
                     $model->cliente_fk = $cliente->id;
                     $data_entrega = "$data-04-30";

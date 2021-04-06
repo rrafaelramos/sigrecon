@@ -18,7 +18,7 @@ class ClienteavulsoSearch extends Clienteavulso
     public function rules()
     {
         return [
-            [['id', 'numero', 'rotina', 'usuario_fk'], 'integer'],
+            [['id', 'numero', 'usuario_fk'], 'integer'],
             [['cpf', 'nome', 'telefone', 'rua', 'bairro', 'cidade', 'cep', 'uf', 'datanascimento'], 'safe'],
         ];
     }
@@ -62,7 +62,6 @@ class ClienteavulsoSearch extends Clienteavulso
         $query->andFilterWhere([
             'id' => $this->id,
             'numero' => $this->numero,
-            'rotina' => $this->rotina,
             'datanascimento' => $this->datanascimento,
             'usuario_fk' => $this->usuario_fk,
         ]);
